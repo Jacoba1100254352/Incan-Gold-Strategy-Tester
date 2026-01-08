@@ -1,0 +1,2 @@
+lib/*.dylib filter=lfs diff=lfs merge=lfs -text
+lib/*.jar filter=lfs diff=lfs merge=lfs -text

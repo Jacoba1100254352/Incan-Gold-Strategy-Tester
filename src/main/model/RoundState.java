@@ -10,17 +10,20 @@ public class RoundState {
     private final int templeTreasure;
     private final int roundTreasure;
     private final Map<Hazard, Integer> hazardCounts;
+    private final int artifactsOnPath;
 
     public RoundState(int turnNumber,
                       int activePlayers,
                       int templeTreasure,
                       int roundTreasure,
-                      Map<Hazard, Integer> hazardCounts) {
+                      Map<Hazard, Integer> hazardCounts,
+                      int artifactsOnPath) {
         this.turnNumber = turnNumber;
         this.activePlayers = activePlayers;
         this.templeTreasure = templeTreasure;
         this.roundTreasure = roundTreasure;
         this.hazardCounts = Collections.unmodifiableMap(new EnumMap<>(hazardCounts));
+        this.artifactsOnPath = artifactsOnPath;
     }
 
     public int getTurnNumber() {
@@ -53,5 +56,9 @@ public class RoundState {
 
     public Map<Hazard, Integer> getHazardCounts() {
         return hazardCounts;
+    }
+
+    public int getArtifactsOnPath() {
+        return artifactsOnPath;
     }
 }

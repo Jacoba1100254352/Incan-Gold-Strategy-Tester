@@ -1,63 +1,120 @@
 package client;
 
-import algorithm.AlwaysContinueStrategy;
-import algorithm.LeaveAfterHazardsOrTurnsStrategy;
-import algorithm.LeaveAfterHazardsStrategy;
-import algorithm.LeaveAfterTempleTreasureStrategy;
-import algorithm.LeaveAfterTreasureOrHazardsStrategy;
-import algorithm.LeaveAfterTreasureStrategy;
-import algorithm.LeaveAfterTurnsStrategy;
-import algorithm.LeaveWhenSoloStrategy;
-import algorithm.RiskAverseStrategy;
 import algorithm.Strategy;
-import algorithm.SwitchAfterHazardsStrategy;
-import model.Game;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Runs strategy sweeps and summarizes average treasure outcomes.
+ */
 public class IncanGoldTest {
+    // Default number of sweep runs when no repeat count is provided.
+    private static final int DEFAULT_REPEATS = 1;
+    // Default number of simulations per strategy.
     private static final int SIMULATIONS = 10000;
-    private static final int PLAYERS_PER_GAME = 4;
+    // Default number of players per simulated game.
+    private static final int DEFAULT_PLAYERS_PER_GAME = 4;
+    // Argument index for repeat count.
+    private static final int REPEATS_ARG_INDEX = 0;
+    // Argument index for simulations per strategy.
+    private static final int SIMULATIONS_ARG_INDEX = 1;
+    // Minimum allowed repeat count.
+    private static final int MIN_REPEATS = 1;
+    // Minimum allowed simulations per strategy.
+    private static final int MIN_SIMULATIONS = 1;
+    // Minimum players per game for player-count sweeps.
+    private static final int PLAYER_SWEEP_MIN = 2;
+    // Maximum players per game for player-count sweeps.
+    private static final int PLAYER_SWEEP_MAX = 8;
+    // Toggle to run the player-count sweep after the main sweep.
+    private static final boolean ENABLE_PLAYER_COUNT_SWEEP = true;
+    // Number of top strategies to show per player count in the sweep.
+    private static final int PLAYER_SWEEP_TOP_COUNT = 1;
+    // Minimum allowed players per game.
+    private static final int MIN_PLAYERS_PER_GAME = 1;
+    // Argument index for players per game.
+    private static final int PLAYERS_ARG_INDEX = 2;
+    // Number of top strategies to list in the summary.
+    private static final int TOP_STRATEGIES_TO_DISPLAY = 10;
+    // Tolerance for treating averages as ties.
     private static final double TIE_EPSILON = 1e-9;
 
+    /**
+     * Entry point for running sweep simulations.
+     *
+     * @param args optional args: [repeats] [simulations] [playersPerGame]
+     */
     public static void main(String[] args) {
-        int repeats = args.length > 0 ? Integer.parseInt(args[0]) : 1;
-        int simulations = args.length > 1 ? Integer.parseInt(args[1]) : SIMULATIONS;
+        int repeats = args.length > REPEATS_ARG_INDEX
+                ? Integer.parseInt(args[REPEATS_ARG_INDEX])
+                : DEFAULT_REPEATS;
+        int simulations = args.length > SIMULATIONS_ARG_INDEX
+                ? Integer.parseInt(args[SIMULATIONS_ARG_INDEX])
+                : SIMULATIONS;
+        int playersPerGame = args.length > PLAYERS_ARG_INDEX
+                ? Integer.parseInt(args[PLAYERS_ARG_INDEX])
+                : DEFAULT_PLAYERS_PER_GAME;
 
-        if (repeats < 1) {
-            repeats = 1;
+        if (repeats < MIN_REPEATS) {
+            repeats = DEFAULT_REPEATS;
         }
-        if (simulations < 1) {
+        if (simulations < MIN_SIMULATIONS) {
             simulations = SIMULATIONS;
         }
+        if (playersPerGame < MIN_PLAYERS_PER_GAME) {
+            playersPerGame = DEFAULT_PLAYERS_PER_GAME;
+        }
 
-        List<StrategySpec> strategies = buildStrategies();
-        runSweeps(strategies, repeats, simulations);
+        double averageTurns = StrategySimulator.simulateAverageTurnsUntilDoubleHazard(simulations);
+        System.out.printf("Stay as long as possible average turns survived per round: %.2f%n", averageTurns);
+
+        List<StrategyCatalog.StrategySpec> strategies = StrategyCatalog.buildDefaultStrategies();
+        if (ENABLE_PLAYER_COUNT_SWEEP) {
+            runPlayerCountSweep(strategies, repeats, simulations);
+        }
+        runSweeps(strategies, repeats, simulations, playersPerGame);
     }
 
-    private static List<StrategySpec> buildStrategies() {
-        List<StrategySpec> strategies = new ArrayList<>();
-        strategies.add(new StrategySpec("Stay as long as possible", AlwaysContinueStrategy::new));
-        strategies.add(new StrategySpec("Leave after 1 hazard", RiskAverseStrategy::new));
-        strategies.add(new StrategySpec("Leave when solo", LeaveWhenSoloStrategy::new));
-
-        addHazardSweep(strategies, 2, 4);
-        addTurnSweep(strategies, 2, 15);
-        addTreasureSweep(strategies, 2, 10, 1);
-        addTempleTreasureSweep(strategies, 2, 10, 1);
-        addHazardsOrTurnsSweep(strategies, 1, 3, 2, 8, 2);
-        addTreasureOrHazardsSweep(strategies, 5, 20, 5, 1, 3);
-        addSwitchAfterHazardsSweep(strategies, 1, 3, 2, 6, 1);
-
-        return strategies;
+    /**
+     * Executes the sweeps and prints per-run winners and a summary.
+     */
+    private static void runSweeps(List<StrategyCatalog.StrategySpec> strategies,
+                                  int repeats,
+                                  int simulations,
+                                  int playersPerGame) {
+        List<StrategyStats> stats = evaluateStrategies(strategies, repeats, simulations, playersPerGame, true);
+        printSummary(stats, repeats);
     }
 
-    private static void runSweeps(List<StrategySpec> strategies, int repeats, int simulations) {
+    /**
+     * Sweeps player counts and prints the top strategy for each size.
+     */
+    private static void runPlayerCountSweep(List<StrategyCatalog.StrategySpec> strategies,
+                                            int repeats,
+                                            int simulations) {
+        System.out.printf("%nTop strategy by player count (%d-%d players):%n",
+                PLAYER_SWEEP_MIN, PLAYER_SWEEP_MAX);
+        for (int playersPerGame = PLAYER_SWEEP_MIN; playersPerGame <= PLAYER_SWEEP_MAX; playersPerGame++) {
+            List<StrategyStats> stats = evaluateStrategies(strategies, repeats, simulations, playersPerGame, false);
+            StrategyStats top = getTopStrategies(stats, PLAYER_SWEEP_TOP_COUNT).getFirst();
+            System.out.printf("%d players: %s (%.2f)%n",
+                    playersPerGame, top.name, top.getAverage());
+        }
+        System.out.println();
+    }
+
+    /**
+     * Runs simulations and accumulates per-strategy averages and win counts.
+     */
+    private static List<StrategyStats> evaluateStrategies(List<StrategyCatalog.StrategySpec> strategies,
+                                                          int repeats,
+                                                          int simulations,
+                                                          int playersPerGame,
+                                                          boolean verbose) {
         List<StrategyStats> stats = new ArrayList<>();
-        for (StrategySpec spec : strategies) {
+        for (StrategyCatalog.StrategySpec spec : strategies) {
             stats.add(new StrategyStats(spec.name, spec.factory));
         }
 
@@ -65,15 +122,15 @@ public class IncanGoldTest {
             double bestAverage = Double.NEGATIVE_INFINITY;
             List<StrategyStats> runWinners = new ArrayList<>();
 
-            if (repeats > 1) {
+            if (verbose && repeats > DEFAULT_REPEATS) {
                 System.out.printf("Sweep %d/%d (simulations per strategy: %d)%n", run, repeats, simulations);
             }
 
             for (StrategyStats stat : stats) {
-                double average = runSimulation(stat.factory, simulations);
+                double average = StrategySimulator.simulateAverageTreasure(stat.factory, simulations, playersPerGame);
                 stat.recordRun(average);
 
-                if (repeats == 1) {
+                if (verbose && repeats == DEFAULT_REPEATS) {
                     System.out.printf("%s average treasure: %.2f%n", stat.name, average);
                 }
 
@@ -90,29 +147,23 @@ public class IncanGoldTest {
                 winner.recordWin();
             }
 
-            System.out.printf("Run %d winner%s: %s (%.2f)%n", run, runWinners.size() > 1 ? "s" : "",
-                    joinNames(runWinners), bestAverage);
+            if (verbose) {
+                System.out.printf("Run %d winner%s: %s (%.2f)%n", run, runWinners.size() > 1 ? "s" : "",
+                        joinNames(runWinners), bestAverage);
+            }
         }
 
-        printSummary(stats, repeats);
+        return stats;
     }
 
+    /**
+     * Prints the ranked summary and win counts across sweep runs.
+     */
     private static void printSummary(List<StrategyStats> stats, int repeats) {
-        double bestAverage = Double.NEGATIVE_INFINITY;
-        List<StrategyStats> bestAverageStrategies = new ArrayList<>();
         int mostWins = -1;
         List<StrategyStats> mostWinStrategies = new ArrayList<>();
 
         for (StrategyStats stat : stats) {
-            double average = stat.getAverage();
-            if (average > bestAverage + TIE_EPSILON) {
-                bestAverage = average;
-                bestAverageStrategies.clear();
-                bestAverageStrategies.add(stat);
-            } else if (Math.abs(average - bestAverage) <= TIE_EPSILON) {
-                bestAverageStrategies.add(stat);
-            }
-
             if (stat.wins > mostWins) {
                 mostWins = stat.wins;
                 mostWinStrategies.clear();
@@ -122,12 +173,36 @@ public class IncanGoldTest {
             }
         }
 
-        System.out.printf("%nBest average over %d run%s: %s (%.2f)%n",
-                repeats, repeats == 1 ? "" : "s", joinNames(bestAverageStrategies), bestAverage);
+        List<StrategyStats> topStrategies = getTopStrategies(stats, TOP_STRATEGIES_TO_DISPLAY);
+        int displayCount = topStrategies.size();
+
+        System.out.printf("%nTop %d average%s over %d run%s:%n",
+                displayCount,
+                displayCount == DEFAULT_REPEATS ? "" : "s",
+                repeats,
+                repeats == DEFAULT_REPEATS ? "" : "s");
+
+        for (int i = 0; i < topStrategies.size(); i++) {
+            StrategyStats stat = topStrategies.get(i);
+            System.out.printf("%d) %s (%.2f)%n", i + 1, stat.name, stat.getAverage());
+        }
         System.out.printf("Most run wins: %s (%d/%d)%n",
                 joinNames(mostWinStrategies), mostWins, repeats);
     }
 
+    /**
+     * Returns the top strategies by average treasure.
+     */
+    private static List<StrategyStats> getTopStrategies(List<StrategyStats> stats, int count) {
+        List<StrategyStats> sortedByAverage = new ArrayList<>(stats);
+        sortedByAverage.sort((left, right) -> Double.compare(right.getAverage(), left.getAverage()));
+        int displayCount = Math.min(count, sortedByAverage.size());
+        return new ArrayList<>(sortedByAverage.subList(0, displayCount));
+    }
+
+    /**
+     * Joins strategy names for compact output.
+     */
     private static String joinNames(List<StrategyStats> stats) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < stats.size(); i++) {
@@ -139,32 +214,9 @@ public class IncanGoldTest {
         return builder.toString();
     }
 
-    private static double runSimulation(Supplier<Strategy> strategyFactory, int simulations) {
-        long totalTreasure = 0;
-        for (int i = 0; i < simulations; i++) {
-            List<Player> players = new ArrayList<>();
-            for (int p = 0; p < PLAYERS_PER_GAME; p++) {
-                players.add(new Player(strategyFactory.get()));
-            }
-            Game game = new Game(players);
-            game.playGame();
-            for (Player player : players) {
-                totalTreasure += player.getTotalTreasure();
-            }
-        }
-        return totalTreasure / (double) (simulations * PLAYERS_PER_GAME);
-    }
-
-    private static class StrategySpec {
-        private final String name;
-        private final Supplier<Strategy> factory;
-
-        private StrategySpec(String name, Supplier<Strategy> factory) {
-            this.name = name;
-            this.factory = factory;
-        }
-    }
-
+    /**
+     * Accumulates averages and win counts for a strategy.
+     */
     private static class StrategyStats {
         private final String name;
         private final Supplier<Strategy> factory;
@@ -188,77 +240,6 @@ public class IncanGoldTest {
 
         private double getAverage() {
             return totalAverage / runs;
-        }
-    }
-
-    private static void addHazardSweep(List<StrategySpec> strategies, int min, int max) {
-        for (int hazards = min; hazards <= max; hazards++) {
-            final int threshold = hazards;
-            strategies.add(new StrategySpec("Leave after " + hazards + " hazards",
-                    () -> new LeaveAfterHazardsStrategy(threshold)));
-        }
-    }
-
-    private static void addTempleTreasureSweep(List<StrategySpec> strategies, int min, int max, int step) {
-        for (int treasure = min; treasure <= max; treasure += step) {
-            final int threshold = treasure;
-            strategies.add(new StrategySpec("Leave after temple treasure " + treasure,
-                    () -> new LeaveAfterTempleTreasureStrategy(threshold)));
-        }
-    }
-
-    private static void addTurnSweep(List<StrategySpec> strategies, int min, int max) {
-        for (int turns = min; turns <= max; turns++) {
-            final int threshold = turns;
-            strategies.add(new StrategySpec("Leave after " + turns + " turns",
-                    () -> new LeaveAfterTurnsStrategy(threshold)));
-        }
-    }
-
-    private static void addTreasureSweep(List<StrategySpec> strategies, int min, int max, int step) {
-        for (int treasure = min; treasure <= max; treasure += step) {
-            final int threshold = treasure;
-            strategies.add(new StrategySpec("Leave after " + treasure + " treasure",
-                    () -> new LeaveAfterTreasureStrategy(threshold)));
-        }
-    }
-
-    private static void addHazardsOrTurnsSweep(List<StrategySpec> strategies, int hazardMin, int hazardMax,
-                                               int turnMin, int turnMax, int turnStep) {
-        for (int hazards = hazardMin; hazards <= hazardMax; hazards++) {
-            for (int turns = turnMin; turns <= turnMax; turns += turnStep) {
-                final int hazardThreshold = hazards;
-                final int turnThreshold = turns;
-                strategies.add(new StrategySpec("Leave after " + hazards + " hazards or " + turns + " turns",
-                        () -> new LeaveAfterHazardsOrTurnsStrategy(hazardThreshold, turnThreshold)));
-            }
-        }
-    }
-
-    private static void addTreasureOrHazardsSweep(List<StrategySpec> strategies, int treasureMin, int treasureMax,
-                                                  int treasureStep, int hazardMin, int hazardMax) {
-        for (int treasure = treasureMin; treasure <= treasureMax; treasure += treasureStep) {
-            for (int hazards = hazardMin; hazards <= hazardMax; hazards++) {
-                final int treasureThreshold = treasure;
-                final int hazardThreshold = hazards;
-                strategies.add(new StrategySpec("Leave after " + treasure + " treasure or " + hazards + " hazards",
-                        () -> new LeaveAfterTreasureOrHazardsStrategy(treasureThreshold, hazardThreshold)));
-            }
-        }
-    }
-
-    private static void addSwitchAfterHazardsSweep(List<StrategySpec> strategies, int hazardMin, int hazardMax,
-                                                   int turnMin, int turnMax, int turnStep) {
-        for (int hazards = hazardMin; hazards <= hazardMax; hazards++) {
-            for (int turns = turnMin; turns <= turnMax; turns += turnStep) {
-                final int hazardThreshold = hazards;
-                final int turnThreshold = turns;
-                strategies.add(new StrategySpec("Switch after " + hazards + " hazards (stay->leave after " + turns + " turns)",
-                        () -> new SwitchAfterHazardsStrategy(
-                                hazardThreshold,
-                                new AlwaysContinueStrategy(),
-                                new LeaveAfterTurnsStrategy(turnThreshold))));
-            }
         }
     }
 }

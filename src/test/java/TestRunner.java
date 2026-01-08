@@ -28,6 +28,7 @@ public class TestRunner {
         testStrategies();
         testGameHazardEndsRound();
         testGameLeavingAndTempleRemainder();
+        testArtifactClaim();
         System.out.println("All tests passed.");
     }
 
@@ -41,18 +42,25 @@ public class TestRunner {
         assertEquals(Card.Type.HAZARD, hazard.getType(), "hazard type");
         assertEquals(0, hazard.getTreasureValue(), "hazard treasure value");
         assertEquals(Hazard.SNAKE, hazard.getHazard(), "hazard value");
+
+        Card artifact = Card.artifact(1);
+        assertEquals(Card.Type.ARTIFACT, artifact.getType(), "artifact type");
+        assertEquals(0, artifact.getTreasureValue(), "artifact treasure value");
+        assertEquals(null, artifact.getHazard(), "artifact hazard");
+        assertEquals(1, artifact.getArtifactId(), "artifact id");
     }
 
     private static void testRoundState() {
         Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
         counts.put(Hazard.SNAKE, 1);
         counts.put(Hazard.SPIDER, 2);
-        RoundState state = new RoundState(3, 4, 5, 6, counts);
+        RoundState state = new RoundState(3, 4, 5, 6, counts, 0);
 
         assertEquals(3, state.getTurnNumber(), "turn number");
         assertEquals(4, state.getActivePlayers(), "active players");
         assertEquals(5, state.getTempleTreasure(), "temple treasure");
         assertEquals(6, state.getRoundTreasure(), "round treasure");
+        assertEquals(0, state.getArtifactsOnPath(), "artifacts on path");
         assertEquals(1, state.getHazardCount(Hazard.SNAKE), "snake count");
         assertEquals(2, state.getHazardCount(Hazard.SPIDER), "spider count");
         assertEquals(0, state.getHazardCount(Hazard.TRAP), "trap count default");
@@ -75,7 +83,7 @@ public class TestRunner {
 
     private static void testStrategies() {
         Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
-        RoundState base = new RoundState(2, 3, 4, 5, counts);
+        RoundState base = new RoundState(2, 3, 4, 5, counts, 0);
 
         assertTrue(new AlwaysContinueStrategy().shouldContinue(base), "always continue");
         assertTrue(new RiskAverseStrategy().shouldContinue(base), "risk averse no hazards");
@@ -88,28 +96,28 @@ public class TestRunner {
         assertTrue(new LeaveWhenSoloStrategy().shouldContinue(base), "not solo yet");
 
         counts.put(Hazard.SNAKE, 1);
-        RoundState oneHazard = new RoundState(2, 3, 4, 5, counts);
+        RoundState oneHazard = new RoundState(2, 3, 4, 5, counts, 0);
         assertTrue(new LeaveAfterHazardsStrategy(2).shouldContinue(oneHazard), "hazards at 1");
         assertFalse(new RiskAverseStrategy().shouldContinue(oneHazard), "risk averse after hazard");
 
         counts.put(Hazard.SPIDER, 1);
-        RoundState twoHazards = new RoundState(2, 3, 4, 5, counts);
+        RoundState twoHazards = new RoundState(2, 3, 4, 5, counts, 0);
         assertFalse(new LeaveAfterHazardsStrategy(2).shouldContinue(twoHazards), "hazards at limit");
         assertFalse(new LeaveAfterHazardsOrTurnsStrategy(2, 3).shouldContinue(twoHazards), "hazards at limit");
         assertFalse(new LeaveAfterTreasureOrHazardsStrategy(6, 2).shouldContinue(twoHazards), "hazards at limit");
 
-        RoundState turnLimit = new RoundState(3, 3, 4, 5, counts);
+        RoundState turnLimit = new RoundState(3, 3, 4, 5, counts, 0);
         assertFalse(new LeaveAfterTurnsStrategy(3).shouldContinue(turnLimit), "turns at limit");
         assertFalse(new LeaveAfterHazardsOrTurnsStrategy(3, 3).shouldContinue(turnLimit), "turns at limit");
 
-        RoundState treasureLimit = new RoundState(2, 3, 4, 6, counts);
+        RoundState treasureLimit = new RoundState(2, 3, 4, 6, counts, 0);
         assertFalse(new LeaveAfterTreasureStrategy(6).shouldContinue(treasureLimit), "treasure at limit");
         assertFalse(new LeaveAfterTreasureOrHazardsStrategy(6, 3).shouldContinue(treasureLimit), "treasure at limit");
 
-        RoundState templeLimit = new RoundState(2, 3, 5, 5, counts);
+        RoundState templeLimit = new RoundState(2, 3, 5, 5, counts, 0);
         assertFalse(new LeaveAfterTempleTreasureStrategy(5).shouldContinue(templeLimit), "temple at limit");
 
-        RoundState solo = new RoundState(2, 1, 0, 0, counts);
+        RoundState solo = new RoundState(2, 1, 0, 0, counts, 0);
         assertFalse(new LeaveWhenSoloStrategy().shouldContinue(solo), "leave when solo");
 
         SwitchAfterHazardsStrategy switchStrategy = new SwitchAfterHazardsStrategy(
@@ -117,9 +125,9 @@ public class TestRunner {
                 new AlwaysContinueStrategy(),
                 new LeaveAfterTurnsStrategy(2)
         );
-        RoundState beforeSwitch = new RoundState(10, 2, 0, 0, new EnumMap<>(Hazard.class));
+        RoundState beforeSwitch = new RoundState(10, 2, 0, 0, new EnumMap<>(Hazard.class), 0);
         assertTrue(switchStrategy.shouldContinue(beforeSwitch), "before switch uses always continue");
-        RoundState afterSwitch = new RoundState(2, 2, 0, 0, counts);
+        RoundState afterSwitch = new RoundState(2, 2, 0, 0, counts, 0);
         assertFalse(switchStrategy.shouldContinue(afterSwitch), "after switch uses turn strategy");
     }
 
@@ -157,6 +165,24 @@ public class TestRunner {
 
         assertEquals(3, players.get(0).getTotalTreasure(), "leaver total");
         assertEquals(6, players.get(1).getTotalTreasure(), "stayer total");
+    }
+
+    private static void testArtifactClaim() {
+        List<Card> deck = Arrays.asList(
+                Card.artifact(1),
+                Card.hazard(Hazard.SNAKE),
+                Card.hazard(Hazard.SNAKE)
+        );
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(new LeaveAfterTurnsStrategy(1)));
+        players.add(new Player(new AlwaysContinueStrategy()));
+
+        Game game = new FixedDeckGame(players, deck);
+        game.playGame();
+
+        assertEquals(5, players.get(0).getTotalTreasure(), "artifact claimant total");
+        assertEquals(1, players.get(0).getArtifactsClaimed(), "artifact claimant count");
+        assertEquals(0, players.get(1).getTotalTreasure(), "artifact non-claimant total");
     }
 
     private static class FixedDeckGame extends Game {

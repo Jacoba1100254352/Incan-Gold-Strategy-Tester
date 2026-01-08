@@ -6,11 +6,13 @@ public class Player {
     private final Strategy strategy;
     private int totalTreasure;
     private int roundTreasure;
+    private int artifactsClaimed;
 
     public Player(Strategy strategy) {
         this.strategy = strategy;
         this.totalTreasure = 0;
         this.roundTreasure = 0;
+        this.artifactsClaimed = 0;
     }
 
     public void startRound() {
@@ -45,5 +47,14 @@ public class Player {
 
     public int getRoundTreasure() {
         return roundTreasure;
+    }
+
+    public void claimArtifact(int value) {
+        totalTreasure += value;
+        artifactsClaimed++;
+    }
+
+    public int getArtifactsClaimed() {
+        return artifactsClaimed;
     }
 }
