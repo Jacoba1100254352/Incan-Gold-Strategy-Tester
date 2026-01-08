@@ -2,14 +2,14 @@ package algorithm;
 
 import model.RoundState;
 
-public class RiskAverseStrategy implements Strategy {
+public class LeaveWhenSoloStrategy implements Strategy {
     @Override
     public boolean shouldContinue(RoundState state) {
-        return state.getTotalHazardsRevealed() == 0;
+        return state.getActivePlayers() > 1;
     }
 
     @Override
     public String toString() {
-        return "RiskAverse (leave after 1 hazard)";
+        return "LeaveWhenSolo";
     }
 }

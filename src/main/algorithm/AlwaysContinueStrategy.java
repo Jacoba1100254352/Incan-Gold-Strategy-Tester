@@ -2,14 +2,14 @@ package algorithm;
 
 import model.RoundState;
 
-public class RiskAverseStrategy implements Strategy {
+public class AlwaysContinueStrategy implements Strategy {
     @Override
     public boolean shouldContinue(RoundState state) {
-        return state.getTotalHazardsRevealed() == 0;
+        return true;
     }
 
     @Override
     public String toString() {
-        return "RiskAverse (leave after 1 hazard)";
+        return "AlwaysContinue";
     }
 }

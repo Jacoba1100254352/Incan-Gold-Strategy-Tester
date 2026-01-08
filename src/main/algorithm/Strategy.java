@@ -1,9 +1,7 @@
 package algorithm;
 
-import model.Hazard;
-
-import java.util.List;
+import model.RoundState;
 
 public interface Strategy {
-    boolean shouldContinue(int currentTreasure, List<Hazard> revealedHazards);
+    boolean shouldContinue(RoundState state);
 }
