@@ -87,6 +87,17 @@ public class StrategyInteractionEvaluator {
                 maxDelta = Math.max(maxDelta, delta);
                 minDelta = Math.min(minDelta, delta);
             }
+            matchups.sort((left, right) -> {
+                int winRateCompare = Double.compare(left.winRate, right.winRate);
+                if (winRateCompare != 0) {
+                    return winRateCompare;
+                }
+                int deltaCompare = Double.compare(left.delta, right.delta);
+                if (deltaCompare != 0) {
+                    return deltaCompare;
+                }
+                return left.opponent.compareToIgnoreCase(right.opponent);
+            });
 
             StrategySimulator.MatchupStats mixedStats = simulateAgainstField(
                     focus.name,

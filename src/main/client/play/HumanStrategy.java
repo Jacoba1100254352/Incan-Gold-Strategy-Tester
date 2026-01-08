@@ -31,7 +31,7 @@ public class HumanStrategy implements Strategy {
     public boolean shouldContinue(RoundState state) {
         while (true) {
             System.out.printf(
-                    "%s | Turn %d | Active players: %d | Temple: %d | Your treasure: %d | Hazards: %s | Artifacts: %d%n",
+                    "%s | Turn %d | Active players: %d | Unclaimed treasure: %d | Your treasure: %d | Hazards: %s | Artifacts: %d%n",
                     name,
                     state.getTurnNumber(),
                     state.getActivePlayers(),
