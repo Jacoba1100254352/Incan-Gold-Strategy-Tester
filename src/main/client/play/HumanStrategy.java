@@ -1,4 +1,4 @@
-package client;
+package client.play;
 
 import algorithm.Strategy;
 import model.Hazard;

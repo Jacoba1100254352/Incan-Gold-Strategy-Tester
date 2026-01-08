@@ -1,4 +1,4 @@
-package client;
+package client.ai;
 
 /**
  * Defines AI difficulty levels by controlling simulation depth.

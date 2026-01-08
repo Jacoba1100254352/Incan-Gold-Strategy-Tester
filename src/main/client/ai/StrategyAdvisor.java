@@ -1,6 +1,8 @@
-package client;
+package client.ai;
 
 import algorithm.Strategy;
+import client.analysis.StrategyCatalog;
+import client.analysis.StrategyEvaluator;
 import model.RoundState;
 
 import java.util.List;

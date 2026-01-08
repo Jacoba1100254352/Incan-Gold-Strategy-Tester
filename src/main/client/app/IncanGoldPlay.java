@@ -1,10 +1,17 @@
-package client;
+package client.app;
 
+import algorithm.Strategy;
+import client.ai.AIDifficulty;
+import client.ai.AdaptiveAIStrategy;
+import client.ai.NeuralNetworkStrategy;
+import client.ai.StrategyAdvisor;
+import client.play.HumanStrategy;
 import model.Card;
 import model.Game;
 import model.Hazard;
 import model.Player;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +37,18 @@ public class IncanGoldPlay {
     private static final int MEDIUM_DIFFICULTY_OPTION = 2;
     // Option number for hard difficulty in the prompt.
     private static final int HARD_DIFFICULTY_OPTION = 3;
+    // Option number for advisor-based AI.
+    private static final int ADVISOR_AI_OPTION = 1;
+    // Option number for neural-network AI.
+    private static final int NEURAL_AI_OPTION = 2;
     // Default difficulty option number.
     private static final int DEFAULT_DIFFICULTY_OPTION = MEDIUM_DIFFICULTY_OPTION;
+    // Default AI mode option number.
+    private static final int DEFAULT_AI_OPTION = ADVISOR_AI_OPTION;
+    // Default neural model path.
+    private static final String DEFAULT_NEURAL_MODEL_PATH = "results/models/strategy-net.json";
+    // Default neural decision threshold.
+    private static final double DEFAULT_NEURAL_THRESHOLD = 0.5;
     // Toggle to print per-turn card and hazard details.
     private static final boolean SHOW_HAZARD_LOG = true;
 
@@ -55,8 +72,18 @@ public class IncanGoldPlay {
         int aiPlayers = totalPlayers - humanPlayers;
 
         StrategyAdvisor advisor = null;
+        AiMode aiMode = AiMode.ADVISOR;
+        String neuralModelPath = DEFAULT_NEURAL_MODEL_PATH;
+        double neuralThreshold = DEFAULT_NEURAL_THRESHOLD;
         if (aiPlayers > 0) {
-            AIDifficulty difficulty = promptDifficulty(scanner);
+            aiMode = promptAiMode(scanner);
+            if (aiMode == AiMode.NEURAL) {
+                neuralModelPath = promptString(scanner, "Neural model path", DEFAULT_NEURAL_MODEL_PATH);
+                neuralThreshold = promptDouble(scanner, "Neural continue threshold (0-1)",
+                        DEFAULT_NEURAL_THRESHOLD, 0.0, 1.0);
+            }
+            AIDifficulty difficulty = promptDifficulty(scanner,
+                    aiMode == AiMode.NEURAL ? "Fallback advisor difficulty" : "AI difficulty");
             System.out.printf("Building AI strategy table (%s)...%n", difficulty);
             advisor = StrategyAdvisor.buildDefault(difficulty, totalPlayers);
             System.out.println("AI strategy table ready.");
@@ -69,7 +96,12 @@ public class IncanGoldPlay {
         }
         for (int i = 1; i <= aiPlayers; i++) {
             String name = "AI " + i;
-            participants.add(new NamedPlayer(name, new Player(new AdaptiveAIStrategy(name, advisor, true))));
+            participants.add(new NamedPlayer(name, new Player(buildAiStrategy(
+                    name,
+                    aiMode,
+                    advisor,
+                    neuralModelPath,
+                    neuralThreshold))));
         }
 
         List<Player> players = new ArrayList<>();
@@ -138,9 +170,19 @@ public class IncanGoldPlay {
         }
     }
 
-    private static AIDifficulty promptDifficulty(Scanner scanner) {
-        System.out.printf("AI difficulty: %d) easy %d) medium %d) hard%n",
-                EASY_DIFFICULTY_OPTION, MEDIUM_DIFFICULTY_OPTION, HARD_DIFFICULTY_OPTION);
+    private static AiMode promptAiMode(Scanner scanner) {
+        System.out.printf("AI mode: %d) advisor %d) neural%n", ADVISOR_AI_OPTION, NEURAL_AI_OPTION);
+        System.out.printf("Choose AI mode [default %d]: ", DEFAULT_AI_OPTION);
+        String input = scanner.nextLine().trim();
+        if (input.isEmpty()) {
+            return AiMode.ADVISOR;
+        }
+        return AiMode.fromInput(input);
+    }
+
+    private static AIDifficulty promptDifficulty(Scanner scanner, String label) {
+        System.out.printf("%s: %d) easy %d) medium %d) hard%n",
+                label, EASY_DIFFICULTY_OPTION, MEDIUM_DIFFICULTY_OPTION, HARD_DIFFICULTY_OPTION);
         System.out.printf("Choose difficulty [default %d]: ", DEFAULT_DIFFICULTY_OPTION);
         String input = scanner.nextLine().trim();
         if (input.isEmpty()) {
@@ -148,9 +190,61 @@ public class IncanGoldPlay {
         }
         return AIDifficulty.fromInput(input);
     }
+
+    private static String promptString(Scanner scanner, String prompt, String defaultValue) {
+        System.out.printf("%s [default %s]: ", prompt, defaultValue);
+        String input = scanner.nextLine().trim();
+        if (input.isEmpty()) {
+            return defaultValue;
+        }
+        return input;
+    }
+
+    private static double promptDouble(Scanner scanner, String prompt, double defaultValue, double min, double max) {
+        while (true) {
+            System.out.printf("%s [default %.2f]: ", prompt, defaultValue);
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                return defaultValue;
+            }
+            try {
+                double value = Double.parseDouble(input);
+                if (value >= min && value <= max) {
+                    return value;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+            System.out.printf("Enter a number between %.2f and %.2f.%n", min, max);
+        }
+    }
+
+    private static Strategy buildAiStrategy(String name,
+                                            AiMode aiMode,
+                                            StrategyAdvisor advisor,
+                                            String modelPath,
+                                            double threshold) {
+        if (aiMode == AiMode.NEURAL) {
+            Strategy fallback = advisor == null ? null : new AdaptiveAIStrategy(name, advisor, false);
+            return new NeuralNetworkStrategy(name, Path.of(modelPath), threshold, fallback);
+        }
+        return new AdaptiveAIStrategy(name, advisor, true);
+    }
     
     private record NamedPlayer(String name, Player player)
     {
+    }
+
+    private enum AiMode {
+        ADVISOR,
+        NEURAL;
+
+        private static AiMode fromInput(String input) {
+            String normalized = input.trim().toLowerCase();
+            return switch (normalized) {
+                case "2", "neural", "nn" -> NEURAL;
+                default -> ADVISOR;
+            };
+        }
     }
 
     /**

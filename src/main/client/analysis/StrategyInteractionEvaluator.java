@@ -1,4 +1,4 @@
-package client;
+package client.analysis;
 
 import algorithm.Strategy;
 

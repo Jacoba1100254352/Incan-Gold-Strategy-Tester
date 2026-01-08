@@ -1,4 +1,4 @@
-package client;
+package client.ai;
 
 import algorithm.Strategy;
 import model.RoundState;

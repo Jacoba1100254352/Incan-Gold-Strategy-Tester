@@ -1,5 +1,8 @@
-package client;
+package client.app;
 
+import client.analysis.StrategyCatalog;
+import client.analysis.StrategyEvaluator;
+import client.analysis.StrategyRatings;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;

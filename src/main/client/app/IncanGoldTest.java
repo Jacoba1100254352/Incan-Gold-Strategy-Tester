@@ -1,6 +1,10 @@
-package client;
+package client.app;
 
 import algorithm.Strategy;
+import client.analysis.StrategyCatalog;
+import client.analysis.StrategyInteractionEvaluator;
+import client.analysis.StrategyRatings;
+import client.analysis.StrategySimulator;
 
 import java.util.ArrayList;
 import java.util.List;

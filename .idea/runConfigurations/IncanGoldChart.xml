@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="IncanGoldChart" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="client.IncanGoldChart" />
+    <option name="MAIN_CLASS_NAME" value="client.app.IncanGoldChart" />
     <module name="Incan Gold Strategy Tester" />
-    <option name="VM_PARAMETERS" value="--module-path lib --add-modules javafx.controls,javafx.graphics --enable-native-access=javafx.graphics" />
+    <option name="VM_PARAMETERS" value="  --module-path lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.swing,javafx.media,javafx.web --enable-native-access=javafx.graphics" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="client.*" />
+        <option name="PATTERN" value="client.app.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

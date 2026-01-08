@@ -18,7 +18,7 @@ import algorithm.LeaveWhenSoloStrategy;
 import algorithm.RiskAverseStrategy;
 import algorithm.SwitchAfterHazardsStrategy;
 import algorithm.SwitchAfterHazardsForTurnsStrategy;
-import client.StrategyRatings;
+import client.analysis.StrategyRatings;
 import model.Card;
 import model.Game;
 import model.Hazard;
