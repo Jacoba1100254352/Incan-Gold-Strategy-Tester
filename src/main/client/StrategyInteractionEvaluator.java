@@ -130,7 +130,17 @@ public class StrategyInteractionEvaluator {
         }
         mostAffected.sort(Comparator.comparingDouble((MostAffectedEntry entry) -> entry.maxAbsDelta).reversed());
 
-        results.sort(Comparator.comparing(result -> result.name));
+        results.sort((left, right) -> {
+            int averageCompare = Double.compare(right.mixedAverage, left.mixedAverage);
+            if (averageCompare != 0) {
+                return averageCompare;
+            }
+            int winRateCompare = Double.compare(right.mixedWinRate, left.mixedWinRate);
+            if (winRateCompare != 0) {
+                return winRateCompare;
+            }
+            return left.name.compareToIgnoreCase(right.name);
+        });
         return new InteractionReport(
                 OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
                 simulations,
