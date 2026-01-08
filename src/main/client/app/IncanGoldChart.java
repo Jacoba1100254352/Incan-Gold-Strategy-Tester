@@ -60,6 +60,8 @@ public class IncanGoldChart extends Application {
     private static final int PLAYERS_ARG_INDEX = 2;
     // Argument index for max players per game.
     private static final int MAX_PLAYERS_ARG_INDEX = 3;
+    // Argument index for output directory.
+    private static final int OUTPUT_DIR_ARG_INDEX = 4;
     // Default minimum players per game for chart sweeps.
     private static final int DEFAULT_PLAYER_SWEEP_MIN = 2;
     // Default maximum players per game for chart sweeps.
@@ -79,7 +81,7 @@ public class IncanGoldChart extends Application {
     // Number format for metadata averages.
     private static final String METADATA_AVERAGE_FORMAT = "%.4f";
     // Output directory for chart exports.
-    private static final String OUTPUT_DIR_NAME = "results";
+    private static final String OUTPUT_DIR_NAME = "results/charts/original";
     // Base name for chart exports.
     private static final String OUTPUT_BASENAME = "incan-gold-chart";
     // Timestamp format for output file names.
@@ -89,6 +91,7 @@ public class IncanGoldChart extends Application {
      * Launches the JavaFX chart.
      *
      * @param args optional args: [repeats] [simulations] [playersPerGame] or [minPlayers] [maxPlayers]
+     *             [outputDir]
      */
     public static void main(String[] args) {
         launch(args);
@@ -162,7 +165,11 @@ public class IncanGoldChart extends Application {
         minPlayersPerGame = Math.max(minPlayersPerGame, MIN_PLAYERS_PER_GAME);
         maxPlayersPerGame = Math.max(maxPlayersPerGame, minPlayersPerGame);
 
-        return new SimulationParams(repeats, simulations, minPlayersPerGame, maxPlayersPerGame);
+        Path outputDir = rawArgs.size() > OUTPUT_DIR_ARG_INDEX
+                ? Paths.get(rawArgs.get(OUTPUT_DIR_ARG_INDEX))
+                : Paths.get(OUTPUT_DIR_NAME);
+
+        return new SimulationParams(repeats, simulations, minPlayersPerGame, maxPlayersPerGame, outputDir);
     }
 
     /**
@@ -327,7 +334,7 @@ public class IncanGoldChart extends Application {
                                                 SimulationParams params) {
         OffsetDateTime generatedAt = OffsetDateTime.now();
         String timestamp = generatedAt.format(FILE_TIMESTAMP_FORMAT);
-        Path outputDir = Paths.get(OUTPUT_DIR_NAME);
+        Path outputDir = params.outputDir;
         String baseName = OUTPUT_BASENAME + "-" + timestamp;
         Path imagePath = outputDir.resolve(baseName + ".png");
         Path metadataPath = outputDir.resolve(baseName + ".json");
@@ -506,7 +513,8 @@ public class IncanGoldChart extends Application {
     private record SimulationParams(int repeats,
                                     int simulations,
                                     int minPlayersPerGame,
-                                    int maxPlayersPerGame)
+                                    int maxPlayersPerGame,
+                                    Path outputDir)
     {
     }
 

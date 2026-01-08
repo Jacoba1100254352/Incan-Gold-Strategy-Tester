@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T15:22:45.154549-05:00",
+  "metric": "interactionWinRate",
+  "source": "results/strategy-interactions.json",
+  "image": "strategy-interactions-chart-20260108-152245.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 63.5000
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 59.1000
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 53.5000
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 41.6000
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "value": 35.7000
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 34.4000
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 33.7000
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 33.7000
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 33.6000
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 33.5000
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 33.1000
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 33.0000
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 32.7000
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 32.4000
+    },
+    {
+      "name": "Leave after 7 treasure or 4 hazards",
+      "value": 31.9000
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "value": 31.1000
+    },
+    {
+      "name": "Leave after 8 treasure or 4 hazards",
+      "value": 31.0000
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 29.5000
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 29.4000
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "value": 29.1000
+    }
+  ]
+}
