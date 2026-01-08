@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  */
 public class IncanGoldTest {
     // Default number of sweep runs when no repeat count is provided.
-    private static final int DEFAULT_REPEATS = 1;
+    private static final int DEFAULT_REPEATS = 20;
     // Default number of simulations per strategy.
     private static final int SIMULATIONS = 10000;
     // Default number of players per simulated game.
@@ -86,6 +86,7 @@ public class IncanGoldTest {
                                   int playersPerGame) {
         List<StrategyStats> stats = evaluateStrategies(strategies, repeats, simulations, playersPerGame, true);
         printSummary(stats, repeats);
+        StrategyRatings.updateRatings(buildRatingAverages(stats), "strategy-test");
     }
 
     /**
@@ -212,6 +213,14 @@ public class IncanGoldTest {
             builder.append(stats.get(i).name);
         }
         return builder.toString();
+    }
+
+    private static List<StrategyRatings.StrategyAverage> buildRatingAverages(List<StrategyStats> stats) {
+        List<StrategyRatings.StrategyAverage> averages = new ArrayList<>();
+        for (StrategyStats stat : stats) {
+            averages.add(new StrategyRatings.StrategyAverage(stat.name, stat.getAverage()));
+        }
+        return averages;
     }
 
     /**

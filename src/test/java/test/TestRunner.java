@@ -1,4 +1,4 @@
-package java;
+package test;
 
 
 import algorithm.AlwaysContinueStrategy;
@@ -11,13 +11,20 @@ import algorithm.LeaveAfterTurnsStrategy;
 import algorithm.LeaveWhenSoloStrategy;
 import algorithm.RiskAverseStrategy;
 import algorithm.SwitchAfterHazardsStrategy;
+import client.StrategyRatings;
 import model.Card;
 import model.Game;
 import model.Hazard;
 import model.Player;
 import model.RoundState;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class TestRunner {
@@ -29,6 +36,7 @@ public class TestRunner {
         testGameHazardEndsRound();
         testGameLeavingAndTempleRemainder();
         testArtifactClaim();
+        testStrategyRatings();
         System.out.println("All tests passed.");
     }
 
@@ -185,6 +193,47 @@ public class TestRunner {
         assertEquals(0, players.get(1).getTotalTreasure(), "artifact non-claimant total");
     }
 
+    private static void testStrategyRatings() {
+        Path ratingsPath = Paths.get("strategy-ratings.json");
+        String previousContent = null;
+        boolean hadExisting = Files.exists(ratingsPath);
+        if (hadExisting) {
+            previousContent = readFileContent(ratingsPath, "ratings backup");
+        }
+
+        try {
+            deleteFileIfExists(ratingsPath, "ratings cleanup");
+
+            List<StrategyRatings.StrategyAverage> firstRun = new ArrayList<>();
+            firstRun.add(new StrategyRatings.StrategyAverage("Alpha", 10.0));
+            firstRun.add(new StrategyRatings.StrategyAverage("Beta", 5.0));
+            StrategyRatings.updateRatings(firstRun, "test-run-1");
+
+            String firstJson = readFileContent(ratingsPath, "first ratings");
+            assertNear(5.0, extractDoubleField(firstJson, "Alpha", "rating"), 1e-6, "alpha rating first run");
+            assertNear(0.0, extractDoubleField(firstJson, "Beta", "rating"), 1e-6, "beta rating first run");
+            assertEquals(1, extractIntField(firstJson, "Alpha", "ratingRank"), "alpha rank first run");
+            assertEquals(2, extractIntField(firstJson, "Beta", "ratingRank"), "beta rank first run");
+
+            List<StrategyRatings.StrategyAverage> secondRun = new ArrayList<>();
+            secondRun.add(new StrategyRatings.StrategyAverage("Beta", 12.0));
+            secondRun.add(new StrategyRatings.StrategyAverage("Alpha", 6.0));
+            StrategyRatings.updateRatings(secondRun, "test-run-2");
+
+            String secondJson = readFileContent(ratingsPath, "second ratings");
+            assertNear(2.5, extractDoubleField(secondJson, "Alpha", "rating"), 1e-6, "alpha rating second run");
+            assertNear(2.5, extractDoubleField(secondJson, "Beta", "rating"), 1e-6, "beta rating second run");
+            assertEquals(1, extractIntField(secondJson, "Alpha", "ratingRank"), "alpha rank second run");
+            assertEquals(2, extractIntField(secondJson, "Beta", "ratingRank"), "beta rank second run");
+        } finally {
+            if (hadExisting) {
+                writeFileContent(ratingsPath, previousContent, "restore ratings");
+            } else {
+                deleteFileIfExists(ratingsPath, "remove ratings");
+            }
+        }
+    }
+
     private static class FixedDeckGame extends Game {
         private final List<Card> fixedDeck;
 
@@ -226,5 +275,64 @@ public class TestRunner {
         if (condition) {
             throw new AssertionError("Assertion failed: " + message);
         }
+    }
+
+    private static void assertNear(double expected, double actual, double epsilon, String message) {
+        if (Math.abs(expected - actual) > epsilon) {
+            throw new AssertionError("Expected " + expected + " but got " + actual + ": " + message);
+        }
+    }
+
+    private static String readFileContent(Path path, String message) {
+        try {
+            return Files.readString(path, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new AssertionError("Failed to read file for " + message + ": " + e.getMessage());
+        }
+    }
+
+    private static void writeFileContent(Path path, String content, String message) {
+        try {
+            Files.writeString(path, content == null ? "" : content, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new AssertionError("Failed to write file for " + message + ": " + e.getMessage());
+        }
+    }
+
+    private static void deleteFileIfExists(Path path, String message) {
+        try {
+            Files.deleteIfExists(path);
+        } catch (Exception e) {
+            throw new AssertionError("Failed to delete file for " + message + ": " + e.getMessage());
+        }
+    }
+
+    private static String extractEntry(String json, String name) {
+        String pattern = "\\{\\s*\"name\"\\s*:\\s*\"" + Pattern.quote(name) + "\"(.*?)\\n\\s*\\}";
+        Matcher matcher = Pattern.compile(pattern, Pattern.DOTALL).matcher(json);
+        if (!matcher.find()) {
+            throw new AssertionError("Could not find entry for " + name);
+        }
+        return matcher.group();
+    }
+
+    private static double extractDoubleField(String json, String name, String field) {
+        String entry = extractEntry(json, name);
+        Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([0-9.]+)")
+                .matcher(entry);
+        if (!matcher.find()) {
+            throw new AssertionError("Missing field " + field + " for " + name);
+        }
+        return Double.parseDouble(matcher.group(1));
+    }
+
+    private static int extractIntField(String json, String name, String field) {
+        String entry = extractEntry(json, name);
+        Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*(\\d+)")
+                .matcher(entry);
+        if (!matcher.find()) {
+            throw new AssertionError("Missing field " + field + " for " + name);
+        }
+        return Integer.parseInt(matcher.group(1));
     }
 }
