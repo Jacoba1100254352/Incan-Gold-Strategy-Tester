@@ -13,6 +13,13 @@ public class LeaveAfterHazardsWithMemoryStrategy implements Strategy {
     private final int lowRemainingThreshold;
     private final int bonusPerLowRemaining;
 
+    /**
+     * Creates a strategy that increases its hazard limit when copies are scarce.
+     *
+     * @param baseHazardLimit base hazard limit before leaving
+     * @param lowRemainingThreshold remaining copies considered "low"
+     * @param bonusPerLowRemaining bonus hazards allowed per low-copy hazard
+     */
     public LeaveAfterHazardsWithMemoryStrategy(int baseHazardLimit,
                                                int lowRemainingThreshold,
                                                int bonusPerLowRemaining) {
@@ -21,6 +28,9 @@ public class LeaveAfterHazardsWithMemoryStrategy implements Strategy {
         this.bonusPerLowRemaining = bonusPerLowRemaining;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldContinue(RoundState state) {
         int bonus = 0;
@@ -41,6 +51,9 @@ public class LeaveAfterHazardsWithMemoryStrategy implements Strategy {
         return state.getTotalHazardsRevealed() < limit;
     }
 
+    /**
+     * Returns a display name for logging.
+     */
     @Override
     public String toString() {
         return "LeaveAfterHazardsWithMemory";

@@ -17,10 +17,25 @@ public class ArtifactValueRiskStrategy implements Strategy {
     private final int riskThreshold;
     private final int maxPlayersToContest;
 
+    /**
+     * Creates an artifact value/risk strategy with an always-continue fallback.
+     *
+     * @param minBankValue minimum value to justify leaving
+     * @param riskThreshold minimum risk score to justify leaving
+     * @param maxPlayersToContest maximum players allowed to contest artifacts
+     */
     public ArtifactValueRiskStrategy(int minBankValue, int riskThreshold, int maxPlayersToContest) {
         this(minBankValue, riskThreshold, maxPlayersToContest, new AlwaysContinueStrategy());
     }
 
+    /**
+     * Creates an artifact value/risk strategy with a fallback baseline.
+     *
+     * @param minBankValue minimum value to justify leaving
+     * @param riskThreshold minimum risk score to justify leaving
+     * @param maxPlayersToContest maximum players allowed to contest artifacts
+     * @param fallbackStrategy baseline strategy used before value/risk checks
+     */
     public ArtifactValueRiskStrategy(int minBankValue,
                                      int riskThreshold,
                                      int maxPlayersToContest,
@@ -31,6 +46,9 @@ public class ArtifactValueRiskStrategy implements Strategy {
         this.maxPlayersToContest = maxPlayersToContest;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldContinue(RoundState state) {
         if (!fallbackStrategy.shouldContinue(state)) {
@@ -49,11 +67,8 @@ public class ArtifactValueRiskStrategy implements Strategy {
                 : state.getTempleTreasure() / state.getActivePlayers();
         int bankValue = artifactValue + state.getRoundTreasure() + estimatedShare;
         int riskScore = hazardRiskScore(state);
-
-        if (bankValue >= minBankValue && riskScore >= riskThreshold) {
-            return false;
-        }
-        return true;
+	    
+	    return bankValue < minBankValue || riskScore < riskThreshold;
     }
 
     private int estimateArtifactValue(int artifactsOnPath, int artifactsClaimed) {
@@ -79,6 +94,9 @@ public class ArtifactValueRiskStrategy implements Strategy {
         return score;
     }
 
+    /**
+     * Returns a display name for logging.
+     */
     @Override
     public String toString() {
         return "ArtifactValueRisk";

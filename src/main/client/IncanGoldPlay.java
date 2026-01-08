@@ -148,15 +148,9 @@ public class IncanGoldPlay {
         }
         return AIDifficulty.fromInput(input);
     }
-
-    private static class NamedPlayer {
-        private final String name;
-        private final Player player;
-
-        private NamedPlayer(String name, Player player) {
-            this.name = name;
-            this.player = player;
-        }
+    
+    private record NamedPlayer(String name, Player player)
+    {
     }
 
     /**
@@ -195,7 +189,7 @@ public class IncanGoldPlay {
         private String formatHazards(Map<Hazard, Integer> hazardCounts) {
             StringBuilder builder = new StringBuilder();
             for (Hazard hazard : Hazard.values()) {
-                if (builder.length() > 0) {
+                if (!builder.isEmpty()) {
                     builder.append(", ");
                 }
                 builder.append(hazard).append('=').append(hazardCounts.getOrDefault(hazard, 0));

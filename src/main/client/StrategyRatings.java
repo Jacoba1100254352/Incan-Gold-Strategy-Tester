@@ -31,7 +31,7 @@ public class StrategyRatings {
             Pattern.DOTALL);
 
     /**
-     * Represents a strategy average for ranking.
+     * Represents per-run strategy performance for rating updates.
      */
     public record StrategyPerformance(String name, double average, int wins, int runs) {
     }
@@ -47,17 +47,9 @@ public class StrategyRatings {
         Map<String, ExistingEntry> previous = loadRatings();
         List<StrategyPerformance> sorted = new ArrayList<>(performances);
         sorted.sort((left, right) -> Double.compare(right.average, left.average));
-
-        int totalStrategies = sorted.size();
-        Map<String, ScoreInfo> scoreInfo = new HashMap<>();
-        for (int i = 0; i < sorted.size(); i++) {
-            StrategyPerformance performance = sorted.get(i);
-            int scoreRank = i + 1;
-            double scoreRating = ratingFromRank(scoreRank, totalStrategies);
-            double winRate = toWinRate(performance.wins, performance.runs);
-            scoreInfo.put(performance.name, new ScoreInfo(scoreRank, scoreRating, performance.average, winRate));
-        }
-
+        
+        Map<String, ScoreInfo> scoreInfo = getStringScoreInfoMap(sorted);
+        
         List<RatingEntry> entries = new ArrayList<>();
         for (StrategyPerformance performance : sorted) {
             ScoreInfo info = scoreInfo.get(performance.name);
@@ -94,7 +86,20 @@ public class StrategyRatings {
 
         writeRatings(entries, sourceLabel);
     }
-
+    
+    private static Map<String, ScoreInfo> getStringScoreInfoMap(List<StrategyPerformance> sorted) {
+        int totalStrategies = sorted.size();
+        Map<String, ScoreInfo> scoreInfo = new HashMap<>();
+        for (int i = 0; i < sorted.size(); i++) {
+            StrategyPerformance performance = sorted.get(i);
+            int scoreRank = i + 1;
+            double scoreRating = ratingFromRank(scoreRank, totalStrategies);
+            double winRate = toWinRate(performance.wins, performance.runs);
+            scoreInfo.put(performance.name, new ScoreInfo(scoreRank, scoreRating, performance.average, winRate));
+        }
+        return scoreInfo;
+    }
+    
     private static Map<String, ExistingEntry> loadRatings() {
         Map<String, ExistingEntry> ratings = new HashMap<>();
         if (!Files.exists(RATINGS_PATH)) {
@@ -196,20 +201,14 @@ public class StrategyRatings {
         if (rating < MIN_RATING) {
             return MIN_RATING;
         }
-        if (rating > MAX_RATING) {
-            return MAX_RATING;
-        }
-        return rating;
+	    return Math.min(rating, MAX_RATING);
     }
 
     private static double clampWinRate(double winRate) {
         if (winRate < MIN_WIN_RATE) {
             return MIN_WIN_RATE;
         }
-        if (winRate > MAX_WIN_RATE) {
-            return MAX_WIN_RATE;
-        }
-        return winRate;
+	    return Math.min(winRate, MAX_WIN_RATE);
     }
 
     private static double toWinRate(int wins, int runs) {
@@ -288,29 +287,14 @@ public class StrategyRatings {
         }
         return unescaped.toString();
     }
-
-    private static class ScoreInfo {
-        private final int scoreRank;
-        private final double scoreRating;
-        private final double average;
-        private final double winRate;
-
-        private ScoreInfo(int scoreRank, double scoreRating, double average, double winRate) {
-            this.scoreRank = scoreRank;
-            this.scoreRating = scoreRating;
-            this.average = average;
-            this.winRate = winRate;
-        }
+    
+    private record ScoreInfo(int scoreRank, double scoreRating, double average, double winRate)
+    {
     }
-
-    private static class ExistingEntry {
-        private final double rating;
-        private final double winRate;
-
-        private ExistingEntry(double rating, double winRate) {
-            this.rating = rating;
-            this.winRate = winRate;
-        }
+    
+    
+    private record ExistingEntry(double rating, double winRate)
+    {
     }
 
     private static class RatingEntry {

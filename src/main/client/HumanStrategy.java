@@ -13,11 +13,20 @@ public class HumanStrategy implements Strategy {
     private final String name;
     private final Scanner scanner;
 
+    /**
+     * Creates a human strategy that prompts on each decision.
+     *
+     * @param name display name for prompts
+     * @param scanner scanner for reading input
+     */
     public HumanStrategy(String name, Scanner scanner) {
         this.name = name;
         this.scanner = scanner;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldContinue(RoundState state) {
         while (true) {

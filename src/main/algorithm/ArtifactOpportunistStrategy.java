@@ -12,6 +12,14 @@ public class ArtifactOpportunistStrategy implements Strategy {
     private final int minTreasureToLeave;
     private final int hazardThreshold;
 
+    /**
+     * Creates an artifact opportunist strategy with an always-continue fallback.
+     *
+     * @param minArtifacts minimum artifacts needed to consider leaving
+     * @param maxPlayersToContest maximum players allowed to contest artifacts
+     * @param minTreasureToLeave minimum personal treasure to justify leaving
+     * @param hazardThreshold hazard count that triggers leaving
+     */
     public ArtifactOpportunistStrategy(int minArtifacts,
                                        int maxPlayersToContest,
                                        int minTreasureToLeave,
@@ -19,6 +27,15 @@ public class ArtifactOpportunistStrategy implements Strategy {
         this(minArtifacts, maxPlayersToContest, minTreasureToLeave, hazardThreshold, new AlwaysContinueStrategy());
     }
 
+    /**
+     * Creates an artifact opportunist strategy with a fallback baseline.
+     *
+     * @param minArtifacts minimum artifacts needed to consider leaving
+     * @param maxPlayersToContest maximum players allowed to contest artifacts
+     * @param minTreasureToLeave minimum personal treasure to justify leaving
+     * @param hazardThreshold hazard count that triggers leaving
+     * @param fallbackStrategy baseline strategy used before opportunistic checks
+     */
     public ArtifactOpportunistStrategy(int minArtifacts,
                                        int maxPlayersToContest,
                                        int minTreasureToLeave,
@@ -31,6 +48,9 @@ public class ArtifactOpportunistStrategy implements Strategy {
         this.hazardThreshold = hazardThreshold;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldContinue(RoundState state) {
         if (!fallbackStrategy.shouldContinue(state)) {
@@ -47,12 +67,12 @@ public class ArtifactOpportunistStrategy implements Strategy {
                 ? 0
                 : state.getTempleTreasure() / state.getActivePlayers();
         int bankValue = state.getRoundTreasure() + estimatedShare;
-        if (bankValue >= minTreasureToLeave || hazards >= hazardThreshold) {
-            return false;
-        }
-        return true;
+	    return bankValue < minTreasureToLeave && hazards < hazardThreshold;
     }
 
+    /**
+     * Returns a display name for logging.
+     */
     @Override
     public String toString() {
         return "ArtifactOpportunist";

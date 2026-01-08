@@ -12,11 +12,20 @@ public class SwitchAfterHazardsForTurnsStrategy implements Strategy {
     private int lastTurnNumber = -1;
     private int lastHazardCount = 0;
 
+    /**
+     * Creates a strategy that stays for a fixed number of turns after hazards appear.
+     *
+     * @param hazardThreshold hazard count that triggers the extra-turn window
+     * @param extraTurns turns to stay after the trigger
+     */
     public SwitchAfterHazardsForTurnsStrategy(int hazardThreshold, int extraTurns) {
         this.hazardThreshold = hazardThreshold;
         this.extraTurns = Math.max(0, extraTurns);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldContinue(RoundState state) {
         int turnNumber = state.getTurnNumber();
@@ -41,6 +50,9 @@ public class SwitchAfterHazardsForTurnsStrategy implements Strategy {
         return turnsSinceTrigger < extraTurns;
     }
 
+    /**
+     * Returns a display name for logging.
+     */
     @Override
     public String toString() {
         return "SwitchAfterHazardsForTurns(" + hazardThreshold + "," + extraTurns + ")";

@@ -12,6 +12,15 @@ public class ArtifactChaserStrategy implements Strategy {
     private final int bonusHazards;
     private final int maxPlayersToChase;
 
+    /**
+     * Creates a strategy that extends turn/hazard limits when artifacts are present.
+     *
+     * @param baseTurnLimit base turn limit before leaving
+     * @param baseHazardLimit base hazard limit before leaving
+     * @param bonusTurns extra turns allowed when chasing artifacts
+     * @param bonusHazards extra hazards allowed when chasing artifacts
+     * @param maxPlayersToChase maximum players allowed to chase artifacts
+     */
     public ArtifactChaserStrategy(int baseTurnLimit,
                                   int baseHazardLimit,
                                   int bonusTurns,
@@ -24,6 +33,9 @@ public class ArtifactChaserStrategy implements Strategy {
         this.maxPlayersToChase = maxPlayersToChase;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldContinue(RoundState state) {
         if (state.getArtifactsOnPath() > 0 && state.getActivePlayers() == 1) {
@@ -42,6 +54,9 @@ public class ArtifactChaserStrategy implements Strategy {
                 && state.getTotalHazardsRevealed() < hazardLimit;
     }
 
+    /**
+     * Returns a display name for logging.
+     */
     @Override
     public String toString() {
         return "ArtifactChaser";
