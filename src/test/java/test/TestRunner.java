@@ -353,8 +353,16 @@ public class TestRunner {
             String json = readFileContent(ratingsPath, "interaction ratings");
             assertNear(0.0, extractDoubleField(json, "Alpha", "rating"), 1e-6, "alpha rating interaction");
             assertNear(5.0, extractDoubleField(json, "Beta", "rating"), 1e-6, "beta rating interaction");
-            assertNear(50.0, extractDoubleField(json, "Alpha", "winRate"), 1e-6, "alpha win rate interaction");
-            assertNear(75.0, extractDoubleField(json, "Beta", "winRate"), 1e-6, "beta win rate interaction");
+            assertNear(30.0, extractDoubleField(json, "Alpha", "winRate"), 1e-6, "alpha win rate interaction");
+            assertNear(85.0, extractDoubleField(json, "Beta", "winRate"), 1e-6, "beta win rate interaction");
+            assertNear(100.0, extractDoubleField(json, "Alpha", "sweepWinRate"), 1e-6,
+                    "alpha sweep win rate interaction");
+            assertNear(50.0, extractDoubleField(json, "Beta", "sweepWinRate"), 1e-6,
+                    "beta sweep win rate interaction");
+            assertNear(0.0, extractDoubleField(json, "Alpha", "interactionWinRate"), 1e-6,
+                    "alpha interaction win rate");
+            assertNear(100.0, extractDoubleField(json, "Beta", "interactionWinRate"), 1e-6,
+                    "beta interaction win rate");
             assertEquals(2, extractIntField(json, "Alpha", "ratingRank"), "alpha rank interaction");
             assertEquals(1, extractIntField(json, "Beta", "ratingRank"), "beta rank interaction");
         } finally {

@@ -23,7 +23,9 @@ public class StrategyRatings {
     private static final double MAX_RATING = 5.0;
     private static final double MIN_RATING = 0.0;
     private static final double DEFAULT_WEIGHT = 0.5;
-    private static final double INTERACTION_WEIGHT = 0.5;
+    private static final double INTERACTION_AVERAGE_WEIGHT = 0.5;
+    private static final double INTERACTION_WIN_RATE_WEIGHT = 0.7;
+    private static final double WIN_RATE_SCORE_WEIGHT = 0.6;
     private static final String NUMBER_FORMAT = "%.4f";
     private static final double MAX_WIN_RATE = 100.0;
     private static final double MIN_WIN_RATE = 0.0;
@@ -60,7 +62,9 @@ public class StrategyRatings {
                 performances,
                 interactionPerformances,
                 includeInteractions);
-        effectivePerformances.sort((left, right) -> Double.compare(right.average, left.average));
+        applyAverageRatings(effectivePerformances);
+        applyWinRateRatings(effectivePerformances);
+        applyScoreRatings(effectivePerformances);
 
         Map<String, ScoreInfo> scoreInfo = buildScoreInfoMap(effectivePerformances);
         
@@ -71,8 +75,12 @@ public class StrategyRatings {
             ExistingEntry existing = previous.get(performance.name);
             double previousRating = existing == null ? info.scoreRating : existing.rating;
             double previousWinRate = existing == null ? info.winRate : existing.winRate;
+            double previousSweepWinRate = existing == null ? info.sweepWinRate : existing.sweepWinRate;
+            double previousInteractionWinRate = existing == null ? info.interactionWinRate : existing.interactionWinRate;
             double updatedRating = blendRating(previousRating, info.scoreRating);
             double updatedWinRate = blendWinRate(previousWinRate, info.winRate);
+            double updatedSweepWinRate = blendWinRate(previousSweepWinRate, info.sweepWinRate);
+            double updatedInteractionWinRate = blendWinRate(previousInteractionWinRate, info.interactionWinRate);
             entries.add(new RatingEntry(
                     performance.name,
                     updatedRating,
@@ -82,6 +90,10 @@ public class StrategyRatings {
                     info.average,
                     updatedWinRate,
                     info.winRate,
+                    updatedSweepWinRate,
+                    info.sweepWinRate,
+                    updatedInteractionWinRate,
+                    info.interactionWinRate,
                     performance.wins,
                     performance.runs
             ));
@@ -102,15 +114,53 @@ public class StrategyRatings {
         writeRatings(entries, sourceLabel);
     }
     
-    private static Map<String, ScoreInfo> buildScoreInfoMap(List<EffectivePerformance> sorted) {
-        int totalStrategies = sorted.size();
-        Map<String, ScoreInfo> scoreInfo = new HashMap<>();
+    private static void applyAverageRatings(List<EffectivePerformance> performances) {
+        List<EffectivePerformance> sorted = new ArrayList<>(performances);
+        sorted.sort((left, right) -> Double.compare(right.effectiveAverage, left.effectiveAverage));
+        int total = sorted.size();
         for (int i = 0; i < sorted.size(); i++) {
-            EffectivePerformance performance = sorted.get(i);
-            int scoreRank = i + 1;
-            double scoreRating = ratingFromRank(scoreRank, totalStrategies);
+            sorted.get(i).averageRating = ratingFromRank(i + 1, total);
+        }
+    }
+
+    private static void applyWinRateRatings(List<EffectivePerformance> performances) {
+        List<EffectivePerformance> sorted = new ArrayList<>(performances);
+        sorted.sort((left, right) -> Double.compare(right.effectiveWinRate, left.effectiveWinRate));
+        int total = sorted.size();
+        for (int i = 0; i < sorted.size(); i++) {
+            sorted.get(i).winRateRating = ratingFromRank(i + 1, total);
+        }
+    }
+
+    private static void applyScoreRatings(List<EffectivePerformance> performances) {
+        for (EffectivePerformance performance : performances) {
+            performance.scoreRating = mixMetric(performance.averageRating,
+                    performance.winRateRating,
+                    WIN_RATE_SCORE_WEIGHT);
+        }
+        List<EffectivePerformance> sorted = new ArrayList<>(performances);
+        sorted.sort((left, right) -> {
+            int comparison = Double.compare(right.scoreRating, left.scoreRating);
+            if (comparison != 0) {
+                return comparison;
+            }
+            return left.performance.name.compareToIgnoreCase(right.performance.name);
+        });
+        for (int i = 0; i < sorted.size(); i++) {
+            sorted.get(i).scoreRank = i + 1;
+        }
+    }
+
+    private static Map<String, ScoreInfo> buildScoreInfoMap(List<EffectivePerformance> sorted) {
+        Map<String, ScoreInfo> scoreInfo = new HashMap<>();
+        for (EffectivePerformance performance : sorted) {
             scoreInfo.put(performance.performance.name,
-                    new ScoreInfo(scoreRank, scoreRating, performance.average, performance.winRate));
+                    new ScoreInfo(performance.scoreRank,
+                            performance.scoreRating,
+                            performance.effectiveAverage,
+                            performance.effectiveWinRate,
+                            performance.sweepWinRate,
+                            performance.interactionWinRate));
         }
         return scoreInfo;
     }
@@ -123,16 +173,24 @@ public class StrategyRatings {
         for (StrategyPerformance performance : performances) {
             double sweepAverage = performance.average;
             double sweepWinRate = toWinRate(performance.wins, performance.runs);
+            InteractionPerformance interaction = interactionPerformances == null
+                    ? null
+                    : interactionPerformances.get(performance.name);
+            double interactionAverage = interaction == null ? Double.NaN : interaction.average;
+            double interactionWinRate = interaction == null ? Double.NaN : clampWinRate(interaction.winRate);
             double effectiveAverage = sweepAverage;
             double effectiveWinRate = sweepWinRate;
-            if (includeInteractions && interactionPerformances != null) {
-                InteractionPerformance interaction = interactionPerformances.get(performance.name);
-                if (interaction != null) {
-                    effectiveAverage = mixMetric(sweepAverage, interaction.average, INTERACTION_WEIGHT);
-                    effectiveWinRate = clampWinRate(mixMetric(sweepWinRate, interaction.winRate, INTERACTION_WEIGHT));
-                }
+            if (includeInteractions && interaction != null) {
+                effectiveAverage = mixMetric(sweepAverage, interactionAverage, INTERACTION_AVERAGE_WEIGHT);
+                effectiveWinRate = clampWinRate(mixMetric(sweepWinRate, interactionWinRate, INTERACTION_WIN_RATE_WEIGHT));
             }
-            effective.add(new EffectivePerformance(performance, effectiveAverage, effectiveWinRate));
+            effective.add(new EffectivePerformance(performance,
+                    sweepAverage,
+                    interactionAverage,
+                    effectiveAverage,
+                    sweepWinRate,
+                    interactionWinRate,
+                    effectiveWinRate));
         }
         return effective;
     }
@@ -156,9 +214,22 @@ public class StrategyRatings {
                 if (Double.isNaN(winRate)) {
                     winRate = parseDoubleField(entryBody, "lastWinRate", Double.NaN);
                 }
+                double sweepWinRate = parseDoubleField(entryBody, "sweepWinRate", Double.NaN);
+                if (Double.isNaN(sweepWinRate)) {
+                    sweepWinRate = parseDoubleField(entryBody, "lastSweepWinRate", Double.NaN);
+                }
+                double interactionWinRate = parseDoubleField(entryBody, "interactionWinRate", Double.NaN);
+                if (Double.isNaN(interactionWinRate)) {
+                    interactionWinRate = parseDoubleField(entryBody, "lastInteractionWinRate", Double.NaN);
+                }
                 double clampedRating = clampRating(rating);
                 double clampedWinRate = Double.isNaN(winRate) ? Double.NaN : clampWinRate(winRate);
-                ratings.put(name, new ExistingEntry(clampedRating, clampedWinRate));
+                double clampedSweepWinRate = Double.isNaN(sweepWinRate) ? Double.NaN : clampWinRate(sweepWinRate);
+                double clampedInteractionWinRate = Double.isNaN(interactionWinRate)
+                        ? Double.NaN
+                        : clampWinRate(interactionWinRate);
+                ratings.put(name, new ExistingEntry(clampedRating, clampedWinRate,
+                        clampedSweepWinRate, clampedInteractionWinRate));
             }
         } catch (IOException | NumberFormatException e) {
             System.err.println("Failed to read strategy ratings: " + e.getMessage());
@@ -189,6 +260,11 @@ public class StrategyRatings {
             builder.append("      \"lastAverage\": ").append(formatNumber(entry.lastAverage)).append(",\n");
             builder.append("      \"winRate\": ").append(formatNumber(entry.winRate)).append(",\n");
             builder.append("      \"lastWinRate\": ").append(formatNumber(entry.lastWinRate)).append(",\n");
+            builder.append("      \"sweepWinRate\": ").append(formatNumber(entry.sweepWinRate)).append(",\n");
+            builder.append("      \"lastSweepWinRate\": ").append(formatNumber(entry.lastSweepWinRate)).append(",\n");
+            builder.append("      \"interactionWinRate\": ").append(formatNumber(entry.interactionWinRate)).append(",\n");
+            builder.append("      \"lastInteractionWinRate\": ")
+                    .append(formatNumber(entry.lastInteractionWinRate)).append(",\n");
             builder.append("      \"wins\": ").append(entry.wins).append(",\n");
             builder.append("      \"runs\": ").append(entry.runs).append("\n");
             builder.append("    }");
@@ -218,6 +294,12 @@ public class StrategyRatings {
     }
 
     private static double blendWinRate(double previous, double current) {
+        if (Double.isNaN(current)) {
+            if (Double.isNaN(previous)) {
+                return 0.0;
+            }
+            return clampWinRate(previous);
+        }
         if (Double.isNaN(previous)) {
             return clampWinRate(current);
         }
@@ -269,6 +351,9 @@ public class StrategyRatings {
     }
 
     private static String formatNumber(double value) {
+        if (Double.isNaN(value)) {
+            return String.format(Locale.US, NUMBER_FORMAT, 0.0);
+        }
         return String.format(Locale.US, NUMBER_FORMAT, value);
     }
 
@@ -329,12 +414,20 @@ public class StrategyRatings {
         return unescaped.toString();
     }
     
-    private record ScoreInfo(int scoreRank, double scoreRating, double average, double winRate)
+    private record ScoreInfo(int scoreRank,
+                             double scoreRating,
+                             double average,
+                             double winRate,
+                             double sweepWinRate,
+                             double interactionWinRate)
     {
     }
     
     
-    private record ExistingEntry(double rating, double winRate)
+    private record ExistingEntry(double rating,
+                                 double winRate,
+                                 double sweepWinRate,
+                                 double interactionWinRate)
     {
     }
 
@@ -342,9 +435,6 @@ public class StrategyRatings {
      * Interaction data for combining sweep results with matchup performance.
      */
     public record InteractionPerformance(String name, double average, double winRate) {
-    }
-
-    private record EffectivePerformance(StrategyPerformance performance, double average, double winRate) {
     }
 
     private static class RatingEntry {
@@ -356,6 +446,10 @@ public class StrategyRatings {
         private final double lastAverage;
         private final double winRate;
         private final double lastWinRate;
+        private final double sweepWinRate;
+        private final double lastSweepWinRate;
+        private final double interactionWinRate;
+        private final double lastInteractionWinRate;
         private final int wins;
         private final int runs;
 
@@ -367,6 +461,10 @@ public class StrategyRatings {
                             double lastAverage,
                             double winRate,
                             double lastWinRate,
+                            double sweepWinRate,
+                            double lastSweepWinRate,
+                            double interactionWinRate,
+                            double lastInteractionWinRate,
                             int wins,
                             int runs) {
             this.name = name;
@@ -377,8 +475,42 @@ public class StrategyRatings {
             this.lastAverage = lastAverage;
             this.winRate = winRate;
             this.lastWinRate = lastWinRate;
+            this.sweepWinRate = sweepWinRate;
+            this.lastSweepWinRate = lastSweepWinRate;
+            this.interactionWinRate = interactionWinRate;
+            this.lastInteractionWinRate = lastInteractionWinRate;
             this.wins = wins;
             this.runs = runs;
+        }
+    }
+
+    private static class EffectivePerformance {
+        private final StrategyPerformance performance;
+        private final double sweepAverage;
+        private final double interactionAverage;
+        private final double effectiveAverage;
+        private final double sweepWinRate;
+        private final double interactionWinRate;
+        private final double effectiveWinRate;
+        private double averageRating;
+        private double winRateRating;
+        private double scoreRating;
+        private int scoreRank;
+
+        private EffectivePerformance(StrategyPerformance performance,
+                                     double sweepAverage,
+                                     double interactionAverage,
+                                     double effectiveAverage,
+                                     double sweepWinRate,
+                                     double interactionWinRate,
+                                     double effectiveWinRate) {
+            this.performance = performance;
+            this.sweepAverage = sweepAverage;
+            this.interactionAverage = interactionAverage;
+            this.effectiveAverage = effectiveAverage;
+            this.sweepWinRate = sweepWinRate;
+            this.interactionWinRate = interactionWinRate;
+            this.effectiveWinRate = effectiveWinRate;
         }
     }
 }
