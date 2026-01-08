@@ -10,7 +10,9 @@ public class RoundState {
     private final int templeTreasure;
     private final int roundTreasure;
     private final Map<Hazard, Integer> hazardCounts;
+    private final Map<Hazard, Integer> hazardCopiesRemaining;
     private final int artifactsOnPath;
+    private final int artifactsClaimed;
 
     public RoundState(int turnNumber,
                       int activePlayers,
@@ -18,12 +20,38 @@ public class RoundState {
                       int roundTreasure,
                       Map<Hazard, Integer> hazardCounts,
                       int artifactsOnPath) {
+        this(turnNumber,
+                activePlayers,
+                templeTreasure,
+                roundTreasure,
+                hazardCounts,
+                Collections.emptyMap(),
+                artifactsOnPath,
+                0);
+    }
+
+    public RoundState(int turnNumber,
+                      int activePlayers,
+                      int templeTreasure,
+                      int roundTreasure,
+                      Map<Hazard, Integer> hazardCounts,
+                      Map<Hazard, Integer> hazardCopiesRemaining,
+                      int artifactsOnPath,
+                      int artifactsClaimed) {
         this.turnNumber = turnNumber;
         this.activePlayers = activePlayers;
         this.templeTreasure = templeTreasure;
         this.roundTreasure = roundTreasure;
         this.hazardCounts = Collections.unmodifiableMap(new EnumMap<>(hazardCounts));
+        Map<Hazard, Integer> remaining = hazardCopiesRemaining == null
+                ? Collections.emptyMap()
+                : hazardCopiesRemaining;
+        EnumMap<Hazard, Integer> remainingCopy = remaining.isEmpty()
+                ? new EnumMap<>(Hazard.class)
+                : new EnumMap<>(remaining);
+        this.hazardCopiesRemaining = Collections.unmodifiableMap(remainingCopy);
         this.artifactsOnPath = artifactsOnPath;
+        this.artifactsClaimed = artifactsClaimed;
     }
 
     public int getTurnNumber() {
@@ -58,7 +86,19 @@ public class RoundState {
         return hazardCounts;
     }
 
+    public int getHazardCopiesRemaining(Hazard hazard) {
+        return hazardCopiesRemaining.getOrDefault(hazard, 0);
+    }
+
+    public Map<Hazard, Integer> getHazardCopiesRemainingMap() {
+        return hazardCopiesRemaining;
+    }
+
     public int getArtifactsOnPath() {
         return artifactsOnPath;
+    }
+
+    public int getArtifactsClaimed() {
+        return artifactsClaimed;
     }
 }

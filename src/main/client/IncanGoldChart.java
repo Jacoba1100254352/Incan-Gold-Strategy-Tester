@@ -76,7 +76,7 @@ public class IncanGoldChart extends Application {
     // Number format for metadata averages.
     private static final String METADATA_AVERAGE_FORMAT = "%.4f";
     // Output directory for chart exports.
-    private static final String OUTPUT_DIR_NAME = "chart-output";
+    private static final String OUTPUT_DIR_NAME = "results";
     // Base name for chart exports.
     private static final String OUTPUT_BASENAME = "incan-gold-chart";
     // Timestamp format for output file names.

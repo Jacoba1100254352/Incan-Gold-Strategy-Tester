@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * Maintains a shared ratings file for strategy performance.
  */
 public class StrategyRatings {
-    private static final Path RATINGS_PATH = Paths.get("strategy-ratings.json");
+    private static final Path RATINGS_PATH = Paths.get("results", "strategy-ratings.json");
     private static final double MAX_RATING = 5.0;
     private static final double MIN_RATING = 0.0;
     private static final double DEFAULT_WEIGHT = 0.5;
@@ -160,6 +160,10 @@ public class StrategyRatings {
         builder.append("}\n");
 
         try {
+            Path parent = RATINGS_PATH.getParent();
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
             Files.writeString(RATINGS_PATH, builder.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.err.println("Failed to write strategy ratings: " + e.getMessage());

@@ -2,15 +2,22 @@ package test;
 
 
 import algorithm.AlwaysContinueStrategy;
+import algorithm.ArtifactChaserStrategy;
+import algorithm.ArtifactOpportunistStrategy;
+import algorithm.ArtifactSoloExitStrategy;
+import algorithm.ArtifactValueRiskStrategy;
 import algorithm.LeaveAfterHazardsOrTurnsStrategy;
 import algorithm.LeaveAfterHazardsStrategy;
+import algorithm.LeaveAfterHazardsWithMemoryStrategy;
 import algorithm.LeaveAfterTempleTreasureStrategy;
 import algorithm.LeaveAfterTreasureOrHazardsStrategy;
+import algorithm.LeaveAfterTreasureOrTurnsStrategy;
 import algorithm.LeaveAfterTreasureStrategy;
 import algorithm.LeaveAfterTurnsStrategy;
 import algorithm.LeaveWhenSoloStrategy;
 import algorithm.RiskAverseStrategy;
 import algorithm.SwitchAfterHazardsStrategy;
+import algorithm.SwitchAfterHazardsForTurnsStrategy;
 import client.StrategyRatings;
 import model.Card;
 import model.Game;
@@ -33,6 +40,7 @@ public class TestRunner {
         testRoundState();
         testPlayer();
         testStrategies();
+        testArtifactStrategies();
         testGameHazardEndsRound();
         testGameLeavingAndTempleRemainder();
         testArtifactClaim();
@@ -62,7 +70,10 @@ public class TestRunner {
         Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
         counts.put(Hazard.SNAKE, 1);
         counts.put(Hazard.SPIDER, 2);
-        RoundState state = new RoundState(3, 4, 5, 6, counts, 0);
+        Map<Hazard, Integer> copies = new EnumMap<>(Hazard.class);
+        copies.put(Hazard.SNAKE, 2);
+        copies.put(Hazard.SPIDER, 1);
+        RoundState state = new RoundState(3, 4, 5, 6, counts, copies, 0, 2);
 
         assertEquals(3, state.getTurnNumber(), "turn number");
         assertEquals(4, state.getActivePlayers(), "active players");
@@ -73,6 +84,9 @@ public class TestRunner {
         assertEquals(2, state.getHazardCount(Hazard.SPIDER), "spider count");
         assertEquals(0, state.getHazardCount(Hazard.TRAP), "trap count default");
         assertEquals(3, state.getTotalHazardsRevealed(), "total hazards");
+        assertEquals(2, state.getHazardCopiesRemaining(Hazard.SNAKE), "snake copies remaining");
+        assertEquals(0, state.getHazardCopiesRemaining(Hazard.TRAP), "trap copies remaining default");
+        assertEquals(2, state.getArtifactsClaimed(), "artifacts claimed");
     }
 
     private static void testPlayer() {
@@ -101,6 +115,7 @@ public class TestRunner {
         assertTrue(new LeaveAfterTempleTreasureStrategy(5).shouldContinue(base), "temple under limit");
         assertTrue(new LeaveAfterHazardsOrTurnsStrategy(2, 3).shouldContinue(base), "hazards and turns under");
         assertTrue(new LeaveAfterTreasureOrHazardsStrategy(6, 2).shouldContinue(base), "treasure and hazards under");
+        assertTrue(new LeaveAfterTreasureOrTurnsStrategy(6, 3).shouldContinue(base), "treasure and turns under");
         assertTrue(new LeaveWhenSoloStrategy().shouldContinue(base), "not solo yet");
 
         counts.put(Hazard.SNAKE, 1);
@@ -117,10 +132,12 @@ public class TestRunner {
         RoundState turnLimit = new RoundState(3, 3, 4, 5, counts, 0);
         assertFalse(new LeaveAfterTurnsStrategy(3).shouldContinue(turnLimit), "turns at limit");
         assertFalse(new LeaveAfterHazardsOrTurnsStrategy(3, 3).shouldContinue(turnLimit), "turns at limit");
+        assertFalse(new LeaveAfterTreasureOrTurnsStrategy(6, 3).shouldContinue(turnLimit), "turns at limit (treasure or turns)");
 
         RoundState treasureLimit = new RoundState(2, 3, 4, 6, counts, 0);
         assertFalse(new LeaveAfterTreasureStrategy(6).shouldContinue(treasureLimit), "treasure at limit");
         assertFalse(new LeaveAfterTreasureOrHazardsStrategy(6, 3).shouldContinue(treasureLimit), "treasure at limit");
+        assertFalse(new LeaveAfterTreasureOrTurnsStrategy(6, 3).shouldContinue(treasureLimit), "treasure or turns at limit");
 
         RoundState templeLimit = new RoundState(2, 3, 5, 5, counts, 0);
         assertFalse(new LeaveAfterTempleTreasureStrategy(5).shouldContinue(templeLimit), "temple at limit");
@@ -137,6 +154,16 @@ public class TestRunner {
         assertTrue(switchStrategy.shouldContinue(beforeSwitch), "before switch uses always continue");
         RoundState afterSwitch = new RoundState(2, 2, 0, 0, counts, 0);
         assertFalse(switchStrategy.shouldContinue(afterSwitch), "after switch uses turn strategy");
+
+        SwitchAfterHazardsForTurnsStrategy stayAfterHazard = new SwitchAfterHazardsForTurnsStrategy(1, 2);
+        RoundState triggerHazard = new RoundState(3, 2, 0, 0, counts, 0);
+        assertTrue(stayAfterHazard.shouldContinue(triggerHazard), "stay after hazard trigger");
+        RoundState oneTurnLater = new RoundState(4, 2, 0, 0, counts, 0);
+        assertTrue(stayAfterHazard.shouldContinue(oneTurnLater), "stay after hazard extra turn");
+        RoundState twoTurnsLater = new RoundState(5, 2, 0, 0, counts, 0);
+        assertFalse(stayAfterHazard.shouldContinue(twoTurnsLater), "leave after extra turns");
+        RoundState newRoundReset = new RoundState(1, 2, 0, 0, new EnumMap<>(Hazard.class), 0);
+        assertTrue(stayAfterHazard.shouldContinue(newRoundReset), "reset stay after hazard");
     }
 
     private static void testGameHazardEndsRound() {
@@ -193,8 +220,71 @@ public class TestRunner {
         assertEquals(0, players.get(1).getTotalTreasure(), "artifact non-claimant total");
     }
 
+    private static void testArtifactStrategies() {
+        Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
+        Map<Hazard, Integer> copies = createHazardCopies(3);
+
+        RoundState soloArtifact = new RoundState(1, 1, 0, 0, counts, copies, 1, 0);
+        assertFalse(new ArtifactSoloExitStrategy().shouldContinue(soloArtifact), "solo artifact exit");
+
+        RoundState crowdedArtifact = new RoundState(1, 3, 0, 0, counts, copies, 1, 0);
+        assertTrue(new ArtifactSoloExitStrategy().shouldContinue(crowdedArtifact), "crowded artifact continue");
+
+        ArtifactOpportunistStrategy opportunist = new ArtifactOpportunistStrategy(
+                1,
+                2,
+                5,
+                1,
+                new LeaveAfterTurnsStrategy(3)
+        );
+        RoundState opportunistLeave = new RoundState(2, 2, 0, 5, counts, copies, 1, 0);
+        assertFalse(opportunist.shouldContinue(opportunistLeave), "opportunist leaves on treasure");
+
+        RoundState opportunistFallback = new RoundState(3, 2, 0, 0, counts, copies, 0, 0);
+        assertFalse(opportunist.shouldContinue(opportunistFallback), "opportunist leaves on fallback");
+
+        Map<Hazard, Integer> hazardCounts = new EnumMap<>(Hazard.class);
+        hazardCounts.put(Hazard.SNAKE, 1);
+        RoundState opportunistHazard = new RoundState(2, 2, 0, 0, hazardCounts, copies, 1, 0);
+        assertFalse(opportunist.shouldContinue(opportunistHazard), "opportunist leaves on hazard");
+
+        RoundState opportunistStay = new RoundState(2, 3, 0, 6, counts, copies, 1, 0);
+        assertTrue(opportunist.shouldContinue(opportunistStay), "opportunist waits with many players");
+
+        ArtifactValueRiskStrategy riskStrategy = new ArtifactValueRiskStrategy(8, 2, 2, new LeaveAfterTurnsStrategy(7));
+        RoundState riskLeave = new RoundState(2, 2, 0, 3, hazardCounts, copies, 1, 0);
+        assertFalse(riskStrategy.shouldContinue(riskLeave), "risk strategy leaves when bank and risk align");
+
+        RoundState riskStay = new RoundState(2, 3, 0, 3, hazardCounts, copies, 1, 0);
+        assertTrue(riskStrategy.shouldContinue(riskStay), "risk strategy continues with many players");
+
+        ArtifactChaserStrategy chaser = new ArtifactChaserStrategy(7, 4, 1, 1, 2);
+        RoundState chaserBaseLeave = new RoundState(7, 2, 0, 0, counts, copies, 0, 0);
+        assertFalse(chaser.shouldContinue(chaserBaseLeave), "chaser leaves at base limits");
+
+        RoundState chaserArtifactStay = new RoundState(7, 2, 0, 0, hazardCounts, copies, 1, 0);
+        assertTrue(chaser.shouldContinue(chaserArtifactStay), "chaser stays longer with artifact");
+
+        RoundState chaserSolo = new RoundState(3, 1, 0, 0, counts, copies, 1, 0);
+        assertFalse(chaser.shouldContinue(chaserSolo), "chaser leaves when solo with artifact");
+
+        LeaveAfterHazardsWithMemoryStrategy memoryStrategy =
+                new LeaveAfterHazardsWithMemoryStrategy(2, 1, 1);
+        Map<Hazard, Integer> lowCopies = createHazardCopies(3);
+        lowCopies.put(Hazard.SNAKE, 1);
+        lowCopies.put(Hazard.SPIDER, 1);
+        Map<Hazard, Integer> twoHazards = new EnumMap<>(Hazard.class);
+        twoHazards.put(Hazard.SNAKE, 1);
+        twoHazards.put(Hazard.SPIDER, 1);
+        RoundState memoryContinue = new RoundState(3, 2, 0, 0, twoHazards, lowCopies, 0, 0);
+        assertTrue(memoryStrategy.shouldContinue(memoryContinue), "memory strategy continues on low copies");
+
+        RoundState memoryLeave = new RoundState(3, 2, 0, 0, twoHazards, copies, 0, 0);
+        assertFalse(memoryStrategy.shouldContinue(memoryLeave), "memory strategy leaves on normal copies");
+    }
+
     private static void testStrategyRatings() {
-        Path ratingsPath = Paths.get("strategy-ratings.json");
+        Path ratingsPath = Paths.get("results", "strategy-ratings.json");
         String previousContent = null;
         boolean hadExisting = Files.exists(ratingsPath);
         if (hadExisting) {
@@ -309,6 +399,14 @@ public class TestRunner {
         } catch (Exception e) {
             throw new AssertionError("Failed to delete file for " + message + ": " + e.getMessage());
         }
+    }
+
+    private static Map<Hazard, Integer> createHazardCopies(int copies) {
+        Map<Hazard, Integer> result = new EnumMap<>(Hazard.class);
+        for (Hazard hazard : Hazard.values()) {
+            result.put(hazard, copies);
+        }
+        return result;
     }
 
     private static String extractEntry(String json, String name) {

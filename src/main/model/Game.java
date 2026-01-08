@@ -108,7 +108,9 @@ public class Game {
                             templeTreasure,
                             player.getRoundTreasure(),
                             hazardCounts,
-                            artifactsOnPath.size()
+                            snapshotHazardCopiesRemaining(),
+                            artifactsOnPath.size(),
+                            artifactsClaimed
                     );
                     if (!player.makeDecision(state)) {
                         leavingPlayers.add(player);
@@ -220,6 +222,13 @@ public class Game {
      */
     protected Map<Hazard, Integer> snapshotHazards(Map<Hazard, Integer> hazardCounts) {
         return Collections.unmodifiableMap(new EnumMap<>(hazardCounts));
+    }
+
+    /**
+     * Returns a defensive snapshot of hazard copies remaining.
+     */
+    protected Map<Hazard, Integer> snapshotHazardCopiesRemaining() {
+        return Collections.unmodifiableMap(new EnumMap<>(hazardCopiesRemaining));
     }
 
     /**
