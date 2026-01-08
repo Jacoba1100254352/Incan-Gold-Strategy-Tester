@@ -40,6 +40,8 @@ public class IncanGoldTest {
     private static final int TOP_STRATEGIES_TO_DISPLAY = 10;
     // Tolerance for treating averages as ties.
     private static final double TIE_EPSILON = 1e-9;
+    // Number format for win rate percentages.
+    private static final String WIN_RATE_FORMAT = "%.2f";
 
     /**
      * Entry point for running sweep simulations.
@@ -86,7 +88,7 @@ public class IncanGoldTest {
                                   int playersPerGame) {
         List<StrategyStats> stats = evaluateStrategies(strategies, repeats, simulations, playersPerGame, true);
         printSummary(stats, repeats);
-        StrategyRatings.updateRatings(buildRatingAverages(stats), "strategy-test");
+        StrategyRatings.updateRatings(buildRatingPerformances(stats), "strategy-test");
     }
 
     /**
@@ -189,6 +191,33 @@ public class IncanGoldTest {
         }
         System.out.printf("Most run wins: %s (%d/%d)%n",
                 joinNames(mostWinStrategies), mostWins, repeats);
+        printWinRates(stats, repeats);
+    }
+
+    /**
+     * Prints win rate percentages by strategy.
+     */
+    private static void printWinRates(List<StrategyStats> stats, int repeats) {
+        List<StrategyStats> sorted = new ArrayList<>(stats);
+        sorted.sort((left, right) -> {
+            int winCompare = Integer.compare(right.wins, left.wins);
+            if (winCompare != 0) {
+                return winCompare;
+            }
+            return Double.compare(right.getAverage(), left.getAverage());
+        });
+
+        System.out.printf("%nWin rate by strategy (%d run%s):%n",
+                repeats, repeats == 1 ? "" : "s");
+        for (StrategyStats stat : sorted) {
+            double percent = repeats == 0 ? 0.0 : (stat.wins * 100.0) / repeats;
+            System.out.printf("%s: %d/%d (%s%%)%n",
+                    stat.name,
+                    stat.wins,
+                    repeats,
+                    String.format(WIN_RATE_FORMAT, percent));
+        }
+        System.out.println();
     }
 
     /**
@@ -215,12 +244,17 @@ public class IncanGoldTest {
         return builder.toString();
     }
 
-    private static List<StrategyRatings.StrategyAverage> buildRatingAverages(List<StrategyStats> stats) {
-        List<StrategyRatings.StrategyAverage> averages = new ArrayList<>();
+    private static List<StrategyRatings.StrategyPerformance> buildRatingPerformances(List<StrategyStats> stats) {
+        List<StrategyRatings.StrategyPerformance> performances = new ArrayList<>();
         for (StrategyStats stat : stats) {
-            averages.add(new StrategyRatings.StrategyAverage(stat.name, stat.getAverage()));
+            performances.add(new StrategyRatings.StrategyPerformance(
+                    stat.name,
+                    stat.getAverage(),
+                    stat.wins,
+                    stat.runs
+            ));
         }
-        return averages;
+        return performances;
     }
 
     /**

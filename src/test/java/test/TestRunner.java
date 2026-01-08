@@ -204,25 +204,29 @@ public class TestRunner {
         try {
             deleteFileIfExists(ratingsPath, "ratings cleanup");
 
-            List<StrategyRatings.StrategyAverage> firstRun = new ArrayList<>();
-            firstRun.add(new StrategyRatings.StrategyAverage("Alpha", 10.0));
-            firstRun.add(new StrategyRatings.StrategyAverage("Beta", 5.0));
+            List<StrategyRatings.StrategyPerformance> firstRun = new ArrayList<>();
+            firstRun.add(new StrategyRatings.StrategyPerformance("Alpha", 10.0, 3, 4));
+            firstRun.add(new StrategyRatings.StrategyPerformance("Beta", 5.0, 1, 4));
             StrategyRatings.updateRatings(firstRun, "test-run-1");
 
             String firstJson = readFileContent(ratingsPath, "first ratings");
             assertNear(5.0, extractDoubleField(firstJson, "Alpha", "rating"), 1e-6, "alpha rating first run");
             assertNear(0.0, extractDoubleField(firstJson, "Beta", "rating"), 1e-6, "beta rating first run");
+            assertNear(75.0, extractDoubleField(firstJson, "Alpha", "winRate"), 1e-6, "alpha win rate first run");
+            assertNear(25.0, extractDoubleField(firstJson, "Beta", "winRate"), 1e-6, "beta win rate first run");
             assertEquals(1, extractIntField(firstJson, "Alpha", "ratingRank"), "alpha rank first run");
             assertEquals(2, extractIntField(firstJson, "Beta", "ratingRank"), "beta rank first run");
 
-            List<StrategyRatings.StrategyAverage> secondRun = new ArrayList<>();
-            secondRun.add(new StrategyRatings.StrategyAverage("Beta", 12.0));
-            secondRun.add(new StrategyRatings.StrategyAverage("Alpha", 6.0));
+            List<StrategyRatings.StrategyPerformance> secondRun = new ArrayList<>();
+            secondRun.add(new StrategyRatings.StrategyPerformance("Beta", 12.0, 3, 4));
+            secondRun.add(new StrategyRatings.StrategyPerformance("Alpha", 6.0, 1, 4));
             StrategyRatings.updateRatings(secondRun, "test-run-2");
 
             String secondJson = readFileContent(ratingsPath, "second ratings");
             assertNear(2.5, extractDoubleField(secondJson, "Alpha", "rating"), 1e-6, "alpha rating second run");
             assertNear(2.5, extractDoubleField(secondJson, "Beta", "rating"), 1e-6, "beta rating second run");
+            assertNear(50.0, extractDoubleField(secondJson, "Alpha", "winRate"), 1e-6, "alpha win rate second run");
+            assertNear(50.0, extractDoubleField(secondJson, "Beta", "winRate"), 1e-6, "beta win rate second run");
             assertEquals(1, extractIntField(secondJson, "Alpha", "ratingRank"), "alpha rank second run");
             assertEquals(2, extractIntField(secondJson, "Beta", "ratingRank"), "beta rank second run");
         } finally {

@@ -100,7 +100,7 @@ public class IncanGoldChart extends Application {
         VBox content = new VBox(SECTION_SPACING);
         content.setPadding(new Insets(CHART_PADDING));
         List<BucketSection> sections = new ArrayList<>();
-        Map<String, AverageAccumulator> ratingTotals = new LinkedHashMap<>();
+        Map<String, PerformanceAccumulator> ratingTotals = new LinkedHashMap<>();
 
         for (int players = params.minPlayersPerGame; players <= params.maxPlayersPerGame; players++) {
             List<StrategyEvaluator.StrategyScore> scores = StrategyEvaluator.evaluate(
@@ -111,8 +111,8 @@ public class IncanGoldChart extends Application {
             );
             for (StrategyEvaluator.StrategyScore score : scores) {
                 ratingTotals
-                        .computeIfAbsent(score.name, key -> new AverageAccumulator())
-                        .add(score.average);
+                        .computeIfAbsent(score.name, key -> new PerformanceAccumulator())
+                        .add(score);
             }
             BucketResult bucketResult = bucketScores(scores);
             StrategyEvaluator.StrategyScore bestScore = findBestScore(scores);
@@ -121,7 +121,7 @@ public class IncanGoldChart extends Application {
             sections.add(section);
             content.getChildren().add(createBucketSection(section));
         }
-        StrategyRatings.updateRatings(buildRatingAverages(ratingTotals), "chart");
+        StrategyRatings.updateRatings(buildRatingPerformances(ratingTotals), "chart");
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
@@ -464,22 +464,32 @@ public class IncanGoldChart extends Application {
         return escaped.toString();
     }
 
-    private static List<StrategyRatings.StrategyAverage> buildRatingAverages(
-            Map<String, AverageAccumulator> totals) {
-        List<StrategyRatings.StrategyAverage> averages = new ArrayList<>();
-        for (Map.Entry<String, AverageAccumulator> entry : totals.entrySet()) {
-            averages.add(new StrategyRatings.StrategyAverage(entry.getKey(), entry.getValue().average()));
+    private static List<StrategyRatings.StrategyPerformance> buildRatingPerformances(
+            Map<String, PerformanceAccumulator> totals) {
+        List<StrategyRatings.StrategyPerformance> performances = new ArrayList<>();
+        for (Map.Entry<String, PerformanceAccumulator> entry : totals.entrySet()) {
+            PerformanceAccumulator accumulator = entry.getValue();
+            performances.add(new StrategyRatings.StrategyPerformance(
+                    entry.getKey(),
+                    accumulator.average(),
+                    accumulator.wins,
+                    accumulator.runs
+            ));
         }
-        return averages;
+        return performances;
     }
 
-    private static class AverageAccumulator {
+    private static class PerformanceAccumulator {
         private double total;
         private int count;
+        private int wins;
+        private int runs;
 
-        private void add(double value) {
-            total += value;
+        private void add(StrategyEvaluator.StrategyScore score) {
+            total += score.average;
             count++;
+            wins += score.wins;
+            runs += score.runs;
         }
 
         private double average() {
