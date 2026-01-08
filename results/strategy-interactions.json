@@ -1,0 +1,6303 @@
+{
+  "generatedAt": "2026-01-08T12:01:31.155889-05:00",
+  "simulations": 1000,
+  "playersPerGame": 4,
+  "unaffectedThreshold": 0.2500,
+  "strategies": [
+    {
+      "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+      "mirrorAverage": 20.7770,
+      "mixedOpponentsAverage": 23.4370,
+      "mixedOpponentsDelta": 2.6600,
+      "mixedOpponentsWinRate": 25.4000,
+      "maxAbsDelta": 40.3090,
+      "maxDelta": 40.3090,
+      "minDelta": -0.7690,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 40.3090
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 21.5530,
+          "delta": 0.7760,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 21.0100,
+          "delta": 0.2330,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 20.5440,
+          "delta": -0.2330,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 20.0080,
+          "delta": -0.7690,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 61.0860,
+          "delta": 40.3090,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 41.4620,
+          "delta": 20.6850,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 20.1370,
+          "delta": -0.6400,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 40.5220,
+          "delta": 19.7450,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 20.9630,
+          "delta": 0.1860,
+          "winRate": 92.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 41.8500,
+          "delta": 21.0730,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 39.8890,
+          "delta": 19.1120,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.0610,
+          "delta": 16.2840,
+          "winRate": 91.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 38.6850,
+          "delta": 17.9080,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 37.5440,
+          "delta": 16.7670,
+          "winRate": 94.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 39.1220,
+          "delta": 18.3450,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.3480,
+          "delta": 6.5710,
+          "winRate": 83.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 38.9300,
+          "delta": 18.1530,
+          "winRate": 95.4000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 21.2950,
+          "delta": 0.5180,
+          "winRate": 94.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.4690,
+          "delta": 16.6920,
+          "winRate": 95.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 39.2310,
+          "delta": 18.4540,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 24.6360,
+          "delta": 3.8590,
+          "winRate": 85.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 38.8970,
+          "delta": 18.1200,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 43.0540,
+          "delta": 22.2770,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 42.9430,
+          "delta": 22.1660,
+          "winRate": 93.7000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 38.0830,
+          "delta": 17.3060,
+          "winRate": 94.3000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 21.0820,
+          "delta": 0.3050,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 37.9280,
+          "delta": 17.1510,
+          "winRate": 89.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 22.1110,
+          "delta": 1.3340,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 36.9720,
+          "delta": 16.1950,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 25.4110,
+          "delta": 4.6340,
+          "winRate": 95.7000
+        }
+      ]
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "mirrorAverage": 20.9090,
+      "mixedOpponentsAverage": 24.2570,
+      "mixedOpponentsDelta": 3.3480,
+      "mixedOpponentsWinRate": 28.9000,
+      "maxAbsDelta": 50.1600,
+      "maxDelta": 50.1600,
+      "minDelta": -0.8090,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 50.1600
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 22.4160,
+          "delta": 1.5070,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 20.6080,
+          "delta": -0.3010,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 22.7870,
+          "delta": 1.8780,
+          "winRate": 92.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 22.7350,
+          "delta": 1.8260,
+          "winRate": 91.8000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 71.0690,
+          "delta": 50.1600,
+          "winRate": 98.0000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.0140,
+          "delta": 23.1050,
+          "winRate": 97.1000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.4770,
+          "delta": 1.5680,
+          "winRate": 92.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 42.0960,
+          "delta": 21.1870,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 20.5860,
+          "delta": -0.3230,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.9940,
+          "delta": 23.0850,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 42.6140,
+          "delta": 21.7050,
+          "winRate": 93.0000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.1630,
+          "delta": 17.2540,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 39.9720,
+          "delta": 19.0630,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.7460,
+          "delta": 18.8370,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 40.2200,
+          "delta": 19.3110,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.2160,
+          "delta": 6.3070,
+          "winRate": 85.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 40.5380,
+          "delta": 19.6290,
+          "winRate": 94.7000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 20.6360,
+          "delta": -0.2730,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 40.2560,
+          "delta": 19.3470,
+          "winRate": 95.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.7200,
+          "delta": 19.8110,
+          "winRate": 96.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 23.8540,
+          "delta": 2.9450,
+          "winRate": 89.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.3470,
+          "delta": 18.4380,
+          "winRate": 96.6000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 44.2030,
+          "delta": 23.2940,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 45.3720,
+          "delta": 24.4630,
+          "winRate": 95.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.2340,
+          "delta": 19.3250,
+          "winRate": 94.3000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 20.1000,
+          "delta": -0.8090,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 38.2140,
+          "delta": 17.3050,
+          "winRate": 90.1000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 21.7290,
+          "delta": 0.8200,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 37.9660,
+          "delta": 17.0570,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 26.0910,
+          "delta": 5.1820,
+          "winRate": 99.5000
+        }
+      ]
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "mirrorAverage": 20.5260,
+      "mixedOpponentsAverage": 24.3640,
+      "mixedOpponentsDelta": 3.8380,
+      "mixedOpponentsWinRate": 27.7000,
+      "maxAbsDelta": 44.9540,
+      "maxDelta": 44.9540,
+      "minDelta": -0.0220,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 44.9540
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 22.2810,
+          "delta": 1.7550,
+          "winRate": 90.1000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 20.6260,
+          "delta": 0.1000,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 22.6690,
+          "delta": 2.1430,
+          "winRate": 92.5000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 23.1090,
+          "delta": 2.5830,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 65.4800,
+          "delta": 44.9540,
+          "winRate": 99.3000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.0570,
+          "delta": 23.5310,
+          "winRate": 96.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.3450,
+          "delta": 1.8190,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 43.6230,
+          "delta": 23.0970,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 20.9810,
+          "delta": 0.4550,
+          "winRate": 99.3000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.1420,
+          "delta": 22.6160,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 40.9660,
+          "delta": 20.4400,
+          "winRate": 93.6000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.6150,
+          "delta": 18.0890,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 39.3320,
+          "delta": 18.8060,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.4220,
+          "delta": 18.8960,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 40.7130,
+          "delta": 20.1870,
+          "winRate": 94.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 26.1950,
+          "delta": 5.6690,
+          "winRate": 85.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 40.5860,
+          "delta": 20.0600,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 20.6980,
+          "delta": 0.1720,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 39.5360,
+          "delta": 19.0100,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 39.9170,
+          "delta": 19.3910,
+          "winRate": 96.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 24.5990,
+          "delta": 4.0730,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.8430,
+          "delta": 19.3170,
+          "winRate": 96.9000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 42.5610,
+          "delta": 22.0350,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 43.6670,
+          "delta": 23.1410,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.6350,
+          "delta": 20.1090,
+          "winRate": 94.9000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 20.5040,
+          "delta": -0.0220,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 38.0670,
+          "delta": 17.5410,
+          "winRate": 88.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 21.1850,
+          "delta": 0.6590,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 37.5930,
+          "delta": 17.0670,
+          "winRate": 90.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 26.5160,
+          "delta": 5.9900,
+          "winRate": 99.2000
+        }
+      ]
+    },
+    {
+      "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+      "mirrorAverage": 20.1860,
+      "mixedOpponentsAverage": 24.2720,
+      "mixedOpponentsDelta": 4.0860,
+      "mixedOpponentsWinRate": 29.2000,
+      "maxAbsDelta": 38.1750,
+      "maxDelta": 38.1750,
+      "minDelta": -0.1210,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 38.1750
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 20.4160,
+          "delta": 0.2300,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 21.0800,
+          "delta": 0.8940,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 21.3330,
+          "delta": 1.1470,
+          "winRate": 95.7000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 20.3150,
+          "delta": 0.1290,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 58.3610,
+          "delta": 38.1750,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.3280,
+          "delta": 23.1420,
+          "winRate": 96.7000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 20.0650,
+          "delta": -0.1210,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 40.4240,
+          "delta": 20.2380,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 20.9940,
+          "delta": 0.8080,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 42.8040,
+          "delta": 22.6180,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 39.1400,
+          "delta": 18.9540,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.4180,
+          "delta": 17.2320,
+          "winRate": 88.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.3780,
+          "delta": 20.1920,
+          "winRate": 93.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 38.0860,
+          "delta": 17.9000,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 38.5440,
+          "delta": 18.3580,
+          "winRate": 93.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.7470,
+          "delta": 7.5610,
+          "winRate": 83.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 38.3930,
+          "delta": 18.2070,
+          "winRate": 93.7000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 21.5480,
+          "delta": 1.3620,
+          "winRate": 92.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.3410,
+          "delta": 17.1550,
+          "winRate": 95.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.5360,
+          "delta": 20.3500,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 24.3500,
+          "delta": 4.1640,
+          "winRate": 88.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.7330,
+          "delta": 19.5470,
+          "winRate": 96.8000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 43.3660,
+          "delta": 23.1800,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 41.8450,
+          "delta": 21.6590,
+          "winRate": 94.1000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 38.9550,
+          "delta": 18.7690,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 21.3730,
+          "delta": 1.1870,
+          "winRate": 94.5000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 36.0210,
+          "delta": 15.8350,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 22.0620,
+          "delta": 1.8760,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 37.5160,
+          "delta": 17.3300,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 26.1080,
+          "delta": 5.9220,
+          "winRate": 95.0000
+        }
+      ]
+    },
+    {
+      "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+      "mirrorAverage": 20.6240,
+      "mixedOpponentsAverage": 24.5550,
+      "mixedOpponentsDelta": 3.9310,
+      "mixedOpponentsWinRate": 26.1000,
+      "maxAbsDelta": 40.6800,
+      "maxDelta": 40.6800,
+      "minDelta": -0.2950,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 40.6800
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 20.3290,
+          "delta": -0.2950,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 21.6410,
+          "delta": 1.0170,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 21.0400,
+          "delta": 0.4160,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 20.7040,
+          "delta": 0.0800,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 61.3040,
+          "delta": 40.6800,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 41.4710,
+          "delta": 20.8470,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 20.5170,
+          "delta": -0.1070,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 41.4370,
+          "delta": 20.8130,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 21.7170,
+          "delta": 1.0930,
+          "winRate": 94.7000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.2970,
+          "delta": 22.6730,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 40.6290,
+          "delta": 20.0050,
+          "winRate": 92.1000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.2360,
+          "delta": 16.6120,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.2410,
+          "delta": 19.6170,
+          "winRate": 94.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 36.9270,
+          "delta": 16.3030,
+          "winRate": 94.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 38.6610,
+          "delta": 18.0370,
+          "winRate": 93.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.3910,
+          "delta": 6.7670,
+          "winRate": 85.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 39.3150,
+          "delta": 18.6910,
+          "winRate": 93.8000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 20.9650,
+          "delta": 0.3410,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.8640,
+          "delta": 17.2400,
+          "winRate": 96.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.3900,
+          "delta": 19.7660,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 25.3560,
+          "delta": 4.7320,
+          "winRate": 88.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 38.7440,
+          "delta": 18.1200,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 43.4810,
+          "delta": 22.8570,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 41.8850,
+          "delta": 21.2610,
+          "winRate": 94.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 37.7750,
+          "delta": 17.1510,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 21.1270,
+          "delta": 0.5030,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 37.0330,
+          "delta": 16.4090,
+          "winRate": 87.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 22.4630,
+          "delta": 1.8390,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 38.5610,
+          "delta": 17.9370,
+          "winRate": 91.8000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 25.5030,
+          "delta": 4.8790,
+          "winRate": 94.2000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 1 hazard",
+      "mirrorAverage": 8.6170,
+      "mixedOpponentsAverage": 18.1660,
+      "mixedOpponentsDelta": 9.5490,
+      "mixedOpponentsWinRate": 14.4000,
+      "maxAbsDelta": 12.5880,
+      "maxDelta": 12.5880,
+      "minDelta": 9.4960,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Switch after 2 hazards (stay->leave after 7 turns)",
+        "delta": 12.5880
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 19.9030,
+          "delta": 11.2860,
+          "winRate": 42.3000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 20.0540,
+          "delta": 11.4370,
+          "winRate": 40.3000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 20.1690,
+          "delta": 11.5520,
+          "winRate": 41.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 19.7240,
+          "delta": 11.1070,
+          "winRate": 42.7000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 19.4830,
+          "delta": 10.8660,
+          "winRate": 39.1000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 20.4800,
+          "delta": 11.8630,
+          "winRate": 51.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 19.5760,
+          "delta": 10.9590,
+          "winRate": 38.1000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 20.3310,
+          "delta": 11.7140,
+          "winRate": 42.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 19.1120,
+          "delta": 10.4950,
+          "winRate": 35.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 20.1460,
+          "delta": 11.5290,
+          "winRate": 43.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 19.8160,
+          "delta": 11.1990,
+          "winRate": 38.7000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 19.6870,
+          "delta": 11.0700,
+          "winRate": 39.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 20.2090,
+          "delta": 11.5920,
+          "winRate": 38.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 20.1210,
+          "delta": 11.5040,
+          "winRate": 38.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 20.4130,
+          "delta": 11.7960,
+          "winRate": 40.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 19.4920,
+          "delta": 10.8750,
+          "winRate": 35.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 19.9160,
+          "delta": 11.2990,
+          "winRate": 36.3000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 20.1960,
+          "delta": 11.5790,
+          "winRate": 40.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 20.6790,
+          "delta": 12.0620,
+          "winRate": 38.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 19.8210,
+          "delta": 11.2040,
+          "winRate": 38.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 19.4260,
+          "delta": 10.8090,
+          "winRate": 36.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 20.2060,
+          "delta": 11.5890,
+          "winRate": 37.1000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 20.2870,
+          "delta": 11.6700,
+          "winRate": 41.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 20.7540,
+          "delta": 12.1370,
+          "winRate": 57.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 20.5600,
+          "delta": 11.9430,
+          "winRate": 61.0000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 19.4520,
+          "delta": 10.8350,
+          "winRate": 37.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 18.1130,
+          "delta": 9.4960,
+          "winRate": 33.1000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 19.6890,
+          "delta": 11.0720,
+          "winRate": 39.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 20.5510,
+          "delta": 11.9340,
+          "winRate": 41.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 21.2050,
+          "delta": 12.5880,
+          "winRate": 44.4000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "mirrorAverage": 17.1030,
+      "mixedOpponentsAverage": 28.4210,
+      "mixedOpponentsDelta": 11.3180,
+      "mixedOpponentsWinRate": 36.2000,
+      "maxAbsDelta": 40.7270,
+      "maxDelta": 40.7270,
+      "minDelta": 13.5300,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 40.7270
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 33.0490,
+          "delta": 15.9460,
+          "winRate": 76.7000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 31.9440,
+          "delta": 14.8410,
+          "winRate": 73.5000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 33.1390,
+          "delta": 16.0360,
+          "winRate": 75.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 33.0900,
+          "delta": 15.9870,
+          "winRate": 74.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 32.8190,
+          "delta": 15.7160,
+          "winRate": 75.6000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 57.8300,
+          "delta": 40.7270,
+          "winRate": 94.3000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 32.0530,
+          "delta": 14.9500,
+          "winRate": 75.6000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 32.1000,
+          "delta": 14.9970,
+          "winRate": 78.4000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 32.4360,
+          "delta": 15.3330,
+          "winRate": 70.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 32.7160,
+          "delta": 15.6130,
+          "winRate": 76.8000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 40.0010,
+          "delta": 22.8980,
+          "winRate": 77.9000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 33.5790,
+          "delta": 16.4760,
+          "winRate": 72.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 38.1680,
+          "delta": 21.0650,
+          "winRate": 79.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 36.0280,
+          "delta": 18.9250,
+          "winRate": 77.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 38.1360,
+          "delta": 21.0330,
+          "winRate": 79.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 36.3970,
+          "delta": 19.2940,
+          "winRate": 74.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 36.6860,
+          "delta": 19.5830,
+          "winRate": 77.6000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 33.4670,
+          "delta": 16.3640,
+          "winRate": 75.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.4610,
+          "delta": 20.3580,
+          "winRate": 82.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 36.7650,
+          "delta": 19.6620,
+          "winRate": 80.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 35.0490,
+          "delta": 17.9460,
+          "winRate": 73.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 35.2580,
+          "delta": 18.1550,
+          "winRate": 75.7000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 32.2310,
+          "delta": 15.1280,
+          "winRate": 78.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 41.6320,
+          "delta": 24.5290,
+          "winRate": 83.8000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 38.1730,
+          "delta": 21.0700,
+          "winRate": 82.1000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 33.0970,
+          "delta": 15.9940,
+          "winRate": 72.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 34.1130,
+          "delta": 17.0100,
+          "winRate": 71.4000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 32.4930,
+          "delta": 15.3900,
+          "winRate": 73.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 31.5770,
+          "delta": 14.4740,
+          "winRate": 70.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 30.6330,
+          "delta": 13.5300,
+          "winRate": 74.0000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 4 hazards or 7 turns",
+      "mirrorAverage": 20.1780,
+      "mixedOpponentsAverage": 23.9030,
+      "mixedOpponentsDelta": 3.7250,
+      "mixedOpponentsWinRate": 25.7000,
+      "maxAbsDelta": 51.0180,
+      "maxDelta": 51.0180,
+      "minDelta": 0.2180,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 51.0180
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 20.4470,
+          "delta": 0.2690,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 21.1140,
+          "delta": 0.9360,
+          "winRate": 93.0000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 21.3110,
+          "delta": 1.1330,
+          "winRate": 93.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 20.5570,
+          "delta": 0.3790,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 20.3960,
+          "delta": 0.2180,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 71.1960,
+          "delta": 51.0180,
+          "winRate": 98.0000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 42.9490,
+          "delta": 22.7710,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 40.3150,
+          "delta": 20.1370,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 21.4280,
+          "delta": 1.2500,
+          "winRate": 93.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 42.5420,
+          "delta": 22.3640,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 42.2860,
+          "delta": 22.1080,
+          "winRate": 91.1000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 36.9580,
+          "delta": 16.7800,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.1000,
+          "delta": 19.9220,
+          "winRate": 93.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 37.7960,
+          "delta": 17.6180,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 39.9520,
+          "delta": 19.7740,
+          "winRate": 93.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.9570,
+          "delta": 7.7790,
+          "winRate": 84.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 38.9820,
+          "delta": 18.8040,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 21.1460,
+          "delta": 0.9680,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.0470,
+          "delta": 16.8690,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.8020,
+          "delta": 20.6240,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 24.9410,
+          "delta": 4.7630,
+          "winRate": 87.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 40.2820,
+          "delta": 20.1040,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 42.2120,
+          "delta": 22.0340,
+          "winRate": 99.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 43.1180,
+          "delta": 22.9400,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 39.6040,
+          "delta": 19.4260,
+          "winRate": 93.1000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 20.9990,
+          "delta": 0.8210,
+          "winRate": 94.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 36.8030,
+          "delta": 16.6250,
+          "winRate": 88.3000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 22.1010,
+          "delta": 1.9230,
+          "winRate": 94.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 36.8130,
+          "delta": 16.6350,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 26.4230,
+          "delta": 6.2450,
+          "winRate": 94.2000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "mirrorAverage": 19.9060,
+      "mixedOpponentsAverage": 26.8840,
+      "mixedOpponentsDelta": 6.9780,
+      "mixedOpponentsWinRate": 34.4000,
+      "maxAbsDelta": 53.0020,
+      "maxDelta": 53.0020,
+      "minDelta": 1.8040,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 53.0020
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 33.4720,
+          "delta": 13.5660,
+          "winRate": 84.7000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 34.3880,
+          "delta": 14.4820,
+          "winRate": 83.9000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 34.5540,
+          "delta": 14.6480,
+          "winRate": 84.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 33.3500,
+          "delta": 13.4440,
+          "winRate": 82.7000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 34.3970,
+          "delta": 14.4910,
+          "winRate": 84.6000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 72.9080,
+          "delta": 53.0020,
+          "winRate": 96.9000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.1610,
+          "delta": 23.2550,
+          "winRate": 92.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 33.4360,
+          "delta": 13.5300,
+          "winRate": 82.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 34.0570,
+          "delta": 14.1510,
+          "winRate": 85.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 21.7100,
+          "delta": 1.8040,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 42.9800,
+          "delta": 23.0740,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 41.1320,
+          "delta": 21.2260,
+          "winRate": 82.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.5000,
+          "delta": 20.5940,
+          "winRate": 90.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 36.4760,
+          "delta": 16.5700,
+          "winRate": 86.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 39.5560,
+          "delta": 19.6500,
+          "winRate": 88.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 38.7760,
+          "delta": 18.8700,
+          "winRate": 85.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 33.6450,
+          "delta": 13.7390,
+          "winRate": 80.5000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 34.1730,
+          "delta": 14.2670,
+          "winRate": 82.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 34.6960,
+          "delta": 14.7900,
+          "winRate": 90.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 37.7850,
+          "delta": 17.8790,
+          "winRate": 91.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 37.6960,
+          "delta": 17.7900,
+          "winRate": 85.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 29.0010,
+          "delta": 9.0950,
+          "winRate": 79.9000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 22.2610,
+          "delta": 2.3550,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 46.1020,
+          "delta": 26.1960,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.0460,
+          "delta": 20.1400,
+          "winRate": 89.2000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 34.1920,
+          "delta": 14.2860,
+          "winRate": 85.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 40.1980,
+          "delta": 20.2920,
+          "winRate": 84.5000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 34.0960,
+          "delta": 14.1900,
+          "winRate": 83.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 39.3970,
+          "delta": 19.4910,
+          "winRate": 84.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 34.5530,
+          "delta": 14.6470,
+          "winRate": 86.1000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "mirrorAverage": 20.8670,
+      "mixedOpponentsAverage": 23.8470,
+      "mixedOpponentsDelta": 2.9800,
+      "mixedOpponentsWinRate": 28.1000,
+      "maxAbsDelta": 51.2940,
+      "maxDelta": 51.2940,
+      "minDelta": -0.8820,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 51.2940
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 22.2940,
+          "delta": 1.4270,
+          "winRate": 91.6000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 20.3920,
+          "delta": -0.4750,
+          "winRate": 99.3000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 21.0810,
+          "delta": 0.2140,
+          "winRate": 99.1000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 22.1840,
+          "delta": 1.3170,
+          "winRate": 92.1000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 22.8010,
+          "delta": 1.9340,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 72.1610,
+          "delta": 51.2940,
+          "winRate": 98.1000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.3000,
+          "delta": 23.4330,
+          "winRate": 94.9000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.2870,
+          "delta": 1.4200,
+          "winRate": 90.9000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 42.5510,
+          "delta": 21.6840,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.2430,
+          "delta": 22.3760,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 41.3870,
+          "delta": 20.5200,
+          "winRate": 92.0000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.6910,
+          "delta": 16.8240,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.2030,
+          "delta": 19.3360,
+          "winRate": 93.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 40.6550,
+          "delta": 19.7880,
+          "winRate": 94.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 40.6280,
+          "delta": 19.7610,
+          "winRate": 94.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 28.3390,
+          "delta": 7.4720,
+          "winRate": 86.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 39.5490,
+          "delta": 18.6820,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 20.9170,
+          "delta": 0.0500,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 39.1790,
+          "delta": 18.3120,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 41.3590,
+          "delta": 20.4920,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 23.9690,
+          "delta": 3.1020,
+          "winRate": 88.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.5000,
+          "delta": 18.6330,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 42.6830,
+          "delta": 21.8160,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 44.6310,
+          "delta": 23.7640,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 39.2840,
+          "delta": 18.4170,
+          "winRate": 93.6000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 19.9850,
+          "delta": -0.8820,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 38.1710,
+          "delta": 17.3040,
+          "winRate": 89.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 21.5700,
+          "delta": 0.7030,
+          "winRate": 98.8000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 38.7630,
+          "delta": 17.8960,
+          "winRate": 90.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 25.1120,
+          "delta": 4.2450,
+          "winRate": 98.5000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "mirrorAverage": 20.0570,
+      "mixedOpponentsAverage": 27.0840,
+      "mixedOpponentsDelta": 7.0270,
+      "mixedOpponentsWinRate": 33.3000,
+      "maxAbsDelta": 51.3630,
+      "maxDelta": 51.3630,
+      "minDelta": 0.3530,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 51.3630
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 37.1400,
+          "delta": 17.0830,
+          "winRate": 84.1000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 34.9620,
+          "delta": 14.9050,
+          "winRate": 83.5000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 35.3480,
+          "delta": 15.2910,
+          "winRate": 82.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 36.9350,
+          "delta": 16.8780,
+          "winRate": 85.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 36.5350,
+          "delta": 16.4780,
+          "winRate": 84.0000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 71.4200,
+          "delta": 51.3630,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.8000,
+          "delta": 23.7430,
+          "winRate": 90.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 36.3550,
+          "delta": 16.2980,
+          "winRate": 85.1000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 23.1490,
+          "delta": 3.0920,
+          "winRate": 86.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 35.7740,
+          "delta": 15.7170,
+          "winRate": 85.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 42.9540,
+          "delta": 22.8970,
+          "winRate": 88.3000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 44.1890,
+          "delta": 24.1320,
+          "winRate": 88.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.2150,
+          "delta": 20.1580,
+          "winRate": 89.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 40.4360,
+          "delta": 20.3790,
+          "winRate": 88.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 38.0920,
+          "delta": 18.0350,
+          "winRate": 90.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 40.3690,
+          "delta": 20.3120,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 31.1750,
+          "delta": 11.1180,
+          "winRate": 78.9000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 34.9570,
+          "delta": 14.9000,
+          "winRate": 84.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 38.7450,
+          "delta": 18.6880,
+          "winRate": 88.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 38.8030,
+          "delta": 18.7460,
+          "winRate": 92.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 38.9440,
+          "delta": 18.8870,
+          "winRate": 85.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 27.5210,
+          "delta": 7.4640,
+          "winRate": 82.6000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 20.4100,
+          "delta": 0.3530,
+          "winRate": 99.3000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 45.5810,
+          "delta": 25.5240,
+          "winRate": 89.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.1580,
+          "delta": 20.1010,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 35.3630,
+          "delta": 15.3060,
+          "winRate": 85.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 43.5510,
+          "delta": 23.4940,
+          "winRate": 87.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 34.8540,
+          "delta": 14.7970,
+          "winRate": 82.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 42.1220,
+          "delta": 22.0650,
+          "winRate": 87.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 36.0090,
+          "delta": 15.9520,
+          "winRate": 86.5000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "mirrorAverage": 20.4470,
+      "mixedOpponentsAverage": 29.6740,
+      "mixedOpponentsDelta": 9.2270,
+      "mixedOpponentsWinRate": 40.7000,
+      "maxAbsDelta": 32.5740,
+      "maxDelta": 32.5740,
+      "minDelta": 8.5240,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 32.5740
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 38.2390,
+          "delta": 17.7920,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 37.8770,
+          "delta": 17.4300,
+          "winRate": 89.9000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 38.2130,
+          "delta": 17.7660,
+          "winRate": 91.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 38.3950,
+          "delta": 17.9480,
+          "winRate": 91.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 37.3670,
+          "delta": 16.9200,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 53.0210,
+          "delta": 32.5740,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.0400,
+          "delta": 22.5930,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 37.7990,
+          "delta": 17.3520,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 38.2780,
+          "delta": 17.8310,
+          "winRate": 91.3000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 37.5410,
+          "delta": 17.0940,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 36.9970,
+          "delta": 16.5500,
+          "winRate": 90.9000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.4660,
+          "delta": 18.0190,
+          "winRate": 90.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 29.8110,
+          "delta": 9.3640,
+          "winRate": 95.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 31.8060,
+          "delta": 11.3590,
+          "winRate": 89.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 28.9710,
+          "delta": 8.5240,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 33.7480,
+          "delta": 13.3010,
+          "winRate": 87.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 31.2800,
+          "delta": 10.8330,
+          "winRate": 88.1000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 36.5370,
+          "delta": 16.0900,
+          "winRate": 89.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.4540,
+          "delta": 17.0070,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 35.4480,
+          "delta": 15.0010,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 35.3350,
+          "delta": 14.8880,
+          "winRate": 89.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 34.6550,
+          "delta": 14.2080,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 38.2710,
+          "delta": 17.8240,
+          "winRate": 92.7000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 36.8600,
+          "delta": 16.4130,
+          "winRate": 94.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 33.9500,
+          "delta": 13.5030,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 36.9430,
+          "delta": 16.4960,
+          "winRate": 89.2000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 39.4060,
+          "delta": 18.9590,
+          "winRate": 90.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 37.3120,
+          "delta": 16.8650,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 41.8520,
+          "delta": 21.4050,
+          "winRate": 92.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 38.4740,
+          "delta": 18.0270,
+          "winRate": 89.3000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 6 turns",
+      "mirrorAverage": 20.0270,
+      "mixedOpponentsAverage": 34.7380,
+      "mixedOpponentsDelta": 14.7110,
+      "mixedOpponentsWinRate": 61.4000,
+      "maxAbsDelta": 50.3000,
+      "maxDelta": 50.3000,
+      "minDelta": 0.8290,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 50.3000
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 42.7310,
+          "delta": 22.7040,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 42.9610,
+          "delta": 22.9340,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 42.6600,
+          "delta": 22.6330,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 42.7160,
+          "delta": 22.6890,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 41.8540,
+          "delta": 21.8270,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 70.3270,
+          "delta": 50.3000,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.8210,
+          "delta": 23.7940,
+          "winRate": 98.3000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 42.9940,
+          "delta": 22.9670,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 43.6230,
+          "delta": 23.5960,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 43.2150,
+          "delta": 23.1880,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 44.1310,
+          "delta": 24.1040,
+          "winRate": 99.3000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 40.6310,
+          "delta": 20.6040,
+          "winRate": 97.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.4060,
+          "delta": 20.3790,
+          "winRate": 96.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.5150,
+          "delta": 19.4880,
+          "winRate": 98.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 39.7730,
+          "delta": 19.7460,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 39.7330,
+          "delta": 19.7060,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 39.5730,
+          "delta": 19.5460,
+          "winRate": 96.8000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 42.6410,
+          "delta": 22.6140,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 40.3770,
+          "delta": 20.3500,
+          "winRate": 98.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.3160,
+          "delta": 20.2890,
+          "winRate": 98.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 40.5390,
+          "delta": 20.5120,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 40.6130,
+          "delta": 20.5860,
+          "winRate": 97.8000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 43.3420,
+          "delta": 23.3150,
+          "winRate": 99.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 40.8500,
+          "delta": 20.8230,
+          "winRate": 95.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 38.3590,
+          "delta": 18.3320,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 42.7120,
+          "delta": 22.6850,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 20.8560,
+          "delta": 0.8290,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 42.3080,
+          "delta": 22.2810,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 26.5720,
+          "delta": 6.5450,
+          "winRate": 98.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 42.3430,
+          "delta": 22.3160,
+          "winRate": 99.7000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "mirrorAverage": 19.4330,
+      "mixedOpponentsAverage": 27.3650,
+      "mixedOpponentsDelta": 7.9320,
+      "mixedOpponentsWinRate": 35.1000,
+      "maxAbsDelta": 35.2940,
+      "maxDelta": 35.2940,
+      "minDelta": 1.4860,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 35.2940
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 38.5880,
+          "delta": 19.1550,
+          "winRate": 90.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 35.9870,
+          "delta": 16.5540,
+          "winRate": 88.0000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 36.9450,
+          "delta": 17.5120,
+          "winRate": 88.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 39.1150,
+          "delta": 19.6820,
+          "winRate": 88.9000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 38.1700,
+          "delta": 18.7370,
+          "winRate": 90.5000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 54.7270,
+          "delta": 35.2940,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.3320,
+          "delta": 24.8990,
+          "winRate": 95.7000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 38.9870,
+          "delta": 19.5540,
+          "winRate": 90.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 38.1980,
+          "delta": 18.7650,
+          "winRate": 91.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 36.3930,
+          "delta": 16.9600,
+          "winRate": 87.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 37.0020,
+          "delta": 17.5690,
+          "winRate": 90.2000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 29.3520,
+          "delta": 9.9190,
+          "winRate": 85.0000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 40.3990,
+          "delta": 20.9660,
+          "winRate": 88.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 25.6650,
+          "delta": 6.2320,
+          "winRate": 82.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 20.9190,
+          "delta": 1.4860,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 31.8150,
+          "delta": 12.3820,
+          "winRate": 81.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 27.1030,
+          "delta": 7.6700,
+          "winRate": 81.8000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 37.4920,
+          "delta": 18.0590,
+          "winRate": 90.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 32.2330,
+          "delta": 12.8000,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 28.4630,
+          "delta": 9.0300,
+          "winRate": 94.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 34.8690,
+          "delta": 15.4360,
+          "winRate": 86.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 31.3110,
+          "delta": 11.8780,
+          "winRate": 85.7000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 35.5380,
+          "delta": 16.1050,
+          "winRate": 88.7000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 38.0600,
+          "delta": 18.6270,
+          "winRate": 93.3000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 34.5160,
+          "delta": 15.0830,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 37.2790,
+          "delta": 17.8460,
+          "winRate": 88.2000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 41.0150,
+          "delta": 21.5820,
+          "winRate": 89.3000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 37.5380,
+          "delta": 18.1050,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 42.4260,
+          "delta": 22.9930,
+          "winRate": 92.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 38.5010,
+          "delta": 19.0680,
+          "winRate": 89.1000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 7 treasure or 4 hazards",
+      "mirrorAverage": 20.1670,
+      "mixedOpponentsAverage": 26.3580,
+      "mixedOpponentsDelta": 6.1910,
+      "mixedOpponentsWinRate": 29.4000,
+      "maxAbsDelta": 34.2090,
+      "maxDelta": 34.2090,
+      "minDelta": 4.7400,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 34.2090
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 35.3950,
+          "delta": 15.2280,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 35.0550,
+          "delta": 14.8880,
+          "winRate": 89.3000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 34.9030,
+          "delta": 14.7360,
+          "winRate": 90.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 34.0990,
+          "delta": 13.9320,
+          "winRate": 89.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 34.4540,
+          "delta": 14.2870,
+          "winRate": 88.4000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 54.3760,
+          "delta": 34.2090,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 42.4220,
+          "delta": 22.2550,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 35.0710,
+          "delta": 14.9040,
+          "winRate": 89.7000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 34.3380,
+          "delta": 14.1710,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 35.4450,
+          "delta": 15.2780,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 35.5890,
+          "delta": 15.4220,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 32.0310,
+          "delta": 11.8640,
+          "winRate": 87.8000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.4410,
+          "delta": 18.2740,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 24.9070,
+          "delta": 4.7400,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 24.9870,
+          "delta": 4.8200,
+          "winRate": 94.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 29.9150,
+          "delta": 9.7480,
+          "winRate": 83.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 26.5990,
+          "delta": 6.4320,
+          "winRate": 86.1000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 36.4560,
+          "delta": 16.2890,
+          "winRate": 90.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 26.6590,
+          "delta": 6.4920,
+          "winRate": 97.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 31.1860,
+          "delta": 11.0190,
+          "winRate": 95.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 32.8740,
+          "delta": 12.7070,
+          "winRate": 86.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 30.9390,
+          "delta": 10.7720,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 35.6220,
+          "delta": 15.4550,
+          "winRate": 92.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 39.3640,
+          "delta": 19.1970,
+          "winRate": 92.8000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 35.7210,
+          "delta": 15.5540,
+          "winRate": 92.2000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 34.8730,
+          "delta": 14.7060,
+          "winRate": 88.4000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 39.0490,
+          "delta": 18.8820,
+          "winRate": 89.3000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 36.7440,
+          "delta": 16.5770,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 39.5550,
+          "delta": 19.3880,
+          "winRate": 90.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 36.9960,
+          "delta": 16.8290,
+          "winRate": 91.5000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "mirrorAverage": 20.0140,
+      "mixedOpponentsAverage": 27.2250,
+      "mixedOpponentsDelta": 7.2110,
+      "mixedOpponentsWinRate": 33.0000,
+      "maxAbsDelta": 34.4660,
+      "maxDelta": 34.4660,
+      "minDelta": 1.1360,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 34.4660
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 38.7750,
+          "delta": 18.7610,
+          "winRate": 91.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 36.8080,
+          "delta": 16.7940,
+          "winRate": 89.2000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 36.2790,
+          "delta": 16.2650,
+          "winRate": 86.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 38.1530,
+          "delta": 18.1390,
+          "winRate": 90.5000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 39.3190,
+          "delta": 19.3050,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 54.4800,
+          "delta": 34.4660,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.2340,
+          "delta": 23.2200,
+          "winRate": 95.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 37.2060,
+          "delta": 17.1920,
+          "winRate": 87.3000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 37.8940,
+          "delta": 17.8800,
+          "winRate": 91.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 37.4720,
+          "delta": 17.4580,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 35.7540,
+          "delta": 15.7400,
+          "winRate": 89.3000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 30.0220,
+          "delta": 10.0080,
+          "winRate": 85.7000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 40.5680,
+          "delta": 20.5540,
+          "winRate": 90.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 21.1500,
+          "delta": 1.1360,
+          "winRate": 98.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 24.7040,
+          "delta": 4.6900,
+          "winRate": 83.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 31.9240,
+          "delta": 11.9100,
+          "winRate": 82.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 26.7350,
+          "delta": 6.7210,
+          "winRate": 85.0000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 37.2910,
+          "delta": 17.2770,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 32.1750,
+          "delta": 12.1610,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 28.5520,
+          "delta": 8.5380,
+          "winRate": 96.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 34.5690,
+          "delta": 14.5550,
+          "winRate": 86.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 31.0410,
+          "delta": 11.0270,
+          "winRate": 87.9000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 36.2660,
+          "delta": 16.2520,
+          "winRate": 91.5000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 38.4020,
+          "delta": 18.3880,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 35.6190,
+          "delta": 15.6050,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 36.8200,
+          "delta": 16.8060,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 39.2190,
+          "delta": 19.2050,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 36.7760,
+          "delta": 16.7620,
+          "winRate": 88.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 41.3530,
+          "delta": 21.3390,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 38.3370,
+          "delta": 18.3230,
+          "winRate": 89.4000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "mirrorAverage": 20.5090,
+      "mixedOpponentsAverage": 25.8080,
+      "mixedOpponentsDelta": 5.2990,
+      "mixedOpponentsWinRate": 34.3000,
+      "maxAbsDelta": 34.2940,
+      "maxDelta": 34.2940,
+      "minDelta": 3.0960,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 34.2940
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 28.1290,
+          "delta": 7.6200,
+          "winRate": 92.5000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 26.6810,
+          "delta": 6.1720,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 26.2100,
+          "delta": 5.7010,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 28.5010,
+          "delta": 7.9920,
+          "winRate": 91.1000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 28.0460,
+          "delta": 7.5370,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 54.8030,
+          "delta": 34.2940,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.3710,
+          "delta": 22.8620,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 28.1910,
+          "delta": 7.6820,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 42.2530,
+          "delta": 21.7440,
+          "winRate": 98.7000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 26.9610,
+          "delta": 6.4520,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 42.3070,
+          "delta": 21.7980,
+          "winRate": 98.1000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 35.2660,
+          "delta": 14.7570,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.8660,
+          "delta": 17.3570,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 33.2170,
+          "delta": 12.7080,
+          "winRate": 99.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 32.5700,
+          "delta": 12.0610,
+          "winRate": 96.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 32.7420,
+          "delta": 12.2330,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 33.5690,
+          "delta": 13.0600,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 26.4890,
+          "delta": 5.9800,
+          "winRate": 94.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.1650,
+          "delta": 16.6560,
+          "winRate": 97.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 38.4930,
+          "delta": 17.9840,
+          "winRate": 98.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 23.6050,
+          "delta": 3.0960,
+          "winRate": 98.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 38.2370,
+          "delta": 17.7280,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 42.3710,
+          "delta": 21.8620,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 38.6430,
+          "delta": 18.1340,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 36.4910,
+          "delta": 15.9820,
+          "winRate": 94.8000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 25.9870,
+          "delta": 5.4780,
+          "winRate": 94.7000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 37.5390,
+          "delta": 17.0300,
+          "winRate": 92.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 26.6580,
+          "delta": 6.1490,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 38.6140,
+          "delta": 18.1050,
+          "winRate": 92.5000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 28.7160,
+          "delta": 8.2070,
+          "winRate": 93.9000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "mirrorAverage": 19.8600,
+      "mixedOpponentsAverage": 27.7780,
+      "mixedOpponentsDelta": 7.9180,
+      "mixedOpponentsWinRate": 32.7000,
+      "maxAbsDelta": 35.4610,
+      "maxDelta": 35.4610,
+      "minDelta": 5.5560,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 35.4610
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 37.9640,
+          "delta": 18.1040,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 35.3320,
+          "delta": 15.4720,
+          "winRate": 89.2000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 36.3980,
+          "delta": 16.5380,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 37.8310,
+          "delta": 17.9710,
+          "winRate": 92.7000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 36.6180,
+          "delta": 16.7580,
+          "winRate": 90.5000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 55.3210,
+          "delta": 35.4610,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.6270,
+          "delta": 24.7670,
+          "winRate": 95.9000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 37.5900,
+          "delta": 17.7300,
+          "winRate": 91.6000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 32.3200,
+          "delta": 12.4600,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 36.7760,
+          "delta": 16.9160,
+          "winRate": 92.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 30.7430,
+          "delta": 10.8830,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 32.5950,
+          "delta": 12.7350,
+          "winRate": 91.1000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 40.2130,
+          "delta": 20.3530,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 29.0020,
+          "delta": 9.1420,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 29.0680,
+          "delta": 9.2080,
+          "winRate": 91.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 29.6550,
+          "delta": 9.7950,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 30.0910,
+          "delta": 10.2310,
+          "winRate": 84.8000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 36.4120,
+          "delta": 16.5520,
+          "winRate": 89.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 35.0180,
+          "delta": 15.1580,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 35.0150,
+          "delta": 15.1550,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 33.6240,
+          "delta": 13.7640,
+          "winRate": 86.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 25.4160,
+          "delta": 5.5560,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 29.6710,
+          "delta": 9.8110,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 39.1040,
+          "delta": 19.2440,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 36.1040,
+          "delta": 16.2440,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 36.6030,
+          "delta": 16.7430,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 40.7260,
+          "delta": 20.8660,
+          "winRate": 92.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 37.0790,
+          "delta": 17.2190,
+          "winRate": 91.8000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 41.4070,
+          "delta": 21.5470,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 37.2570,
+          "delta": 17.3970,
+          "winRate": 89.6000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 7 turns",
+      "mirrorAverage": 20.0660,
+      "mixedOpponentsAverage": 25.0230,
+      "mixedOpponentsDelta": 4.9570,
+      "mixedOpponentsWinRate": 28.1000,
+      "maxAbsDelta": 54.1620,
+      "maxDelta": 54.1620,
+      "minDelta": 0.4480,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 54.1620
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 22.1350,
+          "delta": 2.0690,
+          "winRate": 91.2000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 20.7370,
+          "delta": 0.6710,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 20.5760,
+          "delta": 0.5100,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 22.6190,
+          "delta": 2.5530,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 22.5750,
+          "delta": 2.5090,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 74.2280,
+          "delta": 54.1620,
+          "winRate": 98.9000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.9150,
+          "delta": 24.8490,
+          "winRate": 95.4000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.1500,
+          "delta": 2.0840,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 43.4910,
+          "delta": 23.4250,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 20.5140,
+          "delta": 0.4480,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.0050,
+          "delta": 22.9390,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 41.2960,
+          "delta": 21.2300,
+          "winRate": 92.8000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.9110,
+          "delta": 18.8450,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 41.0130,
+          "delta": 20.9470,
+          "winRate": 94.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.2830,
+          "delta": 19.2170,
+          "winRate": 92.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 40.4490,
+          "delta": 20.3830,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.8710,
+          "delta": 7.8050,
+          "winRate": 86.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 39.9870,
+          "delta": 19.9210,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 39.2630,
+          "delta": 19.1970,
+          "winRate": 95.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.2380,
+          "delta": 20.1720,
+          "winRate": 96.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 24.3680,
+          "delta": 4.3020,
+          "winRate": 86.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.8210,
+          "delta": 19.7550,
+          "winRate": 97.1000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 43.3990,
+          "delta": 23.3330,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 44.1260,
+          "delta": 24.0600,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.1270,
+          "delta": 20.0610,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 21.1350,
+          "delta": 1.0690,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 37.9700,
+          "delta": 17.9040,
+          "winRate": 88.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 21.5340,
+          "delta": 1.4680,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 37.9570,
+          "delta": 17.8910,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 25.8030,
+          "delta": 5.7370,
+          "winRate": 99.7000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 8 treasure or 4 hazards",
+      "mirrorAverage": 20.1540,
+      "mixedOpponentsAverage": 26.8050,
+      "mixedOpponentsDelta": 6.6510,
+      "mixedOpponentsWinRate": 30.9000,
+      "maxAbsDelta": 35.7190,
+      "maxDelta": 35.7190,
+      "minDelta": 5.2090,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 35.7190
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 35.2480,
+          "delta": 15.0940,
+          "winRate": 87.1000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 35.3050,
+          "delta": 15.1510,
+          "winRate": 86.9000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 35.8280,
+          "delta": 15.6740,
+          "winRate": 86.1000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 34.5750,
+          "delta": 14.4210,
+          "winRate": 87.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 32.8830,
+          "delta": 12.7290,
+          "winRate": 85.1000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 55.8730,
+          "delta": 35.7190,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 42.4850,
+          "delta": 22.3310,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 35.1490,
+          "delta": 14.9950,
+          "winRate": 87.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 32.2840,
+          "delta": 12.1300,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 36.3750,
+          "delta": 16.2210,
+          "winRate": 87.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 34.8250,
+          "delta": 14.6710,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 35.5630,
+          "delta": 15.4090,
+          "winRate": 84.6000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.9420,
+          "delta": 17.7880,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 30.6230,
+          "delta": 10.4690,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 25.9470,
+          "delta": 5.7930,
+          "winRate": 85.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 31.4270,
+          "delta": 11.2730,
+          "winRate": 86.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 33.7550,
+          "delta": 13.6010,
+          "winRate": 84.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 31.3430,
+          "delta": 11.1890,
+          "winRate": 83.0000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 35.9580,
+          "delta": 15.8040,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 25.3630,
+          "delta": 5.2090,
+          "winRate": 94.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 31.3130,
+          "delta": 11.1590,
+          "winRate": 80.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 28.5580,
+          "delta": 8.4040,
+          "winRate": 84.6000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 35.5200,
+          "delta": 15.3660,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 39.2300,
+          "delta": 19.0760,
+          "winRate": 94.3000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 36.0860,
+          "delta": 15.9320,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 35.7710,
+          "delta": 15.6170,
+          "winRate": 86.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 39.4050,
+          "delta": 19.2510,
+          "winRate": 89.1000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 35.6060,
+          "delta": 15.4520,
+          "winRate": 87.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 39.8390,
+          "delta": 19.6850,
+          "winRate": 88.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 36.1850,
+          "delta": 16.0310,
+          "winRate": 87.0000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "mirrorAverage": 19.3750,
+      "mixedOpponentsAverage": 27.8770,
+      "mixedOpponentsDelta": 8.5020,
+      "mixedOpponentsWinRate": 36.3000,
+      "maxAbsDelta": 36.9890,
+      "maxDelta": 36.9890,
+      "minDelta": 5.7840,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 36.9890
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 38.2530,
+          "delta": 18.8780,
+          "winRate": 87.4000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 37.6890,
+          "delta": 18.3140,
+          "winRate": 85.4000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 37.1730,
+          "delta": 17.7980,
+          "winRate": 86.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 38.0020,
+          "delta": 18.6270,
+          "winRate": 87.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 38.7020,
+          "delta": 19.3270,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 56.3640,
+          "delta": 36.9890,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.0070,
+          "delta": 24.6320,
+          "winRate": 93.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 38.5510,
+          "delta": 19.1760,
+          "winRate": 87.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 36.9420,
+          "delta": 17.5670,
+          "winRate": 86.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 37.7310,
+          "delta": 18.3560,
+          "winRate": 86.2000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 34.7070,
+          "delta": 15.3320,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 35.2750,
+          "delta": 15.9000,
+          "winRate": 83.5000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 41.2710,
+          "delta": 21.8960,
+          "winRate": 89.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 28.4180,
+          "delta": 9.0430,
+          "winRate": 83.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 31.5980,
+          "delta": 12.2230,
+          "winRate": 84.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 26.5180,
+          "delta": 7.1430,
+          "winRate": 83.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 35.5920,
+          "delta": 16.2170,
+          "winRate": 82.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 31.9110,
+          "delta": 12.5360,
+          "winRate": 81.6000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 37.2330,
+          "delta": 17.8580,
+          "winRate": 86.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 25.1590,
+          "delta": 5.7840,
+          "winRate": 82.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 34.6440,
+          "delta": 15.2690,
+          "winRate": 81.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 28.9160,
+          "delta": 9.5410,
+          "winRate": 81.5000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 34.8510,
+          "delta": 15.4760,
+          "winRate": 87.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 39.4180,
+          "delta": 20.0430,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 35.7050,
+          "delta": 16.3300,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 37.8280,
+          "delta": 18.4530,
+          "winRate": 86.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 41.7120,
+          "delta": 22.3370,
+          "winRate": 89.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 37.3100,
+          "delta": 17.9350,
+          "winRate": 86.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 42.0570,
+          "delta": 22.6820,
+          "winRate": 88.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 37.8450,
+          "delta": 18.4700,
+          "winRate": 87.0000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 8 treasure or 7 turns",
+      "mirrorAverage": 20.2330,
+      "mixedOpponentsAverage": 24.3290,
+      "mixedOpponentsDelta": 4.0960,
+      "mixedOpponentsWinRate": 24.7000,
+      "maxAbsDelta": 35.3840,
+      "maxDelta": 35.3840,
+      "minDelta": 3.8240,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 35.3840
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 26.3770,
+          "delta": 6.1440,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 24.3450,
+          "delta": 4.1120,
+          "winRate": 97.5000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 24.0740,
+          "delta": 3.8410,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 25.9320,
+          "delta": 5.6990,
+          "winRate": 93.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 26.4740,
+          "delta": 6.2410,
+          "winRate": 92.3000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 55.6170,
+          "delta": 35.3840,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.6600,
+          "delta": 23.4270,
+          "winRate": 96.8000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 25.6930,
+          "delta": 5.4600,
+          "winRate": 93.2000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 42.6120,
+          "delta": 22.3790,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 24.4270,
+          "delta": 4.1940,
+          "winRate": 96.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.6170,
+          "delta": 23.3840,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 37.5170,
+          "delta": 17.2840,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 37.9310,
+          "delta": 17.6980,
+          "winRate": 92.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 36.4650,
+          "delta": 16.2320,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 35.2230,
+          "delta": 14.9900,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 37.3590,
+          "delta": 17.1260,
+          "winRate": 95.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 24.0570,
+          "delta": 3.8240,
+          "winRate": 90.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 35.9170,
+          "delta": 15.6840,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 24.3730,
+          "delta": 4.1400,
+          "winRate": 96.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 35.8450,
+          "delta": 15.6120,
+          "winRate": 97.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 36.5220,
+          "delta": 16.2890,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 37.1340,
+          "delta": 16.9010,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 42.2840,
+          "delta": 22.0510,
+          "winRate": 98.7000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 38.4550,
+          "delta": 18.2220,
+          "winRate": 95.4000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 37.5870,
+          "delta": 17.3540,
+          "winRate": 96.1000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 24.7690,
+          "delta": 4.5360,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 38.9930,
+          "delta": 18.7600,
+          "winRate": 92.7000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 24.6720,
+          "delta": 4.4390,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 39.0550,
+          "delta": 18.8220,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 27.3280,
+          "delta": 7.0950,
+          "winRate": 95.7000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "mirrorAverage": 21.1480,
+      "mixedOpponentsAverage": 26.2570,
+      "mixedOpponentsDelta": 5.1090,
+      "mixedOpponentsWinRate": 29.7000,
+      "maxAbsDelta": 35.4560,
+      "maxDelta": 35.4560,
+      "minDelta": 3.5660,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 35.4560
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 37.2200,
+          "delta": 16.0720,
+          "winRate": 92.0000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 36.6150,
+          "delta": 15.4670,
+          "winRate": 91.4000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 36.7300,
+          "delta": 15.5820,
+          "winRate": 88.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 37.0970,
+          "delta": 15.9490,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 36.8060,
+          "delta": 15.6580,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 56.6040,
+          "delta": 35.4560,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.8010,
+          "delta": 22.6530,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 37.2920,
+          "delta": 16.1440,
+          "winRate": 89.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 30.1830,
+          "delta": 9.0350,
+          "winRate": 90.5000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 36.5550,
+          "delta": 15.4070,
+          "winRate": 90.4000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 27.5270,
+          "delta": 6.3790,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 36.8320,
+          "delta": 15.6840,
+          "winRate": 92.0000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 40.9210,
+          "delta": 19.7730,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 34.0330,
+          "delta": 12.8850,
+          "winRate": 94.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 33.9360,
+          "delta": 12.7880,
+          "winRate": 91.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 34.2390,
+          "delta": 13.0910,
+          "winRate": 93.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 35.5780,
+          "delta": 14.4300,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 24.7140,
+          "delta": 3.5660,
+          "winRate": 86.9000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 35.8360,
+          "delta": 14.6880,
+          "winRate": 86.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 32.4490,
+          "delta": 11.3010,
+          "winRate": 94.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 32.2330,
+          "delta": 11.0850,
+          "winRate": 98.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 32.1460,
+          "delta": 10.9980,
+          "winRate": 84.8000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 26.9780,
+          "delta": 5.8300,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 39.3810,
+          "delta": 18.2330,
+          "winRate": 93.9000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 36.2160,
+          "delta": 15.0680,
+          "winRate": 92.9000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 36.7510,
+          "delta": 15.6030,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 40.0830,
+          "delta": 18.9350,
+          "winRate": 89.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 36.8870,
+          "delta": 15.7390,
+          "winRate": 89.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 40.6620,
+          "delta": 19.5140,
+          "winRate": 90.4000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 37.7740,
+          "delta": 16.6260,
+          "winRate": 91.0000
+        }
+      ]
+    },
+    {
+      "name": "Leave after 8 turns",
+      "mirrorAverage": 19.8290,
+      "mixedOpponentsAverage": 27.4370,
+      "mixedOpponentsDelta": 7.6080,
+      "mixedOpponentsWinRate": 36.7000,
+      "maxAbsDelta": 50.8150,
+      "maxDelta": 50.8150,
+      "minDelta": 0.4040,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 50.8150
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 36.9170,
+          "delta": 17.0880,
+          "winRate": 85.9000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 34.6200,
+          "delta": 14.7910,
+          "winRate": 81.4000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 34.5290,
+          "delta": 14.7000,
+          "winRate": 84.2000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 37.2210,
+          "delta": 17.3920,
+          "winRate": 85.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 36.5140,
+          "delta": 16.6850,
+          "winRate": 84.1000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 70.6440,
+          "delta": 50.8150,
+          "winRate": 96.5000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 42.2170,
+          "delta": 22.3880,
+          "winRate": 88.9000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 37.3630,
+          "delta": 17.5340,
+          "winRate": 85.3000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 24.2680,
+          "delta": 4.4390,
+          "winRate": 84.2000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 35.3390,
+          "delta": 15.5100,
+          "winRate": 84.9000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 20.2330,
+          "delta": 0.4040,
+          "winRate": 97.6000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 43.3420,
+          "delta": 23.5130,
+          "winRate": 88.8000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 43.3690,
+          "delta": 23.5400,
+          "winRate": 86.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 39.1150,
+          "delta": 19.2860,
+          "winRate": 88.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 40.1190,
+          "delta": 20.2900,
+          "winRate": 86.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 39.5390,
+          "delta": 19.7100,
+          "winRate": 88.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 40.3860,
+          "delta": 20.5570,
+          "winRate": 85.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 30.8050,
+          "delta": 10.9760,
+          "winRate": 81.3000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 36.0730,
+          "delta": 16.2440,
+          "winRate": 84.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 37.3820,
+          "delta": 17.5530,
+          "winRate": 89.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 38.8560,
+          "delta": 19.0270,
+          "winRate": 92.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 37.5580,
+          "delta": 17.7290,
+          "winRate": 85.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 27.4970,
+          "delta": 7.6680,
+          "winRate": 82.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 46.3400,
+          "delta": 26.5110,
+          "winRate": 90.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.6150,
+          "delta": 20.7860,
+          "winRate": 90.2000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 34.9980,
+          "delta": 15.1690,
+          "winRate": 82.4000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 44.1670,
+          "delta": 24.3380,
+          "winRate": 87.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 35.5430,
+          "delta": 15.7140,
+          "winRate": 85.9000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 43.1940,
+          "delta": 23.3650,
+          "winRate": 87.1000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 36.0320,
+          "delta": 16.2030,
+          "winRate": 85.2000
+        }
+      ]
+    },
+    {
+      "name": "Leave after temple treasure 5",
+      "mirrorAverage": 17.6590,
+      "mixedOpponentsAverage": 22.0590,
+      "mixedOpponentsDelta": 4.4000,
+      "mixedOpponentsWinRate": 26.5000,
+      "maxAbsDelta": 14.3670,
+      "maxDelta": 14.3670,
+      "minDelta": -10.9530,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 5 hazards or 8 turns",
+        "delta": 14.3670
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 26.9940,
+          "delta": 9.3350,
+          "winRate": 70.8000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 27.3370,
+          "delta": 9.6780,
+          "winRate": 72.3000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 27.0810,
+          "delta": 9.4220,
+          "winRate": 72.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 27.4510,
+          "delta": 9.7920,
+          "winRate": 73.4000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 27.8290,
+          "delta": 10.1700,
+          "winRate": 69.7000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 6.7060,
+          "delta": -10.9530,
+          "winRate": 31.1000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 28.0030,
+          "delta": 10.3440,
+          "winRate": 76.6000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 26.8720,
+          "delta": 9.2130,
+          "winRate": 72.7000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 30.8060,
+          "delta": 13.1470,
+          "winRate": 79.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 27.2070,
+          "delta": 9.5480,
+          "winRate": 73.7000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 32.0260,
+          "delta": 14.3670,
+          "winRate": 85.3000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 22.8810,
+          "delta": 5.2220,
+          "winRate": 62.0000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 21.4030,
+          "delta": 3.7440,
+          "winRate": 55.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 27.4470,
+          "delta": 9.7880,
+          "winRate": 75.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 25.9390,
+          "delta": 8.2800,
+          "winRate": 68.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 26.8970,
+          "delta": 9.2380,
+          "winRate": 71.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 23.0360,
+          "delta": 5.3770,
+          "winRate": 61.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 25.1630,
+          "delta": 7.5040,
+          "winRate": 68.4000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 26.7030,
+          "delta": 9.0440,
+          "winRate": 70.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 30.5650,
+          "delta": 12.9060,
+          "winRate": 79.5000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 31.2330,
+          "delta": 13.5740,
+          "winRate": 82.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 25.0910,
+          "delta": 7.4320,
+          "winRate": 70.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 27.6100,
+          "delta": 9.9510,
+          "winRate": 75.9000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 31.6050,
+          "delta": 13.9460,
+          "winRate": 82.9000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 27.9670,
+          "delta": 10.3080,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 26.4420,
+          "delta": 8.7830,
+          "winRate": 70.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 22.3150,
+          "delta": 4.6560,
+          "winRate": 57.4000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 26.9280,
+          "delta": 9.2690,
+          "winRate": 71.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 24.1420,
+          "delta": 6.4830,
+          "winRate": 61.6000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 27.6670,
+          "delta": 10.0080,
+          "winRate": 73.0000
+        }
+      ]
+    },
+    {
+      "name": "Leave after temple treasure 6",
+      "mirrorAverage": 18.1090,
+      "mixedOpponentsAverage": 16.6300,
+      "mixedOpponentsDelta": -1.4790,
+      "mixedOpponentsWinRate": 17.4000,
+      "maxAbsDelta": 12.2280,
+      "maxDelta": 9.5500,
+      "minDelta": -12.2280,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": -12.2280
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 21.9670,
+          "delta": 3.8580,
+          "winRate": 56.4000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 23.3480,
+          "delta": 5.2390,
+          "winRate": 60.7000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 22.3750,
+          "delta": 4.2660,
+          "winRate": 56.6000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 23.1290,
+          "delta": 5.0200,
+          "winRate": 59.1000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 22.6940,
+          "delta": 4.5850,
+          "winRate": 57.8000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 5.8810,
+          "delta": -12.2280,
+          "winRate": 25.4000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 26.5540,
+          "delta": 8.4450,
+          "winRate": 70.7000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.9780,
+          "delta": 4.8690,
+          "winRate": 57.9000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 27.6590,
+          "delta": 9.5500,
+          "winRate": 72.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 23.7370,
+          "delta": 5.6280,
+          "winRate": 60.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 26.9330,
+          "delta": 8.8240,
+          "winRate": 73.2000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 18.1200,
+          "delta": 0.0110,
+          "winRate": 42.9000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 16.7290,
+          "delta": -1.3800,
+          "winRate": 35.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 23.1050,
+          "delta": 4.9960,
+          "winRate": 61.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 20.2810,
+          "delta": 2.1720,
+          "winRate": 50.1000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 22.3950,
+          "delta": 4.2860,
+          "winRate": 58.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 18.2100,
+          "delta": 0.1010,
+          "winRate": 42.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 20.2890,
+          "delta": 2.1800,
+          "winRate": 50.6000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 23.5820,
+          "delta": 5.4730,
+          "winRate": 57.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 25.6000,
+          "delta": 7.4910,
+          "winRate": 65.8000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 27.2740,
+          "delta": 9.1650,
+          "winRate": 72.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 20.3970,
+          "delta": 2.2880,
+          "winRate": 50.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 23.0580,
+          "delta": 4.9490,
+          "winRate": 59.7000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 27.6400,
+          "delta": 9.5310,
+          "winRate": 75.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 9.4330,
+          "delta": -8.6760,
+          "winRate": 15.3000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 22.8650,
+          "delta": 4.7560,
+          "winRate": 57.3000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 16.1900,
+          "delta": -1.9190,
+          "winRate": 34.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 23.0020,
+          "delta": 4.8930,
+          "winRate": 59.5000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 19.9570,
+          "delta": 1.8480,
+          "winRate": 45.5000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 23.4770,
+          "delta": 5.3680,
+          "winRate": 59.3000
+        }
+      ]
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "mirrorAverage": 21.1220,
+      "mixedOpponentsAverage": 24.8040,
+      "mixedOpponentsDelta": 3.6820,
+      "mixedOpponentsWinRate": 27.2000,
+      "maxAbsDelta": 41.5730,
+      "maxDelta": 41.5730,
+      "minDelta": -0.6310,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 41.5730
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 22.7380,
+          "delta": 1.6160,
+          "winRate": 92.2000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 20.6300,
+          "delta": -0.4920,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 20.4910,
+          "delta": -0.6310,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 22.9960,
+          "delta": 1.8740,
+          "winRate": 91.9000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 22.5000,
+          "delta": 1.3780,
+          "winRate": 92.5000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 62.6950,
+          "delta": 41.5730,
+          "winRate": 98.8000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 42.3520,
+          "delta": 21.2300,
+          "winRate": 96.6000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.4220,
+          "delta": 1.3000,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 42.4460,
+          "delta": 21.3240,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 21.1470,
+          "delta": 0.0250,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 42.9610,
+          "delta": 21.8390,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 39.3010,
+          "delta": 18.1790,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 39.4800,
+          "delta": 18.3580,
+          "winRate": 90.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 39.3380,
+          "delta": 18.2160,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.0790,
+          "delta": 17.9570,
+          "winRate": 94.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 39.0190,
+          "delta": 17.8970,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 27.3180,
+          "delta": 6.1960,
+          "winRate": 85.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 38.8950,
+          "delta": 17.7730,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 21.1250,
+          "delta": 0.0030,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 39.6340,
+          "delta": 18.5120,
+          "winRate": 96.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 39.6050,
+          "delta": 18.4830,
+          "winRate": 96.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 24.2160,
+          "delta": 3.0940,
+          "winRate": 89.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.7320,
+          "delta": 18.6100,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 44.1210,
+          "delta": 22.9990,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 41.8840,
+          "delta": 20.7620,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 38.9000,
+          "delta": 17.7780,
+          "winRate": 94.1000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 38.8600,
+          "delta": 17.7380,
+          "winRate": 89.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 21.7300,
+          "delta": 0.6080,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 39.2540,
+          "delta": 18.1320,
+          "winRate": 90.3000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 25.3380,
+          "delta": 4.2160,
+          "winRate": 100.0000
+        }
+      ]
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "mirrorAverage": 19.9590,
+      "mixedOpponentsAverage": 33.5570,
+      "mixedOpponentsDelta": 13.5980,
+      "mixedOpponentsWinRate": 58.4000,
+      "maxAbsDelta": 49.8960,
+      "maxDelta": 49.8960,
+      "minDelta": 0.9850,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 49.8960
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 42.0170,
+          "delta": 22.0580,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 42.8440,
+          "delta": 22.8850,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 42.2160,
+          "delta": 22.2570,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 41.7270,
+          "delta": 21.7680,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 41.9440,
+          "delta": 21.9850,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 69.8550,
+          "delta": 49.8960,
+          "winRate": 98.9000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.0000,
+          "delta": 24.0410,
+          "winRate": 98.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 41.0650,
+          "delta": 21.1060,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 43.0030,
+          "delta": 23.0440,
+          "winRate": 99.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 41.6890,
+          "delta": 21.7300,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.2230,
+          "delta": 23.2640,
+          "winRate": 99.5000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 40.9440,
+          "delta": 20.9850,
+          "winRate": 96.9000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 20.9440,
+          "delta": 0.9850,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 40.6360,
+          "delta": 20.6770,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.7610,
+          "delta": 19.8020,
+          "winRate": 97.3000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 41.3970,
+          "delta": 21.4380,
+          "winRate": 97.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 40.6290,
+          "delta": 20.6700,
+          "winRate": 97.9000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 40.4010,
+          "delta": 20.4420,
+          "winRate": 97.3000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 42.0600,
+          "delta": 22.1010,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 40.8900,
+          "delta": 20.9310,
+          "winRate": 98.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 41.4070,
+          "delta": 21.4480,
+          "winRate": 98.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 40.6670,
+          "delta": 20.7080,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 40.2260,
+          "delta": 20.2670,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 43.9130,
+          "delta": 23.9540,
+          "winRate": 99.1000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 42.2720,
+          "delta": 22.3130,
+          "winRate": 96.4000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 39.5500,
+          "delta": 19.5910,
+          "winRate": 96.5000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 42.8150,
+          "delta": 22.8560,
+          "winRate": 100.0000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 42.2930,
+          "delta": 22.3340,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 27.1790,
+          "delta": 7.2200,
+          "winRate": 98.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 43.2280,
+          "delta": 23.2690,
+          "winRate": 99.9000
+        }
+      ]
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "mirrorAverage": 19.9140,
+      "mixedOpponentsAverage": 24.4330,
+      "mixedOpponentsDelta": 4.5190,
+      "mixedOpponentsWinRate": 30.1000,
+      "maxAbsDelta": 51.6710,
+      "maxDelta": 51.6710,
+      "minDelta": 0.8530,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 51.6710
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 23.2730,
+          "delta": 3.3590,
+          "winRate": 91.9000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 21.4360,
+          "delta": 1.5220,
+          "winRate": 99.4000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 21.2480,
+          "delta": 1.3340,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 23.1360,
+          "delta": 3.2220,
+          "winRate": 91.9000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 23.1440,
+          "delta": 3.2300,
+          "winRate": 92.0000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 71.5850,
+          "delta": 51.6710,
+          "winRate": 98.3000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 45.3260,
+          "delta": 25.4120,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 22.9200,
+          "delta": 3.0060,
+          "winRate": 92.5000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 42.7600,
+          "delta": 22.8460,
+          "winRate": 99.7000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 21.2730,
+          "delta": 1.3590,
+          "winRate": 98.8000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 43.2290,
+          "delta": 23.3150,
+          "winRate": 99.9000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 41.5980,
+          "delta": 21.6840,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.5220,
+          "delta": 18.6080,
+          "winRate": 91.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 41.0340,
+          "delta": 21.1200,
+          "winRate": 95.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 39.2140,
+          "delta": 19.3000,
+          "winRate": 92.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 41.2020,
+          "delta": 21.2880,
+          "winRate": 94.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 28.6540,
+          "delta": 8.7400,
+          "winRate": 85.6000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 40.6620,
+          "delta": 20.7480,
+          "winRate": 95.6000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 21.3920,
+          "delta": 1.4780,
+          "winRate": 99.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 40.0460,
+          "delta": 20.1320,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 40.4390,
+          "delta": 20.5250,
+          "winRate": 95.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 25.6370,
+          "delta": 5.7230,
+          "winRate": 90.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 40.9000,
+          "delta": 20.9860,
+          "winRate": 96.9000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 41.8350,
+          "delta": 21.9210,
+          "winRate": 99.8000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 45.5150,
+          "delta": 25.6010,
+          "winRate": 94.1000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 40.8480,
+          "delta": 20.9340,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 20.7670,
+          "delta": 0.8530,
+          "winRate": 99.6000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 37.7250,
+          "delta": 17.8110,
+          "winRate": 87.9000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 38.6290,
+          "delta": 18.7150,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 25.5280,
+          "delta": 5.6140,
+          "winRate": 99.5000
+        }
+      ]
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "mirrorAverage": 20.7220,
+      "mixedOpponentsAverage": 32.9510,
+      "mixedOpponentsDelta": 12.2290,
+      "mixedOpponentsWinRate": 56.2000,
+      "maxAbsDelta": 51.0340,
+      "maxDelta": 51.0340,
+      "minDelta": 5.2830,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 51.0340
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 39.5660,
+          "delta": 18.8440,
+          "winRate": 97.8000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 38.8100,
+          "delta": 18.0880,
+          "winRate": 97.6000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 39.6860,
+          "delta": 18.9640,
+          "winRate": 97.5000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 39.8190,
+          "delta": 19.0970,
+          "winRate": 97.1000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 40.0550,
+          "delta": 19.3330,
+          "winRate": 97.7000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 71.7560,
+          "delta": 51.0340,
+          "winRate": 99.2000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 43.1550,
+          "delta": 22.4330,
+          "winRate": 97.9000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 39.2930,
+          "delta": 18.5710,
+          "winRate": 96.8000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 41.9670,
+          "delta": 21.2450,
+          "winRate": 98.1000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 39.4130,
+          "delta": 18.6910,
+          "winRate": 97.2000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 40.3920,
+          "delta": 19.6700,
+          "winRate": 97.7000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 42.9960,
+          "delta": 22.2740,
+          "winRate": 94.7000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 26.0050,
+          "delta": 5.2830,
+          "winRate": 87.5000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 43.1090,
+          "delta": 22.3870,
+          "winRate": 96.2000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 41.4390,
+          "delta": 20.7170,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 41.6790,
+          "delta": 20.9570,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 40.7250,
+          "delta": 20.0030,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 40.8170,
+          "delta": 20.0950,
+          "winRate": 95.9000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 40.6950,
+          "delta": 19.9730,
+          "winRate": 97.9000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 41.4880,
+          "delta": 20.7660,
+          "winRate": 96.3000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 42.6270,
+          "delta": 21.9050,
+          "winRate": 96.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 40.6200,
+          "delta": 19.8980,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 41.1240,
+          "delta": 20.4020,
+          "winRate": 96.5000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 40.7770,
+          "delta": 20.0550,
+          "winRate": 97.5000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 45.6660,
+          "delta": 24.9440,
+          "winRate": 96.4000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 41.8460,
+          "delta": 21.1240,
+          "winRate": 95.5000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 41.0880,
+          "delta": 20.3660,
+          "winRate": 97.4000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 26.7300,
+          "delta": 6.0080,
+          "winRate": 87.9000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 39.9720,
+          "delta": 19.2500,
+          "winRate": 97.0000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+          "average": 36.1140,
+          "delta": 15.3920,
+          "winRate": 99.5000
+        }
+      ]
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "mirrorAverage": 20.8220,
+      "mixedOpponentsAverage": 25.7820,
+      "mixedOpponentsDelta": 4.9600,
+      "mixedOpponentsWinRate": 30.0000,
+      "maxAbsDelta": 51.0060,
+      "maxDelta": 51.0060,
+      "minDelta": 2.1190,
+      "unaffected": false,
+      "mostAffectedBy": {
+        "strategy": "Leave after 1 hazard",
+        "delta": 51.0060
+      },
+      "matchups": [
+        {
+          "opponent": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+          "average": 25.6430,
+          "delta": 4.8210,
+          "winRate": 85.9000
+        },
+        {
+          "opponent": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+          "average": 24.8380,
+          "delta": 4.0160,
+          "winRate": 91.5000
+        },
+        {
+          "opponent": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+          "average": 24.6270,
+          "delta": 3.8050,
+          "winRate": 91.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+          "average": 26.4830,
+          "delta": 5.6610,
+          "winRate": 87.3000
+        },
+        {
+          "opponent": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+          "average": 26.2630,
+          "delta": 5.4410,
+          "winRate": 86.6000
+        },
+        {
+          "opponent": "Leave after 1 hazard",
+          "average": 71.8280,
+          "delta": 51.0060,
+          "winRate": 96.8000
+        },
+        {
+          "opponent": "Leave after 3 hazards",
+          "average": 44.9120,
+          "delta": 24.0900,
+          "winRate": 95.1000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 7 turns",
+          "average": 26.1340,
+          "delta": 5.3120,
+          "winRate": 87.7000
+        },
+        {
+          "opponent": "Leave after 4 hazards or 8 turns",
+          "average": 40.2000,
+          "delta": 19.3780,
+          "winRate": 97.6000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 7 turns",
+          "average": 24.5490,
+          "delta": 3.7270,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 5 hazards or 8 turns",
+          "average": 39.9640,
+          "delta": 19.1420,
+          "winRate": 98.0000
+        },
+        {
+          "opponent": "Leave after 6 treasure",
+          "average": 42.8840,
+          "delta": 22.0620,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Leave after 6 turns",
+          "average": 38.9440,
+          "delta": 18.1220,
+          "winRate": 88.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure",
+          "average": 41.3810,
+          "delta": 20.5590,
+          "winRate": 92.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 4 hazards",
+          "average": 40.9310,
+          "delta": 20.1090,
+          "winRate": 90.8000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 5 hazards",
+          "average": 42.7730,
+          "delta": 21.9510,
+          "winRate": 93.4000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 7 turns",
+          "average": 29.6090,
+          "delta": 8.7870,
+          "winRate": 82.7000
+        },
+        {
+          "opponent": "Leave after 7 treasure or 8 turns",
+          "average": 40.9010,
+          "delta": 20.0790,
+          "winRate": 92.6000
+        },
+        {
+          "opponent": "Leave after 7 turns",
+          "average": 25.0890,
+          "delta": 4.2670,
+          "winRate": 91.7000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 4 hazards",
+          "average": 41.6820,
+          "delta": 20.8600,
+          "winRate": 94.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 5 hazards",
+          "average": 41.1070,
+          "delta": 20.2850,
+          "winRate": 94.6000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 7 turns",
+          "average": 27.9230,
+          "delta": 7.1010,
+          "winRate": 84.4000
+        },
+        {
+          "opponent": "Leave after 8 treasure or 8 turns",
+          "average": 39.9980,
+          "delta": 19.1760,
+          "winRate": 95.8000
+        },
+        {
+          "opponent": "Leave after 8 turns",
+          "average": 40.1490,
+          "delta": 19.3270,
+          "winRate": 98.6000
+        },
+        {
+          "opponent": "Leave after temple treasure 5",
+          "average": 46.2220,
+          "delta": 25.4000,
+          "winRate": 93.5000
+        },
+        {
+          "opponent": "Leave after temple treasure 6",
+          "average": 41.8750,
+          "delta": 21.0530,
+          "winRate": 94.1000
+        },
+        {
+          "opponent": "Leave when solo with artifact (base 7 turns)",
+          "average": 25.7080,
+          "delta": 4.8860,
+          "winRate": 92.8000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 6 turns)",
+          "average": 38.2690,
+          "delta": 17.4470,
+          "winRate": 87.3000
+        },
+        {
+          "opponent": "Switch after 1 hazards (stay->leave after 7 turns)",
+          "average": 22.9410,
+          "delta": 2.1190,
+          "winRate": 90.2000
+        },
+        {
+          "opponent": "Switch after 2 hazards (stay->leave after 6 turns)",
+          "average": 33.5890,
+          "delta": 12.7670,
+          "winRate": 86.7000
+        }
+      ]
+    }
+  ],
+  "mostAffected": [
+    {
+      "name": "Leave after 7 turns",
+      "maxAbsDelta": 54.1620,
+      "opponent": "Leave after 1 hazard",
+      "delta": 54.1620
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "maxAbsDelta": 53.0020,
+      "opponent": "Leave after 1 hazard",
+      "delta": 53.0020
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "maxAbsDelta": 51.6710,
+      "opponent": "Leave after 1 hazard",
+      "delta": 51.6710
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "maxAbsDelta": 51.3630,
+      "opponent": "Leave after 1 hazard",
+      "delta": 51.3630
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "maxAbsDelta": 51.2940,
+      "opponent": "Leave after 1 hazard",
+      "delta": 51.2940
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "maxAbsDelta": 51.0340,
+      "opponent": "Leave after 1 hazard",
+      "delta": 51.0340
+    },
+    {
+      "name": "Leave after 4 hazards or 7 turns",
+      "maxAbsDelta": 51.0180,
+      "opponent": "Leave after 1 hazard",
+      "delta": 51.0180
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "maxAbsDelta": 51.0060,
+      "opponent": "Leave after 1 hazard",
+      "delta": 51.0060
+    },
+    {
+      "name": "Leave after 8 turns",
+      "maxAbsDelta": 50.8150,
+      "opponent": "Leave after 1 hazard",
+      "delta": 50.8150
+    },
+    {
+      "name": "Leave after 6 turns",
+      "maxAbsDelta": 50.3000,
+      "opponent": "Leave after 1 hazard",
+      "delta": 50.3000
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "maxAbsDelta": 50.1600,
+      "opponent": "Leave after 1 hazard",
+      "delta": 50.1600
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "maxAbsDelta": 49.8960,
+      "opponent": "Leave after 1 hazard",
+      "delta": 49.8960
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "maxAbsDelta": 44.9540,
+      "opponent": "Leave after 1 hazard",
+      "delta": 44.9540
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "maxAbsDelta": 41.5730,
+      "opponent": "Leave after 1 hazard",
+      "delta": 41.5730
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "maxAbsDelta": 40.7270,
+      "opponent": "Leave after 1 hazard",
+      "delta": 40.7270
+    },
+    {
+      "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
+      "maxAbsDelta": 40.6800,
+      "opponent": "Leave after 1 hazard",
+      "delta": 40.6800
+    },
+    {
+      "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
+      "maxAbsDelta": 40.3090,
+      "opponent": "Leave after 1 hazard",
+      "delta": 40.3090
+    },
+    {
+      "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
+      "maxAbsDelta": 38.1750,
+      "opponent": "Leave after 1 hazard",
+      "delta": 38.1750
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "maxAbsDelta": 36.9890,
+      "opponent": "Leave after 1 hazard",
+      "delta": 36.9890
+    },
+    {
+      "name": "Leave after 8 treasure or 4 hazards",
+      "maxAbsDelta": 35.7190,
+      "opponent": "Leave after 1 hazard",
+      "delta": 35.7190
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "maxAbsDelta": 35.4610,
+      "opponent": "Leave after 1 hazard",
+      "delta": 35.4610
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "maxAbsDelta": 35.4560,
+      "opponent": "Leave after 1 hazard",
+      "delta": 35.4560
+    },
+    {
+      "name": "Leave after 8 treasure or 7 turns",
+      "maxAbsDelta": 35.3840,
+      "opponent": "Leave after 1 hazard",
+      "delta": 35.3840
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "maxAbsDelta": 35.2940,
+      "opponent": "Leave after 1 hazard",
+      "delta": 35.2940
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "maxAbsDelta": 34.4660,
+      "opponent": "Leave after 1 hazard",
+      "delta": 34.4660
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "maxAbsDelta": 34.2940,
+      "opponent": "Leave after 1 hazard",
+      "delta": 34.2940
+    },
+    {
+      "name": "Leave after 7 treasure or 4 hazards",
+      "maxAbsDelta": 34.2090,
+      "opponent": "Leave after 1 hazard",
+      "delta": 34.2090
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "maxAbsDelta": 32.5740,
+      "opponent": "Leave after 1 hazard",
+      "delta": 32.5740
+    },
+    {
+      "name": "Leave after temple treasure 5",
+      "maxAbsDelta": 14.3670,
+      "opponent": "Leave after 5 hazards or 8 turns",
+      "delta": 14.3670
+    },
+    {
+      "name": "Leave after 1 hazard",
+      "maxAbsDelta": 12.5880,
+      "opponent": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "delta": 12.5880
+    },
+    {
+      "name": "Leave after temple treasure 6",
+      "maxAbsDelta": 12.2280,
+      "opponent": "Leave after 1 hazard",
+      "delta": -12.2280
+    }
+  ]
+}

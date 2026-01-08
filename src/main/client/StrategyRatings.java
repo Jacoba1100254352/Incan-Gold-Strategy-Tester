@@ -23,6 +23,7 @@ public class StrategyRatings {
     private static final double MAX_RATING = 5.0;
     private static final double MIN_RATING = 0.0;
     private static final double DEFAULT_WEIGHT = 0.5;
+    private static final double INTERACTION_WEIGHT = 0.5;
     private static final String NUMBER_FORMAT = "%.4f";
     private static final double MAX_WIN_RATE = 100.0;
     private static final double MIN_WIN_RATE = 0.0;
@@ -40,18 +41,32 @@ public class StrategyRatings {
      * Updates the ratings JSON based on the provided averages.
      */
     public static void updateRatings(List<StrategyPerformance> performances, String sourceLabel) {
+        updateRatings(performances, sourceLabel, null, false);
+    }
+
+    /**
+     * Updates the ratings JSON based on sweep results and optional interaction data.
+     */
+    public static void updateRatings(List<StrategyPerformance> performances,
+                                     String sourceLabel,
+                                     Map<String, InteractionPerformance> interactionPerformances,
+                                     boolean includeInteractions) {
         if (performances == null || performances.isEmpty()) {
             return;
         }
 
         Map<String, ExistingEntry> previous = loadRatings();
-        List<StrategyPerformance> sorted = new ArrayList<>(performances);
-        sorted.sort((left, right) -> Double.compare(right.average, left.average));
-        
-        Map<String, ScoreInfo> scoreInfo = getStringScoreInfoMap(sorted);
+        List<EffectivePerformance> effectivePerformances = buildEffectivePerformances(
+                performances,
+                interactionPerformances,
+                includeInteractions);
+        effectivePerformances.sort((left, right) -> Double.compare(right.average, left.average));
+
+        Map<String, ScoreInfo> scoreInfo = buildScoreInfoMap(effectivePerformances);
         
         List<RatingEntry> entries = new ArrayList<>();
-        for (StrategyPerformance performance : sorted) {
+        for (EffectivePerformance effective : effectivePerformances) {
+            StrategyPerformance performance = effective.performance;
             ScoreInfo info = scoreInfo.get(performance.name);
             ExistingEntry existing = previous.get(performance.name);
             double previousRating = existing == null ? info.scoreRating : existing.rating;
@@ -87,17 +102,39 @@ public class StrategyRatings {
         writeRatings(entries, sourceLabel);
     }
     
-    private static Map<String, ScoreInfo> getStringScoreInfoMap(List<StrategyPerformance> sorted) {
+    private static Map<String, ScoreInfo> buildScoreInfoMap(List<EffectivePerformance> sorted) {
         int totalStrategies = sorted.size();
         Map<String, ScoreInfo> scoreInfo = new HashMap<>();
         for (int i = 0; i < sorted.size(); i++) {
-            StrategyPerformance performance = sorted.get(i);
+            EffectivePerformance performance = sorted.get(i);
             int scoreRank = i + 1;
             double scoreRating = ratingFromRank(scoreRank, totalStrategies);
-            double winRate = toWinRate(performance.wins, performance.runs);
-            scoreInfo.put(performance.name, new ScoreInfo(scoreRank, scoreRating, performance.average, winRate));
+            scoreInfo.put(performance.performance.name,
+                    new ScoreInfo(scoreRank, scoreRating, performance.average, performance.winRate));
         }
         return scoreInfo;
+    }
+
+    private static List<EffectivePerformance> buildEffectivePerformances(
+            List<StrategyPerformance> performances,
+            Map<String, InteractionPerformance> interactionPerformances,
+            boolean includeInteractions) {
+        List<EffectivePerformance> effective = new ArrayList<>(performances.size());
+        for (StrategyPerformance performance : performances) {
+            double sweepAverage = performance.average;
+            double sweepWinRate = toWinRate(performance.wins, performance.runs);
+            double effectiveAverage = sweepAverage;
+            double effectiveWinRate = sweepWinRate;
+            if (includeInteractions && interactionPerformances != null) {
+                InteractionPerformance interaction = interactionPerformances.get(performance.name);
+                if (interaction != null) {
+                    effectiveAverage = mixMetric(sweepAverage, interaction.average, INTERACTION_WEIGHT);
+                    effectiveWinRate = clampWinRate(mixMetric(sweepWinRate, interaction.winRate, INTERACTION_WEIGHT));
+                }
+            }
+            effective.add(new EffectivePerformance(performance, effectiveAverage, effectiveWinRate));
+        }
+        return effective;
     }
     
     private static Map<String, ExistingEntry> loadRatings() {
@@ -186,6 +223,10 @@ public class StrategyRatings {
         }
         double blended = previous * (1.0 - DEFAULT_WEIGHT) + current * DEFAULT_WEIGHT;
         return clampWinRate(blended);
+    }
+
+    private static double mixMetric(double primary, double secondary, double weight) {
+        return primary * (1.0 - weight) + secondary * weight;
     }
 
     private static double ratingFromRank(int rank, int total) {
@@ -295,6 +336,15 @@ public class StrategyRatings {
     
     private record ExistingEntry(double rating, double winRate)
     {
+    }
+
+    /**
+     * Interaction data for combining sweep results with matchup performance.
+     */
+    public record InteractionPerformance(String name, double average, double winRate) {
+    }
+
+    private record EffectivePerformance(StrategyPerformance performance, double average, double winRate) {
     }
 
     private static class RatingEntry {

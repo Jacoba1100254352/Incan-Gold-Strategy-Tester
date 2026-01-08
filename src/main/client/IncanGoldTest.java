@@ -4,6 +4,7 @@ import algorithm.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -40,13 +41,21 @@ public class IncanGoldTest {
     private static final int TOP_STRATEGIES_TO_DISPLAY = 10;
     // Tolerance for treating averages as ties.
     private static final double TIE_EPSILON = 1e-9;
+    // Default simulations per matchup evaluation.
+    private static final int DEFAULT_MATCHUP_SIMULATIONS = 1000;
+    // Argument index for matchup simulations.
+    private static final int MATCHUP_SIMULATIONS_ARG_INDEX = 3;
+    // Argument index for enabling interaction-aware ratings.
+    private static final int INTERACTION_RATINGS_ARG_INDEX = 4;
+    // Toggle for blending matchup performance into ratings by default.
+    private static final boolean DEFAULT_INCLUDE_INTERACTION_RATINGS = true;
     // Number format for win rate percentages.
     private static final String WIN_RATE_FORMAT = "%.2f";
 
     /**
      * Entry point for running sweep simulations.
      *
-     * @param args optional args: [repeats] [simulations] [playersPerGame]
+     * @param args optional args: [repeats] [simulations] [playersPerGame] [matchupSimulations] [includeInteractionRatings]
      */
     public static void main(String[] args) {
         int repeats = args.length > REPEATS_ARG_INDEX
@@ -58,6 +67,12 @@ public class IncanGoldTest {
         int playersPerGame = args.length > PLAYERS_ARG_INDEX
                 ? Integer.parseInt(args[PLAYERS_ARG_INDEX])
                 : DEFAULT_PLAYERS_PER_GAME;
+        int matchupSimulations = args.length > MATCHUP_SIMULATIONS_ARG_INDEX
+                ? Integer.parseInt(args[MATCHUP_SIMULATIONS_ARG_INDEX])
+                : Math.min(simulations, DEFAULT_MATCHUP_SIMULATIONS);
+        boolean includeInteractionRatings = args.length > INTERACTION_RATINGS_ARG_INDEX
+                ? Boolean.parseBoolean(args[INTERACTION_RATINGS_ARG_INDEX])
+                : DEFAULT_INCLUDE_INTERACTION_RATINGS;
 
         if (repeats < MIN_REPEATS) {
             repeats = DEFAULT_REPEATS;
@@ -68,6 +83,9 @@ public class IncanGoldTest {
         if (playersPerGame < MIN_PLAYERS_PER_GAME) {
             playersPerGame = DEFAULT_PLAYERS_PER_GAME;
         }
+        if (matchupSimulations < MIN_SIMULATIONS) {
+            matchupSimulations = Math.min(simulations, DEFAULT_MATCHUP_SIMULATIONS);
+        }
 
         double averageTurns = StrategySimulator.simulateAverageTurnsUntilDoubleHazard(simulations);
         System.out.printf("Stay as long as possible average turns survived per round: %.2f%n", averageTurns);
@@ -76,19 +94,28 @@ public class IncanGoldTest {
         if (ENABLE_PLAYER_COUNT_SWEEP) {
             runPlayerCountSweep(strategies, repeats, simulations);
         }
-        runSweeps(strategies, repeats, simulations, playersPerGame);
+        List<StrategyStats> stats = runSweeps(strategies, repeats, simulations, playersPerGame);
+        Map<String, StrategyRatings.InteractionPerformance> interactionResults =
+                StrategyInteractionEvaluator.evaluateAndWrite(
+                strategies,
+                matchupSimulations,
+                playersPerGame);
+        StrategyRatings.updateRatings(buildRatingPerformances(stats),
+                "strategy-test",
+                interactionResults,
+                includeInteractionRatings);
     }
 
     /**
      * Executes the sweeps and prints per-run winners and a summary.
      */
-    private static void runSweeps(List<StrategyCatalog.StrategySpec> strategies,
-                                  int repeats,
-                                  int simulations,
-                                  int playersPerGame) {
+    private static List<StrategyStats> runSweeps(List<StrategyCatalog.StrategySpec> strategies,
+                                                 int repeats,
+                                                 int simulations,
+                                                 int playersPerGame) {
         List<StrategyStats> stats = evaluateStrategies(strategies, repeats, simulations, playersPerGame, true);
         printSummary(stats, repeats);
-        StrategyRatings.updateRatings(buildRatingPerformances(stats), "strategy-test");
+        return stats;
     }
 
     /**

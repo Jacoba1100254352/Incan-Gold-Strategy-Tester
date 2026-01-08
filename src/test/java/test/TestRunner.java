@@ -45,6 +45,7 @@ public class TestRunner {
         testGameLeavingAndTempleRemainder();
         testArtifactClaim();
         testStrategyRatings();
+        testStrategyRatingsWithInteractions();
         System.out.println("All tests passed.");
     }
 
@@ -324,6 +325,43 @@ public class TestRunner {
                 writeFileContent(ratingsPath, previousContent, "restore ratings");
             } else {
                 deleteFileIfExists(ratingsPath, "remove ratings");
+            }
+        }
+    }
+
+    private static void testStrategyRatingsWithInteractions() {
+        Path ratingsPath = Paths.get("results", "strategy-ratings.json");
+        String previousContent = null;
+        boolean hadExisting = Files.exists(ratingsPath);
+        if (hadExisting) {
+            previousContent = readFileContent(ratingsPath, "ratings backup interactions");
+        }
+
+        try {
+            deleteFileIfExists(ratingsPath, "ratings interactions cleanup");
+
+            List<StrategyRatings.StrategyPerformance> performances = new ArrayList<>();
+            performances.add(new StrategyRatings.StrategyPerformance("Alpha", 10.0, 4, 4));
+            performances.add(new StrategyRatings.StrategyPerformance("Beta", 8.0, 2, 4));
+
+            Map<String, StrategyRatings.InteractionPerformance> interactions = new HashMap<>();
+            interactions.put("Alpha", new StrategyRatings.InteractionPerformance("Alpha", 0.0, 0.0));
+            interactions.put("Beta", new StrategyRatings.InteractionPerformance("Beta", 20.0, 100.0));
+
+            StrategyRatings.updateRatings(performances, "test-interactions", interactions, true);
+
+            String json = readFileContent(ratingsPath, "interaction ratings");
+            assertNear(0.0, extractDoubleField(json, "Alpha", "rating"), 1e-6, "alpha rating interaction");
+            assertNear(5.0, extractDoubleField(json, "Beta", "rating"), 1e-6, "beta rating interaction");
+            assertNear(50.0, extractDoubleField(json, "Alpha", "winRate"), 1e-6, "alpha win rate interaction");
+            assertNear(75.0, extractDoubleField(json, "Beta", "winRate"), 1e-6, "beta win rate interaction");
+            assertEquals(2, extractIntField(json, "Alpha", "ratingRank"), "alpha rank interaction");
+            assertEquals(1, extractIntField(json, "Beta", "ratingRank"), "beta rank interaction");
+        } finally {
+            if (hadExisting) {
+                writeFileContent(ratingsPath, previousContent, "restore ratings interactions");
+            } else {
+                deleteFileIfExists(ratingsPath, "remove ratings interactions");
             }
         }
     }

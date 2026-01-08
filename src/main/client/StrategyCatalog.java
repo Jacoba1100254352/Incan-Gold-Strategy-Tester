@@ -15,7 +15,6 @@ import algorithm.LeaveAfterTreasureStrategy;
 import algorithm.LeaveAfterTurnsStrategy;
 import algorithm.RiskAverseStrategy;
 import algorithm.Strategy;
-import algorithm.SwitchAfterHazardsForTurnsStrategy;
 import algorithm.SwitchAfterHazardsStrategy;
 
 import java.util.ArrayList;
@@ -29,21 +28,21 @@ public class StrategyCatalog {
     // Minimum hazards for the hazard-only sweep.
     private static final int HAZARD_SWEEP_MIN = 3;
     // Maximum hazards for the hazard-only sweep.
-    private static final int HAZARD_SWEEP_MAX = 5;
+    private static final int HAZARD_SWEEP_MAX = 3;
     // Minimum turns for the turn-only sweep.
     private static final int TURN_SWEEP_MIN = 6;
     // Maximum turns for the turn-only sweep.
     private static final int TURN_SWEEP_MAX = 8;
     // Minimum treasure for the treasure-only sweep.
-    private static final int TREASURE_SWEEP_MIN = 5;
+    private static final int TREASURE_SWEEP_MIN = 6;
     // Maximum treasure for the treasure-only sweep.
-    private static final int TREASURE_SWEEP_MAX = 8;
+    private static final int TREASURE_SWEEP_MAX = 7;
     // Step size for the treasure-only sweep.
     private static final int TREASURE_SWEEP_STEP = 1;
     // Minimum temple treasure for the temple-treasure sweep.
     private static final int TEMPLE_TREASURE_MIN = 5;
     // Maximum temple treasure for the temple-treasure sweep.
-    private static final int TEMPLE_TREASURE_MAX = 7;
+    private static final int TEMPLE_TREASURE_MAX = 6;
     // Step size for the temple-treasure sweep.
     private static final int TEMPLE_TREASURE_STEP = 1;
     // Minimum hazards for the hazards-or-turns sweep.
@@ -51,13 +50,13 @@ public class StrategyCatalog {
     // Maximum hazards for the hazards-or-turns sweep.
     private static final int HAZARDS_OR_TURNS_HAZARD_MAX = 5;
     // Minimum turns for the hazards-or-turns sweep.
-    private static final int HAZARDS_OR_TURNS_TURN_MIN = 6;
+    private static final int HAZARDS_OR_TURNS_TURN_MIN = 7;
     // Maximum turns for the hazards-or-turns sweep.
     private static final int HAZARDS_OR_TURNS_TURN_MAX = 8;
     // Step size for the hazards-or-turns sweep.
     private static final int HAZARDS_OR_TURNS_TURN_STEP = 1;
     // Minimum treasure for the treasure-or-hazards sweep.
-    private static final int TREASURE_OR_HAZARDS_TREASURE_MIN = 6;
+    private static final int TREASURE_OR_HAZARDS_TREASURE_MIN = 7;
     // Maximum treasure for the treasure-or-hazards sweep.
     private static final int TREASURE_OR_HAZARDS_TREASURE_MAX = 8;
     // Step size for the treasure-or-hazards sweep.
@@ -67,13 +66,13 @@ public class StrategyCatalog {
     // Maximum hazards for the treasure-or-hazards sweep.
     private static final int TREASURE_OR_HAZARDS_HAZARD_MAX = 5;
     // Minimum treasure for the treasure-or-turns sweep.
-    private static final int TREASURE_OR_TURNS_TREASURE_MIN = 6;
+    private static final int TREASURE_OR_TURNS_TREASURE_MIN = 7;
     // Maximum treasure for the treasure-or-turns sweep.
     private static final int TREASURE_OR_TURNS_TREASURE_MAX = 8;
     // Step size for the treasure-or-turns sweep.
     private static final int TREASURE_OR_TURNS_TREASURE_STEP = 1;
     // Minimum turns for the treasure-or-turns sweep.
-    private static final int TREASURE_OR_TURNS_TURN_MIN = 6;
+    private static final int TREASURE_OR_TURNS_TURN_MIN = 7;
     // Maximum turns for the treasure-or-turns sweep.
     private static final int TREASURE_OR_TURNS_TURN_MAX = 8;
     // Step size for the treasure-or-turns sweep.
@@ -85,19 +84,9 @@ public class StrategyCatalog {
     // Minimum turns for the switch-after-hazards sweep.
     private static final int SWITCH_AFTER_HAZARDS_TURN_MIN = 6;
     // Maximum turns for the switch-after-hazards sweep.
-    private static final int SWITCH_AFTER_HAZARDS_TURN_MAX = 8;
+    private static final int SWITCH_AFTER_HAZARDS_TURN_MAX = 7;
     // Step size for the switch-after-hazards sweep.
     private static final int SWITCH_AFTER_HAZARDS_TURN_STEP = 1;
-    // Minimum hazards for the stay-after-hazard sweep.
-    private static final int STAY_AFTER_HAZARD_MIN = 1;
-    // Maximum hazards for the stay-after-hazard sweep.
-    private static final int STAY_AFTER_HAZARD_MAX = 2;
-    // Minimum extra turns after hazards for the sweep.
-    private static final int STAY_AFTER_HAZARD_TURNS_MIN = 3;
-    // Maximum extra turns after hazards for the sweep.
-    private static final int STAY_AFTER_HAZARD_TURNS_MAX = 7;
-    // Step size for the extra turns sweep.
-    private static final int STAY_AFTER_HAZARD_TURNS_STEP = 1;
 
     /**
      * Builds the default set of strategies and sweep ranges.
@@ -119,10 +108,7 @@ public class StrategyCatalog {
                 TREASURE_OR_TURNS_TURN_STEP);
         addSwitchAfterHazardsSweep(strategies, SWITCH_AFTER_HAZARDS_MIN, SWITCH_AFTER_HAZARDS_MAX,
                 SWITCH_AFTER_HAZARDS_TURN_MIN, SWITCH_AFTER_HAZARDS_TURN_MAX, SWITCH_AFTER_HAZARDS_TURN_STEP);
-        addStayAfterHazardSweep(strategies, STAY_AFTER_HAZARD_MIN, STAY_AFTER_HAZARD_MAX,
-                STAY_AFTER_HAZARD_TURNS_MIN, STAY_AFTER_HAZARD_TURNS_MAX, STAY_AFTER_HAZARD_TURNS_STEP);
         addArtifactStrategies(strategies);
-        addHazardMemoryStrategies(strategies);
 
         return strategies;
     }
@@ -223,17 +209,6 @@ public class StrategyCatalog {
         }
     }
 
-    private static void addStayAfterHazardSweep(List<StrategySpec> strategies, int hazardMin, int hazardMax,
-                                                int extraTurnMin, int extraTurnMax, int extraTurnStep) {
-        for (int hazards = hazardMin; hazards <= hazardMax; hazards++) {
-            for (int extraTurns = extraTurnMin; extraTurns <= extraTurnMax; extraTurns += extraTurnStep) {
-                final int hazardThreshold = hazards;
-                final int extraTurnCount = extraTurns;
-                strategies.add(new StrategySpec("Stay " + extraTurns + " turns after " + hazards + " hazards",
-                        () -> new SwitchAfterHazardsForTurnsStrategy(hazardThreshold, extraTurnCount)));
-            }
-        }
-    }
 
     private static void addArtifactStrategies(List<StrategySpec> strategies) {
         strategies.add(new StrategySpec("Leave when solo with artifact (base 7 turns)",
