@@ -22,7 +22,7 @@ public class StrategyEvaluator {
                                                int playersPerGame) {
         List<StrategyScore> scores = new ArrayList<>();
         for (StrategyCatalog.StrategySpec spec : strategies) {
-            scores.add(new StrategyScore(spec.name, spec.factory));
+            scores.add(new StrategyScore(spec.name(), spec.factory()));
         }
 
         for (int run = 0; run < repeats; run++) {
@@ -63,21 +63,29 @@ public class StrategyEvaluator {
         public int wins;
         public int runs;
         private double totalAverage;
-
+        /**
+         * Creates a strategy score.
+         */
         public StrategyScore(String name, Supplier<Strategy> factory) {
             this.name = name;
             this.factory = factory;
         }
-
+        /**
+         * Handles record run.
+         */
         private void recordRun(double average) {
             totalAverage += average;
             runs++;
         }
-
+        /**
+         * Handles record win.
+         */
         private void recordWin() {
             wins++;
         }
-
+        /**
+         * Handles finalize average.
+         */
         private void finalizeAverage() {
             average = runs == 0 ? 0.0 : totalAverage / runs;
         }

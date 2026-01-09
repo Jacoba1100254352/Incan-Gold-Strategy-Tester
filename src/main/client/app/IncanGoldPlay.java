@@ -111,10 +111,11 @@ public class IncanGoldPlay {
 
         Game game = SHOW_HAZARD_LOG ? new VerboseGame(players) : new Game(players);
         game.playGame();
-
         printScores(participants);
     }
-
+    /**
+     * Handles print scores.
+     */
     private static void printScores(List<NamedPlayer> participants) {
         System.out.println("Final scores:");
         int bestScore = Integer.MIN_VALUE;
@@ -140,7 +141,9 @@ public class IncanGoldPlay {
                     bestScore);
         }
     }
-
+    /**
+     * Handles join names.
+     */
     private static String joinNames(List<NamedPlayer> participants) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < participants.size(); i++) {
@@ -151,7 +154,9 @@ public class IncanGoldPlay {
         }
         return builder.toString();
     }
-
+    /**
+     * Handles prompt int.
+     */
     private static int promptInt(Scanner scanner, String prompt, int defaultValue, int min, int max) {
         while (true) {
             System.out.printf("%s [default %d]: ", prompt, defaultValue);
@@ -169,7 +174,9 @@ public class IncanGoldPlay {
             System.out.printf("Enter a number between %d and %d.%n", min, max);
         }
     }
-
+    /**
+     * Handles prompt ai mode.
+     */
     private static AiMode promptAiMode(Scanner scanner) {
         System.out.printf("AI mode: %d) advisor %d) neural%n", ADVISOR_AI_OPTION, NEURAL_AI_OPTION);
         System.out.printf("Choose AI mode [default %d]: ", DEFAULT_AI_OPTION);
@@ -179,7 +186,9 @@ public class IncanGoldPlay {
         }
         return AiMode.fromInput(input);
     }
-
+    /**
+     * Handles prompt difficulty.
+     */
     private static AIDifficulty promptDifficulty(Scanner scanner, String label) {
         System.out.printf("%s: %d) easy %d) medium %d) hard%n",
                 label, EASY_DIFFICULTY_OPTION, MEDIUM_DIFFICULTY_OPTION, HARD_DIFFICULTY_OPTION);
@@ -190,7 +199,9 @@ public class IncanGoldPlay {
         }
         return AIDifficulty.fromInput(input);
     }
-
+    /**
+     * Handles prompt string.
+     */
     private static String promptString(Scanner scanner, String prompt, String defaultValue) {
         System.out.printf("%s [default %s]: ", prompt, defaultValue);
         String input = scanner.nextLine().trim();
@@ -199,7 +210,9 @@ public class IncanGoldPlay {
         }
         return input;
     }
-
+    /**
+     * Handles prompt double.
+     */
     private static double promptDouble(Scanner scanner, String prompt, double defaultValue, double min, double max) {
         while (true) {
             System.out.printf("%s [default %.2f]: ", prompt, defaultValue);
@@ -217,7 +230,9 @@ public class IncanGoldPlay {
             System.out.printf("Enter a number between %.2f and %.2f.%n", min, max);
         }
     }
-
+    /**
+     * Builds ai strategy.
+     */
     private static Strategy buildAiStrategy(String name,
                                             AiMode aiMode,
                                             StrategyAdvisor advisor,
@@ -237,7 +252,9 @@ public class IncanGoldPlay {
     private enum AiMode {
         ADVISOR,
         NEURAL;
-
+        /**
+         * Handles from input.
+         */
         private static AiMode fromInput(String input) {
             String normalized = input.trim().toLowerCase();
             return switch (normalized) {
@@ -251,9 +268,15 @@ public class IncanGoldPlay {
      * Game subclass that prints revealed cards and hazard counts each turn.
      */
     private static class VerboseGame extends Game {
+        /**
+         * Creates a verbose game.
+         */
         private VerboseGame(List<Player> players) {
             super(players);
         }
+        /**
+         * Handles on card revealed.
+         */
 
         @Override
         protected void onCardRevealed(Card card,
@@ -279,7 +302,6 @@ public class IncanGoldPlay {
         protected void onRoundEndedByHazard(Hazard hazard, Map<Hazard, Integer> hazardCounts) {
             System.out.printf("Round ends: second %s revealed.%n", hazard);
         }
-
         private String formatHazards(Map<Hazard, Integer> hazardCounts) {
             StringBuilder builder = new StringBuilder();
             for (Hazard hazard : Hazard.values()) {

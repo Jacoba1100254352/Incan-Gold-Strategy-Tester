@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-01-08T21:33:23.500705-05:00",
+  "metric": "combinedScore",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-combined-chart-20260108-213323.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 70.5680
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 66.9060
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 61.7850
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 57.2830
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 53.0530
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 52.5690
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 51.7220
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 49.8180
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 49.0410
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 45.0110
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 43.7490
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "value": 41.5460
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 41.1620
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "value": 39.9990
+    },
+    {
+      "name": "Leave after 7 treasure or 4 hazards",
+      "value": 39.9450
+    }
+  ]
+}

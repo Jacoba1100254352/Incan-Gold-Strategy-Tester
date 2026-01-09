@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T16:56:36.197942-05:00",
+  "metric": "rating",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-ratings-chart-20260108-165636.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 4.1485
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 4.0352
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 3.8711
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "value": 3.7149
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 3.6446
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 3.5977
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 3.5469
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "value": 3.4414
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 3.4336
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 3.2656
+    },
+    {
+      "name": "Leave after 7 turns",
+      "value": 3.1524
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 3.0625
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 2.9649
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 2.9297
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 2.9063
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "value": 2.8281
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 2.5586
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 2.3984
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 2.2891
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 2.1328
+    }
+  ]
+}

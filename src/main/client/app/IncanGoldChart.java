@@ -96,6 +96,9 @@ public class IncanGoldChart extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    /**
+     * Handles start.
+     */
 
     @Override
     public void start(Stage stage) {
@@ -131,7 +134,6 @@ public class IncanGoldChart extends Application {
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
-
         stage.setTitle("Incan Gold Strategy Buckets");
         stage.setScene(new Scene(scrollPane, CHART_WIDTH, CHART_HEIGHT));
         stage.show();
@@ -259,7 +261,6 @@ public class IncanGoldChart extends Application {
                 }
             });
         }
-
         chart.getData().add(series);
         return chart;
     }
@@ -349,7 +350,6 @@ public class IncanGoldChart extends Application {
 
             String metadata = buildMetadataJson(sections, params, image, imagePath.getFileName().toString(), generatedAt);
             Files.writeString(metadataPath, metadata, StandardCharsets.UTF_8);
-
             System.out.printf("Saved chart image to %s%n", imagePath.toAbsolutePath());
             System.out.printf("Saved chart metadata to %s%n", metadataPath.toAbsolutePath());
         } catch (IOException e) {
@@ -419,7 +419,6 @@ public class IncanGoldChart extends Application {
                     }
                     builder.append("\n");
                 }
-
                 builder.append("          ]\n");
                 builder.append("        }");
                 if (bucketIndex < bucketCount - 1) {
@@ -428,7 +427,6 @@ public class IncanGoldChart extends Application {
                 builder.append("\n");
                 bucketIndex++;
             }
-
             builder.append("      ]\n");
             builder.append("    }");
             if (i < sections.size() - 1) {
@@ -436,7 +434,6 @@ public class IncanGoldChart extends Application {
             }
             builder.append("\n");
         }
-
         builder.append("  ]\n");
         builder.append("}\n");
         return builder.toString();
@@ -473,7 +470,9 @@ public class IncanGoldChart extends Application {
         }
         return escaped.toString();
     }
-
+    /**
+     * Builds rating performances.
+     */
     private static List<StrategyRatings.StrategyPerformance> buildRatingPerformances(
             Map<String, PerformanceAccumulator> totals) {
         List<StrategyRatings.StrategyPerformance> performances = new ArrayList<>();
@@ -494,14 +493,18 @@ public class IncanGoldChart extends Application {
         private int count;
         private int wins;
         private int runs;
-
+        /**
+         * Handles add.
+         */
         private void add(StrategyEvaluator.StrategyScore score) {
             total += score.average;
             count++;
             wins += score.wins;
             runs += score.runs;
         }
-
+        /**
+         * Handles average.
+         */
         private double average() {
             return count == 0 ? 0.0 : total / count;
         }

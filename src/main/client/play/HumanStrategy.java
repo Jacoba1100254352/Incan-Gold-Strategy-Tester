@@ -51,7 +51,9 @@ public class HumanStrategy implements Strategy {
             System.out.println("Please enter c to continue or l to leave.");
         }
     }
-
+    /**
+     * Formats hazard counts.
+     */
     private String formatHazardCounts(RoundState state) {
         StringBuilder builder = new StringBuilder();
         for (Hazard hazard : Hazard.values()) {

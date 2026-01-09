@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-01-08T16:39:42.449266-05:00",
+  "metric": "combinedScore",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-combined-chart-20260108-163942.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 67.7500
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 60.7070
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 58.8070
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 56.6440
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 54.3820
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 51.4750
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 48.3750
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 46.5750
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 46.4310
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 45.9500
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 45.2060
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 44.3250
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 42.8560
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 41.7500
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 41.3750
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 40.3500
+    }
+  ]
+}

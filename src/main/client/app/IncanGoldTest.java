@@ -149,7 +149,7 @@ public class IncanGoldTest {
                                                           boolean verbose) {
         List<StrategyStats> stats = new ArrayList<>();
         for (StrategyCatalog.StrategySpec spec : strategies) {
-            stats.add(new StrategyStats(spec.name, spec.factory));
+            stats.add(new StrategyStats(spec.name(), spec.factory()));
         }
 
         for (int run = 1; run <= repeats; run++) {
@@ -209,7 +209,6 @@ public class IncanGoldTest {
 
         List<StrategyStats> topStrategies = getTopStrategies(stats, TOP_STRATEGIES_TO_DISPLAY);
         int displayCount = topStrategies.size();
-
         System.out.printf("%nTop %d average%s over %d run%s:%n",
                 displayCount,
                 displayCount == DEFAULT_REPEATS ? "" : "s",
@@ -237,7 +236,6 @@ public class IncanGoldTest {
             }
             return Double.compare(right.getAverage(), left.getAverage());
         });
-
         System.out.printf("%nWin rate by strategy (%d run%s):%n",
                 repeats, repeats == 1 ? "" : "s");
         for (StrategyStats stat : sorted) {
@@ -274,7 +272,9 @@ public class IncanGoldTest {
         }
         return builder.toString();
     }
-
+    /**
+     * Builds rating performances.
+     */
     private static List<StrategyRatings.StrategyPerformance> buildRatingPerformances(List<StrategyStats> stats) {
         List<StrategyRatings.StrategyPerformance> performances = new ArrayList<>();
         for (StrategyStats stat : stats) {
@@ -297,21 +297,29 @@ public class IncanGoldTest {
         private double totalAverage;
         private int runs;
         private int wins;
-
+        /**
+         * Creates a strategy stats.
+         */
         private StrategyStats(String name, Supplier<Strategy> factory) {
             this.name = name;
             this.factory = factory;
         }
-
+        /**
+         * Handles record run.
+         */
         private void recordRun(double average) {
             totalAverage += average;
             runs++;
         }
-
+        /**
+         * Handles record win.
+         */
         private void recordWin() {
             wins++;
         }
-
+        /**
+         * Returns average.
+         */
         private double getAverage() {
             return totalAverage / runs;
         }

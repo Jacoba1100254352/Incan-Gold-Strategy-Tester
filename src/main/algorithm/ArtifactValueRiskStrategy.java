@@ -70,7 +70,9 @@ public class ArtifactValueRiskStrategy implements Strategy {
 	    
 	    return bankValue < minBankValue || riskScore < riskThreshold;
     }
-
+    /**
+     * Estimates artifact value.
+     */
     private int estimateArtifactValue(int artifactsOnPath, int artifactsClaimed) {
         int value = 0;
         for (int i = 0; i < artifactsOnPath; i++) {
@@ -79,7 +81,9 @@ public class ArtifactValueRiskStrategy implements Strategy {
         }
         return value;
     }
-
+    /**
+     * Handles hazard risk score.
+     */
     private int hazardRiskScore(RoundState state) {
         boolean hasCopiesInfo = !state.getHazardCopiesRemainingMap().isEmpty();
         int score = 0;

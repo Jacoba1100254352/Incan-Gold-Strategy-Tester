@@ -43,18 +43,20 @@ public class StrategyInteractionEvaluator {
         writeReport(report);
         return buildInteractionMap(report);
     }
-
+    /**
+     * Handles evaluate.
+     */
     private static InteractionReport evaluate(List<StrategyCatalog.StrategySpec> strategies,
                                               int simulations,
                                               int playersPerGame) {
         List<StrategyResult> results = new ArrayList<>();
         List<StrategyCatalog.StrategySpec> sortedStrategies = new ArrayList<>(strategies);
-        sortedStrategies.sort(Comparator.comparing(spec -> spec.name));
+        sortedStrategies.sort(Comparator.comparing(spec -> spec.name()));
         Random random = new Random();
 
         for (StrategyCatalog.StrategySpec focus : sortedStrategies) {
             double mirrorAverage = StrategySimulator.simulateAverageTreasure(
-                    focus.factory,
+		            focus.factory(),
                     simulations,
                     playersPerGame);
 
@@ -69,14 +71,14 @@ public class StrategyInteractionEvaluator {
                     continue;
                 }
                 StrategySimulator.MatchupStats stats = StrategySimulator.simulateMatchup(
-                        focus.factory,
-                        opponent.factory,
+		                focus.factory(),
+		                opponent.factory(),
                         simulations,
                         playersPerGame,
                         1);
                 double delta = stats.averageTreasure() - mirrorAverage;
-                OpponentResult matchup = new OpponentResult(opponent.name, stats.averageTreasure(), delta,
-                        stats.winRate());
+                OpponentResult matchup = new OpponentResult(opponent.name(), stats.averageTreasure(), delta,
+                                                            stats.winRate());
                 matchups.add(matchup);
 
                 double absDelta = Math.abs(delta);
@@ -100,8 +102,8 @@ public class StrategyInteractionEvaluator {
             });
 
             StrategySimulator.MatchupStats mixedStats = simulateAgainstField(
-                    focus.name,
-                    focus.factory,
+		            focus.name(),
+		            focus.factory(),
                     sortedStrategies,
                     simulations,
                     playersPerGame,
@@ -113,7 +115,7 @@ public class StrategyInteractionEvaluator {
             }
             boolean unaffected = maxAbsDelta <= UNAFFECTED_THRESHOLD;
             results.add(new StrategyResult(
-                    focus.name,
+		            focus.name(),
                     mirrorAverage,
                     mixedStats.averageTreasure(),
                     mixedDelta,
@@ -161,7 +163,9 @@ public class StrategyInteractionEvaluator {
                 mostAffected
         );
     }
-
+    /**
+     * Handles simulate against field.
+     */
     private static StrategySimulator.MatchupStats simulateAgainstField(
             String focusName,
             Supplier<Strategy> focusFactory,
@@ -171,8 +175,8 @@ public class StrategyInteractionEvaluator {
             Random random) {
         List<Supplier<Strategy>> opponentFactories = new ArrayList<>();
         for (StrategyCatalog.StrategySpec spec : allStrategies) {
-            if (!spec.name.equals(focusName)) {
-                opponentFactories.add(spec.factory);
+            if (!spec.name().equals(focusName)) {
+                opponentFactories.add(spec.factory());
             }
         }
         if (opponentFactories.isEmpty()) {
@@ -186,7 +190,9 @@ public class StrategyInteractionEvaluator {
                 random
         );
     }
-
+    /**
+     * Writes report.
+     */
     private static void writeReport(InteractionReport report) {
         Path outputPath = Paths.get(OUTPUT_DIR, OUTPUT_FILE);
         try {
@@ -198,7 +204,9 @@ public class StrategyInteractionEvaluator {
             System.err.println("Failed to write strategy interaction report: " + e.getMessage());
         }
     }
-
+    /**
+     * Builds interaction map.
+     */
     private static Map<String, StrategyRatings.InteractionPerformance> buildInteractionMap(
             InteractionReport report) {
         Map<String, StrategyRatings.InteractionPerformance> interactionMap = new HashMap<>();
@@ -211,7 +219,9 @@ public class StrategyInteractionEvaluator {
         }
         return interactionMap;
     }
-
+    /**
+     * Builds json.
+     */
     private static String buildJson(InteractionReport report) {
         StringBuilder builder = new StringBuilder();
         builder.append("{\n");
@@ -279,11 +289,15 @@ public class StrategyInteractionEvaluator {
         builder.append("}\n");
         return builder.toString();
     }
-
+    /**
+     * Formats number.
+     */
     private static String formatNumber(double value) {
         return String.format(Locale.US, NUMBER_FORMAT, value);
     }
-
+    /**
+     * Handles escape json.
+     */
     private static String escapeJson(String value) {
         StringBuilder escaped = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {

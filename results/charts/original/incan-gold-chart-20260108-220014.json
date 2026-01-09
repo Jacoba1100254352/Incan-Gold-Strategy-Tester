@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-01-08T13:43:18.733793-05:00",
+  "generatedAt": "2026-01-08T22:00:14.783271-05:00",
   "repeats": 20,
   "simulations": 10000,
   "minPlayersPerGame": 2,
   "maxPlayersPerGame": 8,
   "image": {
-    "file": "incan-gold-chart-20260108-134318.png",
+    "file": "incan-gold-chart-20260108-220014.png",
     "width": 944,
     "height": 2227
   },
@@ -14,49 +14,58 @@
       "playersPerGame": 2,
       "topStrategy": {
         "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-        "average": 41.9972
+        "average": 42.0039
       },
-      "commonTopBucketFactor": "turns",
-      "topBucket": 41,
+      "commonTopBucketFactor": "tie: hazards, turns, switch",
+      "topBucket": 42,
       "buckets": [
+        {
+          "bucket": 42,
+          "strategies": [
+            {
+              "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+              "average": 42.0039
+            }
+          ]
+        },
         {
           "bucket": 41,
           "strategies": [
             {
+              "name": "Leave after 6 turns",
+              "average": 41.0345
+            },
+            {
               "name": "Leave after 7 turns",
-              "average": 41.8840
+              "average": 41.8664
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 41.3749
+              "average": 41.3211
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 41.7776
+              "average": 41.8268
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 41.3154
-            },
-            {
-              "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 41.9972
+              "average": 41.3132
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 41.5708
+              "average": 41.5012
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 41.9290
+              "average": 41.8335
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 41.8981
+              "average": 41.8985
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 41.5524
+              "average": 41.5270
             }
           ]
         },
@@ -64,28 +73,24 @@
           "bucket": 40,
           "strategies": [
             {
-              "name": "Leave after 6 turns",
-              "average": 40.9751
-            },
-            {
               "name": "Leave after 8 turns",
-              "average": 40.7155
+              "average": 40.6580
             },
             {
               "name": "Leave after 4 hazards or 8 turns",
-              "average": 40.2140
+              "average": 40.2874
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 40.5903
+              "average": 40.5526
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 40.7489
+              "average": 40.7427
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 40.6570
+              "average": 40.6096
             }
           ]
         },
@@ -94,7 +99,7 @@
           "strategies": [
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 38.5672
+              "average": 38.4998
             }
           ]
         },
@@ -103,15 +108,15 @@
           "strategies": [
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 36.4275
+              "average": 36.4330
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 36.0665
+              "average": 36.1160
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 36.4531
+              "average": 36.4206
             }
           ]
         },
@@ -119,17 +124,12 @@
           "bucket": 35,
           "strategies": [
             {
-              "name": "Leave after 8 treasure or 4 hazards",
-              "average": 35.8493
-            }
-          ]
-        },
-        {
-          "bucket": 34,
-          "strategies": [
-            {
               "name": "Leave after 3 hazards",
-              "average": 34.9551
+              "average": 35.0155
+            },
+            {
+              "name": "Leave after 8 treasure or 4 hazards",
+              "average": 35.8442
             }
           ]
         },
@@ -138,23 +138,23 @@
           "strategies": [
             {
               "name": "Leave after 7 treasure",
-              "average": 33.7202
+              "average": 33.7299
             },
             {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 33.1202
+              "average": 33.0871
             },
             {
               "name": "Leave after 7 treasure or 5 hazards",
-              "average": 33.6565
+              "average": 33.6760
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 33.4348
+              "average": 33.3907
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 33.6392
+              "average": 33.6530
             }
           ]
         },
@@ -162,8 +162,16 @@
           "bucket": 32,
           "strategies": [
             {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 32.2121
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 32.5133
+            },
+            {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 32.7731
+              "average": 32.8307
             }
           ]
         },
@@ -172,7 +180,7 @@
           "strategies": [
             {
               "name": "Leave after 6 treasure",
-              "average": 31.0156
+              "average": 31.0204
             }
           ]
         },
@@ -181,7 +189,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 18.1789
+              "average": 18.1471
             }
           ]
         },
@@ -190,7 +198,7 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 5",
-              "average": 4.9368
+              "average": 4.9341
             }
           ]
         },
@@ -199,7 +207,7 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 6",
-              "average": 1.5101
+              "average": 1.5322
             }
           ]
         }
@@ -209,7 +217,7 @@
       "playersPerGame": 3,
       "topStrategy": {
         "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-        "average": 27.8626
+        "average": 27.8441
       },
       "commonTopBucketFactor": "turns",
       "topBucket": 27,
@@ -219,63 +227,63 @@
           "strategies": [
             {
               "name": "Leave after 6 turns",
-              "average": 27.0246
+              "average": 27.0151
             },
             {
               "name": "Leave after 7 turns",
-              "average": 27.6581
+              "average": 27.7044
             },
             {
               "name": "Leave after 8 turns",
-              "average": 27.0994
+              "average": 27.0490
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 27.3709
+              "average": 27.3683
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 27.7858
+              "average": 27.7280
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 27.0623
+              "average": 27.0299
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 27.2223
+              "average": 27.2099
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 27.8626
+              "average": 27.8441
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 27.4578
+              "average": 27.4190
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 27.7320
+              "average": 27.7378
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 27.7558
+              "average": 27.6950
             },
             {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 27.3599
+              "average": 27.3738
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 27.0644
+              "average": 27.0399
             },
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 27.7723
+              "average": 27.6769
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 27.3309
+              "average": 27.3443
             }
           ]
         },
@@ -284,39 +292,39 @@
           "strategies": [
             {
               "name": "Leave after 7 treasure",
-              "average": 26.1516
+              "average": 26.1409
             },
             {
               "name": "Leave after 4 hazards or 8 turns",
-              "average": 26.7888
+              "average": 26.7080
             },
             {
               "name": "Leave after 7 treasure or 5 hazards",
-              "average": 26.1586
+              "average": 26.1590
             },
             {
               "name": "Leave after 8 treasure or 4 hazards",
-              "average": 26.5945
+              "average": 26.5673
             },
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 26.8094
+              "average": 26.8144
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 26.1263
+              "average": 26.1391
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 26.6734
+              "average": 26.6774
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 26.9069
+              "average": 26.9594
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 26.9938
+              "average": 26.9575
             }
           ]
         },
@@ -325,15 +333,15 @@
           "strategies": [
             {
               "name": "Leave after 6 treasure",
-              "average": 25.1238
+              "average": 25.1593
             },
             {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 25.7759
+              "average": 25.7952
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 25.9088
+              "average": 25.8655
             }
           ]
         },
@@ -342,7 +350,7 @@
           "strategies": [
             {
               "name": "Leave after 3 hazards",
-              "average": 23.2608
+              "average": 23.2122
             }
           ]
         },
@@ -351,7 +359,15 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 5",
-              "average": 21.8597
+              "average": 21.8049
+            },
+            {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 21.0795
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 21.3820
             }
           ]
         },
@@ -360,7 +376,7 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 6",
-              "average": 19.6892
+              "average": 19.6311
             }
           ]
         },
@@ -369,7 +385,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 11.7441
+              "average": 11.7540
             }
           ]
         }
@@ -378,8 +394,8 @@
     {
       "playersPerGame": 4,
       "topStrategy": {
-        "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-        "average": 20.7232
+        "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+        "average": 20.7184
       },
       "commonTopBucketFactor": "turns",
       "topBucket": 20,
@@ -389,95 +405,95 @@
           "strategies": [
             {
               "name": "Leave after 6 turns",
-              "average": 20.0486
+              "average": 20.0479
             },
             {
               "name": "Leave after 7 turns",
-              "average": 20.6598
+              "average": 20.6724
             },
             {
               "name": "Leave after 8 turns",
-              "average": 20.2651
-            },
-            {
-              "name": "Leave after 7 treasure",
-              "average": 20.0527
+              "average": 20.3304
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 20.4293
+              "average": 20.3437
+            },
+            {
+              "name": "Leave after 4 hazards or 8 turns",
+              "average": 20.0031
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 20.6390
+              "average": 20.6437
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 20.2755
+              "average": 20.2570
             },
             {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 20.1508
+              "average": 20.1496
             },
             {
               "name": "Leave after 7 treasure or 5 hazards",
-              "average": 20.1098
+              "average": 20.0934
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 20.3879
+              "average": 20.3858
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 20.5378
+              "average": 20.5082
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 20.5878
+              "average": 20.6092
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 20.5681
+              "average": 20.5925
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 20.1752
+              "average": 20.1973
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 20.7232
+              "average": 20.6809
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 20.3801
+              "average": 20.3850
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 20.7034
+              "average": 20.7184
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 20.6649
+              "average": 20.6512
             },
             {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 20.3684
+              "average": 20.3906
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 20.6601
+              "average": 20.6729
             },
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 20.6566
+              "average": 20.6674
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 20.3765
+              "average": 20.3824
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 20.3624
+              "average": 20.3617
             }
           ]
         },
@@ -486,19 +502,19 @@
           "strategies": [
             {
               "name": "Leave after 6 treasure",
-              "average": 19.9953
+              "average": 19.9590
             },
             {
-              "name": "Leave after 4 hazards or 8 turns",
-              "average": 19.9994
+              "name": "Leave after 7 treasure",
+              "average": 19.9699
             },
             {
               "name": "Leave after 8 treasure or 4 hazards",
-              "average": 19.9561
+              "average": 19.9695
             },
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 19.6797
+              "average": 19.6891
             }
           ]
         },
@@ -507,15 +523,28 @@
           "strategies": [
             {
               "name": "Leave after 3 hazards",
-              "average": 17.2368
+              "average": 17.2591
             },
             {
               "name": "Leave after temple treasure 5",
-              "average": 17.7520
+              "average": 17.7592
             },
             {
               "name": "Leave after temple treasure 6",
-              "average": 17.9295
+              "average": 17.9061
+            }
+          ]
+        },
+        {
+          "bucket": 15,
+          "strategies": [
+            {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 15.5004
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 15.7149
             }
           ]
         },
@@ -524,7 +553,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 8.5336
+              "average": 8.5141
             }
           ]
         }
@@ -533,8 +562,8 @@
     {
       "playersPerGame": 5,
       "topStrategy": {
-        "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-        "average": 16.4756
+        "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+        "average": 16.4851
       },
       "commonTopBucketFactor": "turns",
       "topBucket": 16,
@@ -544,75 +573,75 @@
           "strategies": [
             {
               "name": "Leave after 7 turns",
-              "average": 16.4103
+              "average": 16.4277
             },
             {
               "name": "Leave after 8 turns",
-              "average": 16.1671
+              "average": 16.1649
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 16.1313
+              "average": 16.1810
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 16.3878
+              "average": 16.3759
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 16.1211
+              "average": 16.1026
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 16.4012
+              "average": 16.3796
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 16.3508
+              "average": 16.3701
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 16.3916
+              "average": 16.4033
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 16.2740
+              "average": 16.2856
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 16.4756
+              "average": 16.4604
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 16.1335
+              "average": 16.1426
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 16.4490
+              "average": 16.4851
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 16.4166
+              "average": 16.4227
             },
             {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 16.1853
+              "average": 16.1699
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 16.4229
+              "average": 16.4386
             },
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 16.4251
+              "average": 16.4304
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 16.1611
+              "average": 16.1421
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 16.1589
+              "average": 16.1404
             }
           ]
         },
@@ -621,27 +650,23 @@
           "strategies": [
             {
               "name": "Leave after 6 turns",
-              "average": 15.8638
+              "average": 15.8551
             },
             {
               "name": "Leave after 6 treasure",
-              "average": 15.6302
+              "average": 15.6009
             },
             {
               "name": "Leave after 4 hazards or 8 turns",
-              "average": 15.9277
+              "average": 15.9254
             },
             {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 15.5147
-            },
-            {
-              "name": "Leave after 7 treasure or 5 hazards",
-              "average": 15.0204
+              "average": 15.5112
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 15.9222
+              "average": 15.9607
             }
           ]
         },
@@ -650,11 +675,15 @@
           "strategies": [
             {
               "name": "Leave after 7 treasure",
-              "average": 14.6784
+              "average": 14.7178
+            },
+            {
+              "name": "Leave after 7 treasure or 5 hazards",
+              "average": 14.9828
             },
             {
               "name": "Leave after 8 treasure or 4 hazards",
-              "average": 14.8595
+              "average": 14.8633
             }
           ]
         },
@@ -663,19 +692,32 @@
           "strategies": [
             {
               "name": "Leave after 3 hazards",
-              "average": 13.7252
+              "average": 13.7053
             },
             {
               "name": "Leave after temple treasure 5",
-              "average": 13.8039
+              "average": 13.7997
             },
             {
               "name": "Leave after temple treasure 6",
-              "average": 13.8698
+              "average": 13.8688
             },
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 13.8598
+              "average": 13.8535
+            }
+          ]
+        },
+        {
+          "bucket": 12,
+          "strategies": [
+            {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 12.1679
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 12.3518
             }
           ]
         },
@@ -684,7 +726,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 6.6074
+              "average": 6.6161
             }
           ]
         }
@@ -693,8 +735,8 @@
     {
       "playersPerGame": 6,
       "topStrategy": {
-        "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-        "average": 13.6316
+        "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+        "average": 13.6160
       },
       "commonTopBucketFactor": "turns",
       "topBucket": 13,
@@ -704,87 +746,87 @@
           "strategies": [
             {
               "name": "Leave after 6 turns",
-              "average": 13.0395
+              "average": 13.0212
             },
             {
               "name": "Leave after 7 turns",
-              "average": 13.5831
+              "average": 13.5591
             },
             {
               "name": "Leave after 8 turns",
-              "average": 13.4081
+              "average": 13.4021
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 13.3363
+              "average": 13.3381
             },
             {
               "name": "Leave after 4 hazards or 8 turns",
-              "average": 13.1716
+              "average": 13.1952
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 13.5403
+              "average": 13.5565
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 13.3899
+              "average": 13.3882
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 13.5721
+              "average": 13.5618
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 13.4773
+              "average": 13.4854
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 13.5568
+              "average": 13.5569
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 13.4442
+              "average": 13.4100
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 13.1341
+              "average": 13.1194
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 13.5797
+              "average": 13.6160
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 13.2733
+              "average": 13.2773
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 13.6316
+              "average": 13.6046
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 13.5733
+              "average": 13.5666
             },
             {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 13.3717
+              "average": 13.3566
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 13.5653
+              "average": 13.5743
             },
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 13.5740
+              "average": 13.5529
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 13.3648
+              "average": 13.3525
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 13.3625
+              "average": 13.3536
             }
           ]
         },
@@ -793,23 +835,23 @@
           "strategies": [
             {
               "name": "Leave after 3 hazards",
-              "average": 11.3413
+              "average": 11.2985
             },
             {
               "name": "Leave after 6 treasure",
-              "average": 11.8836
+              "average": 11.9067
             },
             {
               "name": "Leave after temple treasure 6",
-              "average": 11.5742
+              "average": 11.5605
             },
             {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 11.9558
+              "average": 11.9266
             },
             {
               "name": "Leave after 8 treasure or 4 hazards",
-              "average": 11.1552
+              "average": 11.1618
             }
           ]
         },
@@ -818,11 +860,15 @@
           "strategies": [
             {
               "name": "Leave after 7 treasure",
-              "average": 10.5016
+              "average": 10.5101
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 10.1222
             },
             {
               "name": "Leave after 7 treasure or 5 hazards",
-              "average": 10.9422
+              "average": 10.9723
             }
           ]
         },
@@ -831,11 +877,15 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 5",
-              "average": 9.8955
+              "average": 9.8826
+            },
+            {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 9.9428
             },
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 9.6104
+              "average": 9.5813
             }
           ]
         },
@@ -844,7 +894,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 5.3447
+              "average": 5.3592
             }
           ]
         }
@@ -854,7 +904,7 @@
       "playersPerGame": 7,
       "topStrategy": {
         "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-        "average": 11.5939
+        "average": 11.5932
       },
       "commonTopBucketFactor": "turns",
       "topBucket": 11,
@@ -864,87 +914,87 @@
           "strategies": [
             {
               "name": "Leave after 6 turns",
-              "average": 11.0497
+              "average": 11.0374
             },
             {
               "name": "Leave after 7 turns",
-              "average": 11.5481
+              "average": 11.5404
             },
             {
               "name": "Leave after 8 turns",
-              "average": 11.4714
+              "average": 11.4598
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 11.3494
+              "average": 11.3568
             },
             {
               "name": "Leave after 4 hazards or 8 turns",
-              "average": 11.2533
+              "average": 11.2511
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 11.5292
+              "average": 11.5244
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 11.4475
+              "average": 11.4432
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 11.5566
+              "average": 11.5647
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 11.4861
+              "average": 11.4910
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 11.5392
+              "average": 11.5474
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 11.4645
+              "average": 11.4916
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 11.1236
+              "average": 11.1174
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 11.5924
+              "average": 11.5864
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 11.2601
+              "average": 11.2378
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 11.5939
+              "average": 11.5932
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 11.5426
+              "average": 11.5282
             },
             {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 11.3596
+              "average": 11.3584
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 11.5665
+              "average": 11.5348
             },
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 11.5630
+              "average": 11.5124
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 11.3655
+              "average": 11.3559
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 11.3612
+              "average": 11.3616
             }
           ]
         },
@@ -953,11 +1003,11 @@
           "strategies": [
             {
               "name": "Leave after 3 hazards",
-              "average": 9.6567
+              "average": 9.6202
             },
             {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 9.2080
+              "average": 9.1826
             }
           ]
         },
@@ -966,15 +1016,23 @@
           "strategies": [
             {
               "name": "Leave after 6 treasure",
-              "average": 8.6157
+              "average": 8.5844
             },
             {
               "name": "Leave after temple treasure 6",
-              "average": 8.3016
+              "average": 8.3095
+            },
+            {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 8.3569
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 8.5139
             },
             {
               "name": "Leave after 8 treasure or 4 hazards",
-              "average": 8.5047
+              "average": 8.5354
             }
           ]
         },
@@ -983,11 +1041,11 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 5",
-              "average": 7.1114
+              "average": 7.1132
             },
             {
               "name": "Leave after 7 treasure or 5 hazards",
-              "average": 7.6700
+              "average": 7.6380
             }
           ]
         },
@@ -996,11 +1054,11 @@
           "strategies": [
             {
               "name": "Leave after 7 treasure",
-              "average": 6.9206
+              "average": 6.9598
             },
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 6.3240
+              "average": 6.3056
             }
           ]
         },
@@ -1009,7 +1067,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 4.4431
+              "average": 4.4360
             }
           ]
         }
@@ -1018,8 +1076,8 @@
     {
       "playersPerGame": 8,
       "topStrategy": {
-        "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-        "average": 10.1227
+        "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+        "average": 10.1152
       },
       "commonTopBucketFactor": "turns",
       "topBucket": 10,
@@ -1029,55 +1087,55 @@
           "strategies": [
             {
               "name": "Leave after 7 turns",
-              "average": 10.0841
+              "average": 10.0683
             },
             {
               "name": "Leave after 8 turns",
-              "average": 10.0762
+              "average": 10.0544
             },
             {
               "name": "Leave after 5 hazards or 7 turns",
-              "average": 10.0703
+              "average": 10.0778
             },
             {
               "name": "Leave after 5 hazards or 8 turns",
-              "average": 10.0591
+              "average": 10.0533
             },
             {
               "name": "Leave after 7 treasure or 7 turns",
-              "average": 10.0659
+              "average": 10.0485
             },
             {
               "name": "Leave after 7 treasure or 8 turns",
-              "average": 10.0640
+              "average": 10.0734
             },
             {
               "name": "Leave after 8 treasure or 7 turns",
-              "average": 10.0739
+              "average": 10.0730
             },
             {
               "name": "Leave after 8 treasure or 8 turns",
-              "average": 10.0640
+              "average": 10.0813
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 7 turns)",
-              "average": 10.0962
+              "average": 10.1152
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 7 turns)",
-              "average": 10.1227
+              "average": 10.0990
             },
             {
               "name": "Leave when solo with artifact (base 7 turns)",
-              "average": 10.0700
+              "average": 10.0690
             },
             {
               "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
-              "average": 10.0648
+              "average": 10.0685
             },
             {
               "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
-              "average": 10.0847
+              "average": 10.0523
             }
           ]
         },
@@ -1086,35 +1144,35 @@
           "strategies": [
             {
               "name": "Leave after 6 turns",
-              "average": 9.5524
+              "average": 9.5676
             },
             {
               "name": "Leave after 4 hazards or 7 turns",
-              "average": 9.9079
+              "average": 9.9035
             },
             {
               "name": "Leave after 4 hazards or 8 turns",
-              "average": 9.8725
+              "average": 9.8789
             },
             {
               "name": "Switch after 1 hazards (stay->leave after 6 turns)",
-              "average": 9.6370
+              "average": 9.6497
             },
             {
               "name": "Switch after 2 hazards (stay->leave after 6 turns)",
-              "average": 9.7740
+              "average": 9.7724
             },
             {
               "name": "Artifact opportunist (<=2 players, base hazards 4 or 7 turns)",
-              "average": 9.8951
+              "average": 9.8990
             },
             {
               "name": "Chase artifact (base 7/4, bonus +1/+1, <=2 players)",
-              "average": 9.9097
+              "average": 9.8809
             },
             {
               "name": "Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
-              "average": 9.9001
+              "average": 9.8929
             }
           ]
         },
@@ -1123,7 +1181,7 @@
           "strategies": [
             {
               "name": "Leave after 3 hazards",
-              "average": 8.3822
+              "average": 8.4062
             }
           ]
         },
@@ -1131,8 +1189,16 @@
           "bucket": 7,
           "strategies": [
             {
+              "name": "Leave after hazard risk 2 (max hazards 3)",
+              "average": 7.1379
+            },
+            {
+              "name": "Leave after hazard risk 3 (max hazards 4)",
+              "average": 7.2902
+            },
+            {
               "name": "Leave after 7 treasure or 4 hazards",
-              "average": 7.3130
+              "average": 7.3454
             }
           ]
         },
@@ -1141,11 +1207,11 @@
           "strategies": [
             {
               "name": "Leave after temple treasure 6",
-              "average": 6.1163
+              "average": 6.0999
             },
             {
               "name": "Leave after 8 treasure or 4 hazards",
-              "average": 6.9216
+              "average": 6.9201
             }
           ]
         },
@@ -1154,15 +1220,15 @@
           "strategies": [
             {
               "name": "Leave after 6 treasure",
-              "average": 5.9679
+              "average": 5.9498
             },
             {
               "name": "Leave after temple treasure 5",
-              "average": 5.2356
+              "average": 5.2389
             },
             {
               "name": "Leave after 7 treasure or 5 hazards",
-              "average": 5.3705
+              "average": 5.3318
             }
           ]
         },
@@ -1171,11 +1237,11 @@
           "strategies": [
             {
               "name": "Leave after 7 treasure",
-              "average": 4.4321
+              "average": 4.4124
             },
             {
               "name": "Leave after 8 treasure or 5 hazards",
-              "average": 4.3348
+              "average": 4.3277
             }
           ]
         },
@@ -1184,7 +1250,7 @@
           "strategies": [
             {
               "name": "Leave after 1 hazard",
-              "average": 3.6838
+              "average": 3.6931
             }
           ]
         }

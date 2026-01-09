@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-09T09:55:09.269283-05:00",
+  "metric": "rating",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-ratings-chart-20260109-095509.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 4.2597
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "value": 3.9570
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 3.8101
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 3.7786
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 3.7169
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 3.6633
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 3.4549
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 3.4199
+    },
+    {
+      "name": "Leave after 7 turns",
+      "value": 3.4038
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 3.3076
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 3.2896
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 3.2694
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "value": 2.9200
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 2.7802
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "value": 2.6795
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 2.6454
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 2.5358
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 2.5151
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 2.4360
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 2.3336
+    }
+  ]
+}

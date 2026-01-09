@@ -110,10 +110,11 @@ public class StrategyRatings {
         for (int i = 0; i < entries.size(); i++) {
             entries.get(i).ratingRank = i + 1;
         }
-
         writeRatings(entries, sourceLabel);
     }
-    
+    /**
+     * Applies average ratings.
+     */
     private static void applyAverageRatings(List<EffectivePerformance> performances) {
         List<EffectivePerformance> sorted = new ArrayList<>(performances);
         sorted.sort((left, right) -> Double.compare(right.effectiveAverage, left.effectiveAverage));
@@ -122,7 +123,9 @@ public class StrategyRatings {
             sorted.get(i).averageRating = ratingFromRank(i + 1, total);
         }
     }
-
+    /**
+     * Applies win rate ratings.
+     */
     private static void applyWinRateRatings(List<EffectivePerformance> performances) {
         List<EffectivePerformance> sorted = new ArrayList<>(performances);
         sorted.sort((left, right) -> Double.compare(right.effectiveWinRate, left.effectiveWinRate));
@@ -131,7 +134,9 @@ public class StrategyRatings {
             sorted.get(i).winRateRating = ratingFromRank(i + 1, total);
         }
     }
-
+    /**
+     * Applies score ratings.
+     */
     private static void applyScoreRatings(List<EffectivePerformance> performances) {
         for (EffectivePerformance performance : performances) {
             performance.scoreRating = mixMetric(performance.averageRating,
@@ -150,7 +155,9 @@ public class StrategyRatings {
             sorted.get(i).scoreRank = i + 1;
         }
     }
-
+    /**
+     * Builds score info map.
+     */
     private static Map<String, ScoreInfo> buildScoreInfoMap(List<EffectivePerformance> sorted) {
         Map<String, ScoreInfo> scoreInfo = new HashMap<>();
         for (EffectivePerformance performance : sorted) {
@@ -164,7 +171,9 @@ public class StrategyRatings {
         }
         return scoreInfo;
     }
-
+    /**
+     * Builds effective performances.
+     */
     private static List<EffectivePerformance> buildEffectivePerformances(
             List<StrategyPerformance> performances,
             Map<String, InteractionPerformance> interactionPerformances,
@@ -194,7 +203,9 @@ public class StrategyRatings {
         }
         return effective;
     }
-    
+    /**
+     * Loads ratings.
+     */
     private static Map<String, ExistingEntry> loadRatings() {
         Map<String, ExistingEntry> ratings = new HashMap<>();
         if (!Files.exists(RATINGS_PATH)) {
@@ -236,7 +247,9 @@ public class StrategyRatings {
         }
         return ratings;
     }
-
+    /**
+     * Writes ratings.
+     */
     private static void writeRatings(List<RatingEntry> entries, String sourceLabel) {
         StringBuilder builder = new StringBuilder();
         builder.append("{\n");
@@ -273,7 +286,6 @@ public class StrategyRatings {
             }
             builder.append("\n");
         }
-
         builder.append("  ]\n");
         builder.append("}\n");
 
@@ -287,12 +299,16 @@ public class StrategyRatings {
             System.err.println("Failed to write strategy ratings: " + e.getMessage());
         }
     }
-
+    /**
+     * Handles blend rating.
+     */
     private static double blendRating(double previous, double current) {
         double blended = previous * (1.0 - DEFAULT_WEIGHT) + current * DEFAULT_WEIGHT;
         return clampRating(blended);
     }
-
+    /**
+     * Handles blend win rate.
+     */
     private static double blendWinRate(double previous, double current) {
         if (Double.isNaN(current)) {
             if (Double.isNaN(previous)) {
@@ -306,11 +322,15 @@ public class StrategyRatings {
         double blended = previous * (1.0 - DEFAULT_WEIGHT) + current * DEFAULT_WEIGHT;
         return clampWinRate(blended);
     }
-
+    /**
+     * Handles mix metric.
+     */
     private static double mixMetric(double primary, double secondary, double weight) {
         return primary * (1.0 - weight) + secondary * weight;
     }
-
+    /**
+     * Handles rating from rank.
+     */
     private static double ratingFromRank(int rank, int total) {
         if (total <= 1) {
             return MAX_RATING;
@@ -319,28 +339,36 @@ public class StrategyRatings {
         double rating = MAX_RATING - (rank - 1) * step;
         return clampRating(rating);
     }
-
+    /**
+     * Handles clamp rating.
+     */
     private static double clampRating(double rating) {
         if (rating < MIN_RATING) {
             return MIN_RATING;
         }
 	    return Math.min(rating, MAX_RATING);
     }
-
+    /**
+     * Handles clamp win rate.
+     */
     private static double clampWinRate(double winRate) {
         if (winRate < MIN_WIN_RATE) {
             return MIN_WIN_RATE;
         }
 	    return Math.min(winRate, MAX_WIN_RATE);
     }
-
+    /**
+     * Handles to win rate.
+     */
     private static double toWinRate(int wins, int runs) {
         if (runs <= 0) {
             return 0.0;
         }
         return (wins * 100.0) / runs;
     }
-
+    /**
+     * Parses double field.
+     */
     private static double parseDoubleField(String entryBody, String field, double fallback) {
         Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([0-9.]+)")
                 .matcher(entryBody);
@@ -349,14 +377,18 @@ public class StrategyRatings {
         }
         return Double.parseDouble(matcher.group(1));
     }
-
+    /**
+     * Formats number.
+     */
     private static String formatNumber(double value) {
         if (Double.isNaN(value)) {
             return String.format(Locale.US, NUMBER_FORMAT, 0.0);
         }
         return String.format(Locale.US, NUMBER_FORMAT, value);
     }
-
+    /**
+     * Handles escape json.
+     */
     private static String escapeJson(String value) {
         StringBuilder escaped = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
@@ -378,7 +410,9 @@ public class StrategyRatings {
         }
         return escaped.toString();
     }
-
+    /**
+     * Handles unescape json.
+     */
     private static String unescapeJson(String value) {
         StringBuilder unescaped = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
@@ -452,7 +486,9 @@ public class StrategyRatings {
         private final double lastInteractionWinRate;
         private final int wins;
         private final int runs;
-
+        /**
+         * Creates a rating entry.
+         */
         private RatingEntry(String name,
                             double rating,
                             int ratingRank,
@@ -496,7 +532,6 @@ public class StrategyRatings {
         private double winRateRating;
         private double scoreRating;
         private int scoreRank;
-
         private EffectivePerformance(StrategyPerformance performance,
                                      double sweepAverage,
                                      double interactionAverage,

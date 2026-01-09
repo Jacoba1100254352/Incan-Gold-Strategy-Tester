@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T21:50:58.188401-05:00",
+  "metric": "rating",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-ratings-chart-20260108-215058.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 4.2261
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 3.9280
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 3.8020
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 3.7112
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 3.6533
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "value": 3.5862
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "value": 3.3591
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "value": 3.3428
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 3.3357
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 3.3145
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 3.1318
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 3.1089
+    },
+    {
+      "name": "Leave after 7 turns",
+      "value": 2.9900
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 2.8628
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 2.7146
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 2.6367
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 2.5916
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "value": 2.5796
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 2.5564
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 2.5532
+    }
+  ]
+}

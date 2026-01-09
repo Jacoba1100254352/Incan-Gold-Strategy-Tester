@@ -8,6 +8,7 @@ import algorithm.ArtifactValueRiskStrategy;
 import algorithm.LeaveAfterHazardsOrTurnsStrategy;
 import algorithm.LeaveAfterHazardsStrategy;
 import algorithm.LeaveAfterHazardsWithMemoryStrategy;
+import algorithm.LeaveAfterHazardRiskStrategy;
 import algorithm.LeaveAfterTempleTreasureStrategy;
 import algorithm.LeaveAfterTreasureOrHazardsStrategy;
 import algorithm.LeaveAfterTreasureOrTurnsStrategy;
@@ -87,6 +88,14 @@ public class StrategyCatalog {
     private static final int SWITCH_AFTER_HAZARDS_TURN_MAX = 7;
     // Step size for the switch-after-hazards sweep.
     private static final int SWITCH_AFTER_HAZARDS_TURN_STEP = 1;
+    // Risk-score thresholds for hazard-aware strategies.
+    private static final int HAZARD_RISK_MIN = 2;
+    // Maximum risk-score threshold for hazard-aware strategies.
+    private static final int HAZARD_RISK_MAX = 3;
+    // Minimum total hazards allowed for hazard-risk strategies.
+    private static final int HAZARD_RISK_HAZARDS_MIN = 3;
+    // Maximum total hazards allowed for hazard-risk strategies.
+    private static final int HAZARD_RISK_HAZARDS_MAX = 4;
 
     /**
      * Builds the default set of strategies and sweep ranges.
@@ -94,11 +103,12 @@ public class StrategyCatalog {
     public static List<StrategySpec> buildDefaultStrategies() {
         List<StrategySpec> strategies = new ArrayList<>();
         strategies.add(new StrategySpec("Leave after 1 hazard", RiskAverseStrategy::new));
-
         addHazardSweep(strategies, HAZARD_SWEEP_MIN, HAZARD_SWEEP_MAX);
         addTurnSweep(strategies, TURN_SWEEP_MIN, TURN_SWEEP_MAX);
         addTreasureSweep(strategies, TREASURE_SWEEP_MIN, TREASURE_SWEEP_MAX, TREASURE_SWEEP_STEP);
         addTempleTreasureSweep(strategies, TEMPLE_TREASURE_MIN, TEMPLE_TREASURE_MAX, TEMPLE_TREASURE_STEP);
+        addHazardRiskStrategies(strategies, HAZARD_RISK_MIN, HAZARD_RISK_MAX,
+                HAZARD_RISK_HAZARDS_MIN, HAZARD_RISK_HAZARDS_MAX);
         addHazardsOrTurnsSweep(strategies, HAZARDS_OR_TURNS_HAZARD_MIN, HAZARDS_OR_TURNS_HAZARD_MAX,
                 HAZARDS_OR_TURNS_TURN_MIN, HAZARDS_OR_TURNS_TURN_MAX, HAZARDS_OR_TURNS_TURN_STEP);
         addTreasureOrHazardsSweep(strategies, TREASURE_OR_HAZARDS_TREASURE_MIN, TREASURE_OR_HAZARDS_TREASURE_MAX,
@@ -116,16 +126,12 @@ public class StrategyCatalog {
     /**
      * Describes a strategy name and factory for instantiation.
      */
-    public static class StrategySpec {
-        public final String name;
-        public final Supplier<Strategy> factory;
-
-        public StrategySpec(String name, Supplier<Strategy> factory) {
-            this.name = name;
-            this.factory = factory;
-        }
+    public record StrategySpec(String name, Supplier<Strategy> factory)
+    {
     }
-
+    /**
+     * Adds hazard sweep.
+     */
     private static void addHazardSweep(List<StrategySpec> strategies, int min, int max) {
         for (int hazards = min; hazards <= max; hazards++) {
             final int threshold = hazards;
@@ -133,7 +139,9 @@ public class StrategyCatalog {
                     () -> new LeaveAfterHazardsStrategy(threshold)));
         }
     }
-
+    /**
+     * Adds temple treasure sweep.
+     */
     private static void addTempleTreasureSweep(List<StrategySpec> strategies, int min, int max, int step) {
         for (int treasure = min; treasure <= max; treasure += step) {
             final int threshold = treasure;
@@ -141,7 +149,9 @@ public class StrategyCatalog {
                     () -> new LeaveAfterTempleTreasureStrategy(threshold)));
         }
     }
-
+    /**
+     * Adds turn sweep.
+     */
     private static void addTurnSweep(List<StrategySpec> strategies, int min, int max) {
         for (int turns = min; turns <= max; turns++) {
             final int threshold = turns;
@@ -149,7 +159,9 @@ public class StrategyCatalog {
                     () -> new LeaveAfterTurnsStrategy(threshold)));
         }
     }
-
+    /**
+     * Adds treasure sweep.
+     */
     private static void addTreasureSweep(List<StrategySpec> strategies, int min, int max, int step) {
         for (int treasure = min; treasure <= max; treasure += step) {
             final int threshold = treasure;
@@ -157,7 +169,9 @@ public class StrategyCatalog {
                     () -> new LeaveAfterTreasureStrategy(threshold)));
         }
     }
-
+    /**
+     * Adds hazards or turns sweep.
+     */
     private static void addHazardsOrTurnsSweep(List<StrategySpec> strategies, int hazardMin, int hazardMax,
                                                int turnMin, int turnMax, int turnStep) {
         for (int hazards = hazardMin; hazards <= hazardMax; hazards++) {
@@ -169,7 +183,9 @@ public class StrategyCatalog {
             }
         }
     }
-
+    /**
+     * Adds treasure or hazards sweep.
+     */
     private static void addTreasureOrHazardsSweep(List<StrategySpec> strategies, int treasureMin, int treasureMax,
                                                   int treasureStep, int hazardMin, int hazardMax) {
         for (int treasure = treasureMin; treasure <= treasureMax; treasure += treasureStep) {
@@ -181,7 +197,9 @@ public class StrategyCatalog {
             }
         }
     }
-
+    /**
+     * Adds treasure or turns sweep.
+     */
     private static void addTreasureOrTurnsSweep(List<StrategySpec> strategies, int treasureMin, int treasureMax,
                                                 int treasureStep, int turnMin, int turnMax, int turnStep) {
         for (int treasure = treasureMin; treasure <= treasureMax; treasure += treasureStep) {
@@ -193,7 +211,26 @@ public class StrategyCatalog {
             }
         }
     }
-
+    /**
+     * Adds hazard risk strategies.
+     */
+    private static void addHazardRiskStrategies(List<StrategySpec> strategies,
+                                                int riskMin,
+                                                int riskMax,
+                                                int hazardsMin,
+                                                int hazardsMax) {
+        for (int risk = riskMin; risk <= riskMax; risk++) {
+            int maxHazards = Math.min(hazardsMax, hazardsMin + (risk - riskMin));
+            final int riskThreshold = risk;
+            final int hazardLimit = maxHazards;
+            strategies.add(new StrategySpec(
+                    "Leave after hazard risk " + riskThreshold + " (max hazards " + hazardLimit + ")",
+                    () -> new LeaveAfterHazardRiskStrategy(riskThreshold, hazardLimit)));
+        }
+    }
+    /**
+     * Adds switch after hazards sweep.
+     */
     private static void addSwitchAfterHazardsSweep(List<StrategySpec> strategies, int hazardMin, int hazardMax,
                                                    int turnMin, int turnMax, int turnStep) {
         for (int hazards = hazardMin; hazards <= hazardMax; hazards++) {
@@ -208,8 +245,9 @@ public class StrategyCatalog {
             }
         }
     }
-
-
+    /**
+     * Adds artifact strategies.
+     */
     private static void addArtifactStrategies(List<StrategySpec> strategies) {
         strategies.add(new StrategySpec("Leave when solo with artifact (base 7 turns)",
                 () -> new ArtifactSoloExitStrategy(new LeaveAfterTurnsStrategy(7))));
@@ -227,7 +265,9 @@ public class StrategyCatalog {
         strategies.add(new StrategySpec("Chase artifact (base 7/4, bonus +2/+1, <=3 players)",
                 () -> new ArtifactChaserStrategy(7, 4, 2, 1, 3)));
     }
-
+    /**
+     * Adds hazard memory strategies.
+     */
     private static void addHazardMemoryStrategies(List<StrategySpec> strategies) {
         strategies.add(new StrategySpec("Leave after hazards with memory (base 4)",
                 () -> new LeaveAfterHazardsWithMemoryStrategy(4, 1, 1)));

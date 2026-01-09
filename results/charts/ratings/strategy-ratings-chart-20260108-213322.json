@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T21:33:22.560027-05:00",
+  "metric": "rating",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-ratings-chart-20260108-213322.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 4.2168
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 3.8369
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 3.7706
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 3.6885
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "value": 3.6553
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 3.6133
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "value": 3.5947
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 3.5703
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 3.4522
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 3.2491
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 3.2168
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 2.8711
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 2.7569
+    },
+    {
+      "name": "Leave after 7 turns",
+      "value": 2.6787
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 2.6699
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 2.6162
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "value": 2.5899
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 2.4844
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "value": 2.4746
+    },
+    {
+      "name": "Leave after 7 treasure or 4 hazards",
+      "value": 2.3545
+    }
+  ]
+}

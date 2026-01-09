@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T16:39:40.0739-05:00",
+  "metric": "rating",
+  "source": "results/strategy-ratings.json",
+  "image": "strategy-ratings-chart-20260108-163940.png",
+  "strategies": [
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 4.3907
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 7 turns)",
+      "value": 4.1406
+    },
+    {
+      "name": "Leave after 6 turns",
+      "value": 3.8750
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 3.7032
+    },
+    {
+      "name": "Leave after 7 turns",
+      "value": 3.3282
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 3.2657
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 3.2344
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 3.2031
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 3.1875
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 3.1875
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 3.1875
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 3.0156
+    },
+    {
+      "name": "Artifact opportunist (<=3 players, 2+ artifacts, base 7 turns)",
+      "value": 2.8750
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 2.8750
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 2.7656
+    },
+    {
+      "name": "Leave when solo with artifact (base 7 turns)",
+      "value": 2.7656
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 2.5625
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 2.5000
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 2.4375
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 2.3750
+    }
+  ]
+}

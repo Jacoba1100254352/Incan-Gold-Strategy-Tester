@@ -14,7 +14,9 @@ public class RoundStateVectorizer {
     private static final int MAX_HAZARD_COUNT = 2;
     private static final int MAX_HAZARD_COPIES = 3;
     private static final int MAX_TOTAL_HAZARDS = Hazard.values().length;
-
+    /**
+     * Creates a round state vectorizer.
+     */
     private RoundStateVectorizer() {
     }
 
@@ -46,7 +48,9 @@ public class RoundStateVectorizer {
         }
         return features;
     }
-
+    /**
+     * Handles normalize.
+     */
     private static double normalize(int value, int max) {
         if (max <= 0) {
             return 0.0;

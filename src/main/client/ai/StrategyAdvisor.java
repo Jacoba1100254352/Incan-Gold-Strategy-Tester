@@ -12,7 +12,9 @@ import java.util.List;
  */
 public class StrategyAdvisor {
     private final List<StrategyEvaluator.StrategyScore> scores;
-
+    /**
+     * Creates a strategy advisor.
+     */
     public StrategyAdvisor(List<StrategyEvaluator.StrategyScore> scores) {
         this.scores = scores;
     }
@@ -73,7 +75,6 @@ public class StrategyAdvisor {
         public final boolean shouldContinue;
         public final String strategyName;
         public final double score;
-
         public Decision(boolean shouldContinue, String strategyName, double score) {
             this.shouldContinue = shouldContinue;
             this.strategyName = strategyName;

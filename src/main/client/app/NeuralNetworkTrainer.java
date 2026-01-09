@@ -88,7 +88,6 @@ public class NeuralNetworkTrainer {
         int rollouts = args.length > 11
                 ? parsePositiveInt(args[11], DEFAULT_MONTE_CARLO_ROLLOUTS)
                 : DEFAULT_MONTE_CARLO_ROLLOUTS;
-
         System.out.printf("Training samples: target=%d games=%d players=%d%n", sampleTarget, games, players);
         System.out.printf("Trainer: epochs=%d batch=%d hidden=%d lr=%.4f followRate=%.2f%n",
                 epochs, batchSize, hiddenSize, learningRate, followRate);
@@ -114,7 +113,9 @@ public class NeuralNetworkTrainer {
             System.err.println("Failed to save model: " + e.getMessage());
         }
     }
-
+    /**
+     * Handles collect samples.
+     */
     private static List<TrainingSample> collectSamples(List<StrategyCatalog.StrategySpec> strategies,
                                                        StrategyAdvisor advisor,
                                                        int games,
@@ -129,7 +130,7 @@ public class NeuralNetworkTrainer {
         while (gameIndex < games && samples.size() < sampleTarget) {
             List<Player> players = new ArrayList<>();
             for (int i = 0; i < playersPerGame; i++) {
-                Strategy baseStrategy = strategies.get(random.nextInt(strategies.size())).factory.get();
+                Strategy baseStrategy = strategies.get(random.nextInt(strategies.size())).factory().get();
                 Strategy trainingStrategy = new TrainingStrategy(baseStrategy, advisor, samples, sampleTarget,
                         followRate, useMonteCarloLabels, rollouts, random);
                 players.add(new Player(trainingStrategy));
@@ -140,7 +141,9 @@ public class NeuralNetworkTrainer {
         }
         return samples;
     }
-
+    /**
+     * Parses positive int.
+     */
     private static int parsePositiveInt(String value, int fallback) {
         try {
             int parsed = Integer.parseInt(value);
@@ -149,7 +152,9 @@ public class NeuralNetworkTrainer {
             return fallback;
         }
     }
-
+    /**
+     * Parses positive double.
+     */
     private static double parsePositiveDouble(String value, double fallback) {
         try {
             double parsed = Double.parseDouble(value);
@@ -168,7 +173,9 @@ public class NeuralNetworkTrainer {
         private final boolean useMonteCarloLabels;
         private final int rollouts;
         private final Random random;
-
+        /**
+         * Creates a training strategy.
+         */
         private TrainingStrategy(Strategy baseStrategy,
                                  StrategyAdvisor advisor,
                                  List<TrainingSample> samples,
@@ -202,7 +209,9 @@ public class NeuralNetworkTrainer {
             return baseStrategy.shouldContinue(state);
         }
     }
-
+    /**
+     * Computes monte carlo label.
+     */
     private static double computeMonteCarloLabel(RoundState state,
                                                  StrategyAdvisor advisor,
                                                  int rollouts,
@@ -215,7 +224,9 @@ public class NeuralNetworkTrainer {
         }
         return 0.0;
     }
-
+    /**
+     * Estimates average outcome.
+     */
     private static double estimateAverageOutcome(RoundState state,
                                                  StrategyAdvisor advisor,
                                                  boolean forceContinue,
@@ -228,7 +239,9 @@ public class NeuralNetworkTrainer {
         }
         return total / rollouts;
     }
-
+    /**
+     * Handles simulate round.
+     */
     private static int simulateRound(RoundState state,
                                      StrategyAdvisor advisor,
                                      Map<Hazard, Integer> hazardCopies,
@@ -332,7 +345,9 @@ public class NeuralNetworkTrainer {
         }
         return gain;
     }
-
+    /**
+     * Handles artifact value.
+     */
     private static int artifactValue(int artifactsOnPath, int artifactsClaimed) {
         int total = 0;
         int claimed = artifactsClaimed;
@@ -343,7 +358,9 @@ public class NeuralNetworkTrainer {
         }
         return total;
     }
-
+    /**
+     * Handles resolve hazard copies.
+     */
     private static Map<Hazard, Integer> resolveHazardCopies(RoundState state) {
         Map<Hazard, Integer> provided = state.getHazardCopiesRemainingMap();
         boolean useDefault = provided == null || provided.isEmpty();
@@ -355,7 +372,9 @@ public class NeuralNetworkTrainer {
         }
         return copies;
     }
-
+    /**
+     * Builds remaining deck.
+     */
     private static List<Card> buildRemainingDeck(RoundState state,
                                                  Map<Hazard, Integer> hazardCopies,
                                                  Random random) {
@@ -389,7 +408,6 @@ public class NeuralNetworkTrainer {
         for (int i = 0; i < remainingArtifacts; i++) {
             deck.add(Card.artifact(i + 1));
         }
-
         Collections.shuffle(deck, random);
         return deck;
     }

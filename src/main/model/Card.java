@@ -15,7 +15,9 @@ public class Card {
     private int remainingTreasure;
     private final Hazard hazard;
     private final int artifactId;
-
+    /**
+     * Creates a card.
+     */
     private Card(Type type, int treasureValue, Hazard hazard, int artifactId) {
         this.type = type;
         this.treasureValue = treasureValue;

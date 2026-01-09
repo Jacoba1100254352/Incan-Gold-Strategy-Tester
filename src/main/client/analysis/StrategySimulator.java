@@ -86,6 +86,9 @@ public class StrategySimulator {
 
         double averageTreasure = simulations == 0
                 ? 0.0
+                /**
+                 * Handles the operation.
+                 */
                 : focusTreasure / (double) (simulations * focusCount);
         double winRate = simulations == 0 ? 0.0 : (focusWins * 100.0) / simulations;
         return new MatchupStats(averageTreasure, winRate);
@@ -135,6 +138,9 @@ public class StrategySimulator {
 
         double averageTreasure = simulations == 0
                 ? 0.0
+                /**
+                 * Handles the operation.
+                 */
                 : focusTreasure / (double) simulations;
         double winRate = simulations == 0 ? 0.0 : (focusWins * 100.0) / simulations;
         return new MatchupStats(averageTreasure, winRate);
@@ -163,7 +169,9 @@ public class StrategySimulator {
 
         return totalTurns / (double) simulations;
     }
-
+    /**
+     * Handles count turns until double hazard.
+     */
     private static int countTurnsUntilDoubleHazard(List<Card> deck) {
         Map<Hazard, Integer> hazardCounts = new EnumMap<>(Hazard.class);
         int turns = 0;
@@ -184,10 +192,15 @@ public class StrategySimulator {
     }
 
     private static class RoundLengthGame extends Game {
+        /**
+         * Creates a round length game.
+         */
         private RoundLengthGame() {
             super(new ArrayList<>());
         }
-
+        /**
+         * Creates round deck for simulation.
+         */
         private List<Card> createRoundDeckForSimulation() {
             return createRoundDeck();
         }

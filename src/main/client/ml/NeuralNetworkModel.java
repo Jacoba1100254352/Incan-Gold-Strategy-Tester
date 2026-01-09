@@ -23,7 +23,9 @@ public class NeuralNetworkModel {
     private final double[] bias1;
     private final double[] weights2;
     private double bias2;
-
+    /**
+     * Creates a neural network model.
+     */
     private NeuralNetworkModel(int inputSize, int hiddenSize) {
         this.inputSize = inputSize;
         this.hiddenSize = hiddenSize;
@@ -219,7 +221,9 @@ public class NeuralNetworkModel {
         model.bias2 = bias2;
         return model;
     }
-
+    /**
+     * Handles reset.
+     */
     private void reset(double[][] gradW1, double[] gradB1, double[] gradW2) {
         for (int i = 0; i < gradW1.length; i++) {
             for (int j = 0; j < gradW1[i].length; j++) {
@@ -229,7 +233,9 @@ public class NeuralNetworkModel {
             gradW2[i] = 0.0;
         }
     }
-
+    /**
+     * Handles extract number.
+     */
     private static double extractNumber(String json, String field) {
         Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([-0-9.eE]+)")
                 .matcher(json);
@@ -238,7 +244,9 @@ public class NeuralNetworkModel {
         }
         return Double.parseDouble(matcher.group(1));
     }
-
+    /**
+     * Handles extract array.
+     */
     private static double[] extractArray(String json, String field, int expected) {
         String content = extractArrayContent(json, field);
         List<Double> values = extractNumbers(content);
@@ -252,7 +260,9 @@ public class NeuralNetworkModel {
         }
         return result;
     }
-
+    /**
+     * Handles extract matrix.
+     */
     private static double[][] extractMatrix(String json, String field, int rows, int cols) {
         String content = extractArrayContent(json, field);
         List<Double> values = extractNumbers(content);
@@ -269,7 +279,9 @@ public class NeuralNetworkModel {
         }
         return result;
     }
-
+    /**
+     * Handles extract array content.
+     */
     private static String extractArrayContent(String json, String field) {
         int fieldIndex = json.indexOf("\"" + field + "\"");
         if (fieldIndex < 0) {
@@ -293,7 +305,9 @@ public class NeuralNetworkModel {
         }
         throw new IllegalArgumentException("Unterminated array for field: " + field);
     }
-
+    /**
+     * Handles extract numbers.
+     */
     private static List<Double> extractNumbers(String input) {
         List<Double> values = new ArrayList<>();
         Matcher matcher = Pattern.compile("[-0-9.eE]+").matcher(input);
@@ -302,7 +316,9 @@ public class NeuralNetworkModel {
         }
         return values;
     }
-
+    /**
+     * Applies gradients.
+     */
     private void applyGradients(double[][] gradW1,
                                 double[] gradB1,
                                 double[] gradW2,
@@ -319,25 +335,35 @@ public class NeuralNetworkModel {
         }
         bias2 -= gradB2 * scale;
     }
-
+    /**
+     * Handles relu.
+     */
     private static double relu(double value) {
         return Math.max(0.0, value);
     }
-
+    /**
+     * Handles relu derivative.
+     */
     private static double reluDerivative(double value) {
         return value > 0.0 ? 1.0 : 0.0;
     }
-
+    /**
+     * Handles sigmoid.
+     */
     private static double sigmoid(double value) {
         return 1.0 / (1.0 + Math.exp(-value));
     }
-
+    /**
+     * Handles cross entropy.
+     */
     private static double crossEntropy(double prediction, double label) {
         double epsilon = 1e-9;
         double p = Math.min(1.0 - epsilon, Math.max(epsilon, prediction));
         return -(label * Math.log(p) + (1.0 - label) * Math.log(1.0 - p));
     }
-
+    /**
+     * Handles format.
+     */
     private static String format(double value) {
         return String.format(Locale.US, NUMBER_FORMAT, value);
     }

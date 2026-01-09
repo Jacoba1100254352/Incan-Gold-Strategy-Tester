@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T21:50:58.457145-05:00",
+  "metric": "interactionWinRate",
+  "source": "results/strategy-interactions.json",
+  "image": "strategy-interactions-chart-20260108-215058.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 59.0000
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 58.9000
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 50.5000
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 40.9000
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "value": 34.5000
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 34.2000
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 34.2000
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 34.0000
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 33.9000
+    },
+    {
+      "name": "Leave after hazard risk 2 (max hazards 3)",
+      "value": 33.2000
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 32.8000
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 32.3000
+    },
+    {
+      "name": "Leave after 7 treasure or 4 hazards",
+      "value": 32.2000
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 32.1000
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 31.0000
+    },
+    {
+      "name": "Leave after 8 treasure or 4 hazards",
+      "value": 29.8000
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 29.5000
+    },
+    {
+      "name": "Leave after hazard risk 3 (max hazards 4)",
+      "value": 29.4000
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 29.3000
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 29.2000
+    }
+  ]
+}

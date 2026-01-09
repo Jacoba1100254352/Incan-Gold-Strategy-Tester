@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-01-08T16:39:42.129689-05:00",
+  "metric": "interactionWinRate",
+  "source": "results/strategy-interactions.json",
+  "image": "strategy-interactions-chart-20260108-163942.png",
+  "strategies": [
+    {
+      "name": "Leave after 6 turns",
+      "value": 58.0000
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 6 turns)",
+      "value": 56.1000
+    },
+    {
+      "name": "Switch after 2 hazards (stay->leave after 6 turns)",
+      "value": 48.6000
+    },
+    {
+      "name": "Leave after 6 treasure",
+      "value": 39.2000
+    },
+    {
+      "name": "Leave after 8 treasure or 5 hazards",
+      "value": 37.4000
+    },
+    {
+      "name": "Leave after 8 turns",
+      "value": 34.7000
+    },
+    {
+      "name": "Leave after 7 treasure",
+      "value": 34.4000
+    },
+    {
+      "name": "Leave after hazard risk 3 (max hazards 4)",
+      "value": 34.1000
+    },
+    {
+      "name": "Leave after 7 treasure or 5 hazards",
+      "value": 34.0000
+    },
+    {
+      "name": "Leave after hazard risk 2 (max hazards 3)",
+      "value": 33.7000
+    },
+    {
+      "name": "Leave after 4 hazards or 8 turns",
+      "value": 33.5000
+    },
+    {
+      "name": "Leave after 7 treasure or 8 turns",
+      "value": 33.2000
+    },
+    {
+      "name": "Leave after 5 hazards or 8 turns",
+      "value": 33.0000
+    },
+    {
+      "name": "Leave after 3 hazards",
+      "value": 30.8000
+    },
+    {
+      "name": "Leave after 7 treasure or 7 turns",
+      "value": 30.4000
+    },
+    {
+      "name": "Leave after 8 treasure or 4 hazards",
+      "value": 30.1000
+    },
+    {
+      "name": "Leave after 8 treasure or 8 turns",
+      "value": 30.1000
+    },
+    {
+      "name": "Switch after 1 hazards (stay->leave after 7 turns)",
+      "value": 29.8000
+    },
+    {
+      "name": "Leave after 5 hazards or 7 turns",
+      "value": 29.4000
+    },
+    {
+      "name": "Artifact value vs risk (bank 10, risk 2, <=2 players, base 7 turns)",
+      "value": 28.8000
+    }
+  ]
+}

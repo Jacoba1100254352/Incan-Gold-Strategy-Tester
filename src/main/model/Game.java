@@ -82,7 +82,9 @@ public class Game {
             playRound();
         }
     }
-
+    /**
+     * Handles play round.
+     */
     protected void playRound() {
         for (Player player : players) {
             player.startRound();
@@ -129,7 +131,6 @@ public class Game {
                     if (leavingPlayers.size() == 1 && !artifactsOnPath.isEmpty()) {
                         awardArtifacts(leavingPlayers.getFirst(), artifactsOnPath);
                     }
-
                     activePlayers.removeAll(leavingPlayers);
                 }
             } else {
@@ -258,7 +259,9 @@ public class Game {
         remainingArtifacts.removeAll(artifactsOnPath);
         artifactsOnPath.clear();
     }
-
+    /**
+     * Handles award artifacts.
+     */
     private void awardArtifacts(Player player, List<Card> artifactsOnPath) {
         for (int i = 0; i < artifactsOnPath.size(); i++) {
             int value = artifactsClaimed < ARTIFACT_LOW_COUNT ? ARTIFACT_LOW_VALUE : ARTIFACT_HIGH_VALUE;
@@ -268,7 +271,9 @@ public class Game {
         remainingArtifacts.removeAll(artifactsOnPath);
         artifactsOnPath.clear();
     }
-
+    /**
+     * Handles redistribute treasure remainder.
+     */
     private void redistributeTreasureRemainder(List<Card> treasureCardsOnPath, int remainder) {
         for (Card treasureCard : treasureCardsOnPath) {
             treasureCard.setRemainingTreasure(0);

@@ -13,7 +13,9 @@ public enum AIDifficulty {
 
     private final int repeats;
     private final int simulations;
-
+    /**
+     * Creates a aidifficulty.
+     */
     AIDifficulty(int repeats, int simulations) {
         this.repeats = repeats;
         this.simulations = simulations;

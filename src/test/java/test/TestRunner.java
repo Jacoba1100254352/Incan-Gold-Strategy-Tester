@@ -35,6 +35,9 @@ import java.util.regex.Pattern;
 
 
 public class TestRunner {
+    /**
+     * Handles main.
+     */
     public static void main(String[] args) {
         testCard();
         testRoundState();
@@ -48,7 +51,9 @@ public class TestRunner {
         testStrategyRatingsWithInteractions();
         System.out.println("All tests passed.");
     }
-
+    /**
+     * Handles test card.
+     */
     private static void testCard() {
         Card treasure = Card.treasure(7);
         assertEquals(Card.Type.TREASURE, treasure.getType(), "treasure type");
@@ -66,7 +71,9 @@ public class TestRunner {
         assertEquals(null, artifact.getHazard(), "artifact hazard");
         assertEquals(1, artifact.getArtifactId(), "artifact id");
     }
-
+    /**
+     * Handles test round state.
+     */
     private static void testRoundState() {
         Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
         counts.put(Hazard.SNAKE, 1);
@@ -75,7 +82,6 @@ public class TestRunner {
         copies.put(Hazard.SNAKE, 2);
         copies.put(Hazard.SPIDER, 1);
         RoundState state = new RoundState(3, 4, 5, 6, counts, copies, 0, 2);
-
         assertEquals(3, state.getTurnNumber(), "turn number");
         assertEquals(4, state.getActivePlayers(), "active players");
         assertEquals(5, state.getTempleTreasure(), "temple treasure");
@@ -89,7 +95,9 @@ public class TestRunner {
         assertEquals(0, state.getHazardCopiesRemaining(Hazard.TRAP), "trap copies remaining default");
         assertEquals(2, state.getArtifactsClaimed(), "artifacts claimed");
     }
-
+    /**
+     * Handles test player.
+     */
     private static void testPlayer() {
         Player player = new Player(new AlwaysContinueStrategy());
         player.startRound();
@@ -103,7 +111,9 @@ public class TestRunner {
         player.loseRoundTreasure();
         assertEquals(0, player.getRoundTreasure(), "round reset after loss");
     }
-
+    /**
+     * Handles test strategies.
+     */
     private static void testStrategies() {
         Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
         RoundState base = new RoundState(2, 3, 4, 5, counts, 0);
@@ -118,12 +128,10 @@ public class TestRunner {
         assertTrue(new LeaveAfterTreasureOrHazardsStrategy(6, 2).shouldContinue(base), "treasure and hazards under");
         assertTrue(new LeaveAfterTreasureOrTurnsStrategy(6, 3).shouldContinue(base), "treasure and turns under");
         assertTrue(new LeaveWhenSoloStrategy().shouldContinue(base), "not solo yet");
-
         counts.put(Hazard.SNAKE, 1);
         RoundState oneHazard = new RoundState(2, 3, 4, 5, counts, 0);
         assertTrue(new LeaveAfterHazardsStrategy(2).shouldContinue(oneHazard), "hazards at 1");
         assertFalse(new RiskAverseStrategy().shouldContinue(oneHazard), "risk averse after hazard");
-
         counts.put(Hazard.SPIDER, 1);
         RoundState twoHazards = new RoundState(2, 3, 4, 5, counts, 0);
         assertFalse(new LeaveAfterHazardsStrategy(2).shouldContinue(twoHazards), "hazards at limit");
@@ -166,7 +174,9 @@ public class TestRunner {
         RoundState newRoundReset = new RoundState(1, 2, 0, 0, new EnumMap<>(Hazard.class), 0);
         assertTrue(stayAfterHazard.shouldContinue(newRoundReset), "reset stay after hazard");
     }
-
+    /**
+     * Handles test game hazard ends round.
+     */
     private static void testGameHazardEndsRound() {
         List<Card> deck = Arrays.asList(
                 Card.treasure(5),
@@ -180,11 +190,12 @@ public class TestRunner {
 
         Game game = new FixedDeckGame(players, deck);
         game.playGame();
-
         assertEquals(0, players.get(0).getTotalTreasure(), "hazard end player 1");
         assertEquals(0, players.get(1).getTotalTreasure(), "hazard end player 2");
     }
-
+    /**
+     * Handles test game leaving and temple remainder.
+     */
     private static void testGameLeavingAndTempleRemainder() {
         List<Card> deck = Arrays.asList(
                 Card.treasure(5),
@@ -198,11 +209,12 @@ public class TestRunner {
 
         Game game = new FixedDeckGame(players, deck);
         game.playGame();
-
         assertEquals(3, players.get(0).getTotalTreasure(), "leaver total");
         assertEquals(6, players.get(1).getTotalTreasure(), "stayer total");
     }
-
+    /**
+     * Handles test artifact claim.
+     */
     private static void testArtifactClaim() {
         List<Card> deck = Arrays.asList(
                 Card.artifact(1),
@@ -215,12 +227,13 @@ public class TestRunner {
 
         Game game = new FixedDeckGame(players, deck);
         game.playGame();
-
         assertEquals(5, players.get(0).getTotalTreasure(), "artifact claimant total");
         assertEquals(1, players.get(0).getArtifactsClaimed(), "artifact claimant count");
         assertEquals(0, players.get(1).getTotalTreasure(), "artifact non-claimant total");
     }
-
+    /**
+     * Handles test artifact strategies.
+     */
     private static void testArtifactStrategies() {
         Map<Hazard, Integer> counts = new EnumMap<>(Hazard.class);
         Map<Hazard, Integer> copies = createHazardCopies(3);
@@ -283,7 +296,9 @@ public class TestRunner {
         RoundState memoryLeave = new RoundState(3, 2, 0, 0, twoHazards, copies, 0, 0);
         assertFalse(memoryStrategy.shouldContinue(memoryLeave), "memory strategy leaves on normal copies");
     }
-
+    /**
+     * Handles test strategy ratings.
+     */
     private static void testStrategyRatings() {
         Path ratingsPath = Paths.get("results", "strategy-ratings.json");
         String previousContent = null;
@@ -328,7 +343,9 @@ public class TestRunner {
             }
         }
     }
-
+    /**
+     * Handles test strategy ratings with interactions.
+     */
     private static void testStrategyRatingsWithInteractions() {
         Path ratingsPath = Paths.get("results", "strategy-ratings.json");
         String previousContent = null;
@@ -347,7 +364,6 @@ public class TestRunner {
             Map<String, StrategyRatings.InteractionPerformance> interactions = new HashMap<>();
             interactions.put("Alpha", new StrategyRatings.InteractionPerformance("Alpha", 0.0, 0.0));
             interactions.put("Beta", new StrategyRatings.InteractionPerformance("Beta", 20.0, 100.0));
-
             StrategyRatings.updateRatings(performances, "test-interactions", interactions, true);
 
             String json = readFileContent(ratingsPath, "interaction ratings");
@@ -376,7 +392,6 @@ public class TestRunner {
 
     private static class FixedDeckGame extends Game {
         private final List<Card> fixedDeck;
-
         private FixedDeckGame(List<Player> players, List<Card> fixedDeck) {
             super(players, 1, 0, Collections.emptyList(), new Random(0));
             this.fixedDeck = fixedDeck;
@@ -392,37 +407,49 @@ public class TestRunner {
             // Preserve deterministic order for tests.
         }
     }
-
+    /**
+     * Handles assert equals.
+     */
     private static void assertEquals(Object expected, Object actual, String message) {
         if (!Objects.equals(expected, actual)) {
             throw new AssertionError("Expected " + expected + " but got " + actual + ": " + message);
         }
     }
-
+    /**
+     * Handles assert equals.
+     */
     private static void assertEquals(int expected, int actual, String message) {
         if (expected != actual) {
             throw new AssertionError("Expected " + expected + " but got " + actual + ": " + message);
         }
     }
-
+    /**
+     * Handles assert true.
+     */
     private static void assertTrue(boolean condition, String message) {
         if (!condition) {
             throw new AssertionError("Assertion failed: " + message);
         }
     }
-
+    /**
+     * Handles assert false.
+     */
     private static void assertFalse(boolean condition, String message) {
         if (condition) {
             throw new AssertionError("Assertion failed: " + message);
         }
     }
-
+    /**
+     * Handles assert near.
+     */
     private static void assertNear(double expected, double actual, double epsilon, String message) {
         if (Math.abs(expected - actual) > epsilon) {
             throw new AssertionError("Expected " + expected + " but got " + actual + ": " + message);
         }
     }
-
+    /**
+     * Reads file content.
+     */
     private static String readFileContent(Path path, String message) {
         try {
             return Files.readString(path, StandardCharsets.UTF_8);
@@ -430,7 +457,9 @@ public class TestRunner {
             throw new AssertionError("Failed to read file for " + message + ": " + e.getMessage());
         }
     }
-
+    /**
+     * Writes file content.
+     */
     private static void writeFileContent(Path path, String content, String message) {
         try {
             Files.writeString(path, content == null ? "" : content, StandardCharsets.UTF_8);
@@ -438,7 +467,9 @@ public class TestRunner {
             throw new AssertionError("Failed to write file for " + message + ": " + e.getMessage());
         }
     }
-
+    /**
+     * Handles delete file if exists.
+     */
     private static void deleteFileIfExists(Path path, String message) {
         try {
             Files.deleteIfExists(path);
@@ -446,7 +477,9 @@ public class TestRunner {
             throw new AssertionError("Failed to delete file for " + message + ": " + e.getMessage());
         }
     }
-
+    /**
+     * Creates hazard copies.
+     */
     private static Map<Hazard, Integer> createHazardCopies(int copies) {
         Map<Hazard, Integer> result = new EnumMap<>(Hazard.class);
         for (Hazard hazard : Hazard.values()) {
@@ -454,7 +487,9 @@ public class TestRunner {
         }
         return result;
     }
-
+    /**
+     * Handles extract entry.
+     */
     private static String extractEntry(String json, String name) {
         String pattern = "\\{\\s*\"name\"\\s*:\\s*\"" + Pattern.quote(name) + "\"(.*?)\\n\\s*\\}";
         Matcher matcher = Pattern.compile(pattern, Pattern.DOTALL).matcher(json);
@@ -463,7 +498,9 @@ public class TestRunner {
         }
         return matcher.group();
     }
-
+    /**
+     * Handles extract double field.
+     */
     private static double extractDoubleField(String json, String name, String field) {
         String entry = extractEntry(json, name);
         Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([0-9.]+)")
@@ -473,7 +510,9 @@ public class TestRunner {
         }
         return Double.parseDouble(matcher.group(1));
     }
-
+    /**
+     * Handles extract int field.
+     */
     private static int extractIntField(String json, String name, String field) {
         String entry = extractEntry(json, name);
         Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*(\\d+)")
