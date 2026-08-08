@@ -1,12 +1,12 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -25,17 +25,16 @@ public class Game {
     private static final int ARTIFACT_HIGH_VALUE = 10;
     // Number of artifacts scored at the lower value.
     private static final int ARTIFACT_LOW_COUNT = 3;
-    // Default treasure values included in the deck.
-    private static final List<Integer> DEFAULT_TREASURE_VALUES = Arrays.asList(
-            1, 2, 3, 4, 5,
-            6, 7, 8, 9, 10,
-            11, 12, 13, 14, 15
+    // Treasure values used by the legacy Incan Gold rules implemented on Board Game Arena.
+    private static final List<Integer> DEFAULT_TREASURE_VALUES = List.of(
+            1, 2, 3, 4, 5, 5, 7,
+            7, 9, 11, 11, 13, 14, 15
     );
 
     private final List<Player> players;
     private final int rounds;
     private final int hazardCopies;
-    private final List<Card> treasureCards;
+    private final List<Integer> treasureValues;
     private final Random random;
     private final Map<Hazard, Integer> hazardCopiesRemaining;
     private final List<Card> remainingArtifacts;
@@ -50,6 +49,13 @@ public class Game {
     }
 
     /**
+     * Creates a game using default settings and an explicit RNG.
+     */
+    public Game(List<Player> players, Random random) {
+        this(players, DEFAULT_ROUNDS, DEFAULT_HAZARD_COPIES, DEFAULT_TREASURE_VALUES, random);
+    }
+
+    /**
      * Creates a game with explicit deck configuration and RNG.
      */
     public Game(List<Player> players,
@@ -57,14 +63,17 @@ public class Game {
                 int hazardCopies,
                 List<Integer> treasureValues,
                 Random random) {
-        this.players = players;
+        this.players = validatePlayers(players);
+        if (rounds < 0) {
+            throw new IllegalArgumentException("Rounds cannot be negative: " + rounds);
+        }
+        if (hazardCopies < 0) {
+            throw new IllegalArgumentException("Hazard copies cannot be negative: " + hazardCopies);
+        }
         this.rounds = rounds;
         this.hazardCopies = hazardCopies;
-        this.treasureCards = new ArrayList<>();
-        for (int value : treasureValues) {
-            this.treasureCards.add(Card.treasure(value));
-        }
-        this.random = random;
+        this.treasureValues = List.copyOf(validateTreasureValues(treasureValues));
+        this.random = Objects.requireNonNull(random, "random");
         this.hazardCopiesRemaining = new EnumMap<>(Hazard.class);
         for (Hazard hazard : Hazard.values()) {
             this.hazardCopiesRemaining.put(hazard, hazardCopies);
@@ -75,6 +84,68 @@ public class Game {
     }
 
     /**
+     * Returns the default BGA Incan Gold treasure-card values.
+     */
+    public static List<Integer> defaultTreasureValues() {
+        return DEFAULT_TREASURE_VALUES;
+    }
+
+    /**
+     * Returns the total number of artifacts in the default ruleset.
+     */
+    public static int totalArtifacts() {
+        return TOTAL_ARTIFACTS;
+    }
+
+    /**
+     * Returns the low artifact score used by the default ruleset.
+     */
+    public static int artifactLowValue() {
+        return ARTIFACT_LOW_VALUE;
+    }
+
+    /**
+     * Returns the high artifact score used by the default ruleset.
+     */
+    public static int artifactHighValue() {
+        return ARTIFACT_HIGH_VALUE;
+    }
+
+    /**
+     * Returns how many artifacts score at the low value.
+     */
+    public static int artifactLowCount() {
+        return ARTIFACT_LOW_COUNT;
+    }
+
+    /**
+     * Validates and copies players.
+     */
+    private static List<Player> validatePlayers(List<Player> players) {
+        Objects.requireNonNull(players, "players");
+        List<Player> copy = new ArrayList<>(players.size());
+        for (Player player : players) {
+            copy.add(Objects.requireNonNull(player, "players cannot contain null"));
+        }
+        return copy;
+    }
+
+    /**
+     * Validates treasure card values.
+     */
+    private static List<Integer> validateTreasureValues(List<Integer> treasureValues) {
+        Objects.requireNonNull(treasureValues, "treasureValues");
+        List<Integer> copy = new ArrayList<>(treasureValues.size());
+        for (Integer value : treasureValues) {
+            if (value == null || value <= 0) {
+                throw new IllegalArgumentException("Treasure values must be positive: " + value);
+            }
+            copy.add(value);
+        }
+        return copy;
+    }
+
+    /**
      * Plays all rounds of the game using current players and deck settings.
      */
     public void playGame() {
@@ -82,8 +153,9 @@ public class Game {
             playRound();
         }
     }
+
     /**
-     * Handles play round.
+     * Plays one expedition, including decisions, hazard resolution, and banking.
      */
     protected void playRound() {
         for (Player player : players) {
@@ -112,7 +184,8 @@ public class Game {
                             hazardCounts,
                             snapshotHazardCopiesRemaining(),
                             artifactsOnPath.size(),
-                            artifactsClaimed
+                            artifactsClaimed,
+                            artifactsRemainingInDeck(artifactsOnPath)
                     );
                     if (!player.makeDecision(state)) {
                         leavingPlayers.add(player);
@@ -138,6 +211,7 @@ public class Game {
             }
 
             if (activePlayers.isEmpty()) {
+                removeArtifactsFromGame(artifactsOnPath);
                 break;
             }
 
@@ -145,7 +219,7 @@ public class Game {
             turnNumber++;
 
             if (card.getType() == Card.Type.TREASURE) {
-                int value = card.getTreasureValue() + card.getRemainingTreasure();
+                int value = card.getTreasureValue();
                 int share = value / activePlayers.size();
                 int remainder = value % activePlayers.size();
                 for (Player player : activePlayers) {
@@ -189,6 +263,7 @@ public class Game {
                 awardArtifacts(activePlayers.getFirst(), artifactsOnPath);
             }
         }
+        removeArtifactsFromGame(artifactsOnPath);
     }
 
     /**
@@ -226,7 +301,10 @@ public class Game {
     }
 
     /**
-     * Returns a defensive snapshot of hazard copies remaining.
+     * Returns copies of each hazard still in the game.
+     *
+     * <p>Strategies subtract hazards already visible on the current path when
+     * estimating how many matching cards remain unrevealed.</p>
      */
     protected Map<Hazard, Integer> snapshotHazardCopiesRemaining() {
         return Collections.unmodifiableMap(new EnumMap<>(hazardCopiesRemaining));
@@ -253,14 +331,15 @@ public class Game {
     }
 
     /**
-     * Removes unclaimed artifacts from the game after a hazard ends the round.
+     * Removes revealed, unclaimed artifacts when an expedition ends.
      */
     protected void removeArtifactsFromGame(List<Card> artifactsOnPath) {
         remainingArtifacts.removeAll(artifactsOnPath);
         artifactsOnPath.clear();
     }
+
     /**
-     * Handles award artifacts.
+     * Awards every artifact on the path to the sole leaving player.
      */
     private void awardArtifacts(Player player, List<Card> artifactsOnPath) {
         for (int i = 0; i < artifactsOnPath.size(); i++) {
@@ -271,8 +350,9 @@ public class Game {
         remainingArtifacts.removeAll(artifactsOnPath);
         artifactsOnPath.clear();
     }
+
     /**
-     * Handles redistribute treasure remainder.
+     * Places the aggregate undivided treasure back onto one path card.
      */
     private void redistributeTreasureRemainder(List<Card> treasureCardsOnPath, int remainder) {
         for (Card treasureCard : treasureCardsOnPath) {
@@ -282,7 +362,6 @@ public class Game {
             treasureCardsOnPath.getLast().setRemainingTreasure(remainder);
         }
     }
-
 
     /**
      * Builds a fresh deck with configured hazards and treasure values.
@@ -295,9 +374,18 @@ public class Game {
                 deck.add(Card.hazard(hazard));
             }
         }
-        deck.addAll(treasureCards);
+        for (int treasureValue : treasureValues) {
+            deck.add(Card.treasure(treasureValue));
+        }
         deck.addAll(remainingArtifacts);
         return deck;
+    }
+
+    /**
+     * Returns artifact cards still unrevealed in the current expedition deck.
+     */
+    private int artifactsRemainingInDeck(List<Card> artifactsOnPath) {
+        return Math.max(0, remainingArtifacts.size() - artifactsOnPath.size());
     }
 
     /**

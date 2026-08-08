@@ -3,6 +3,8 @@ package client.ai;
 import algorithm.Strategy;
 import model.RoundState;
 
+import java.util.Objects;
+
 /**
  * AI strategy that adapts decisions using a precomputed advisor table.
  */
@@ -20,7 +22,7 @@ public class AdaptiveAIStrategy implements Strategy {
      */
     public AdaptiveAIStrategy(String name, StrategyAdvisor advisor, boolean verbose) {
         this.name = name;
-        this.advisor = advisor;
+        this.advisor = Objects.requireNonNull(advisor, "advisor");
         this.verbose = verbose;
     }
 

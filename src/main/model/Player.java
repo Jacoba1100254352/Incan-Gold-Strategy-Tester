@@ -2,6 +2,8 @@ package model;
 
 import algorithm.Strategy;
 
+import java.util.Objects;
+
 /**
  * Represents a player and their accumulated treasure.
  */
@@ -17,7 +19,7 @@ public class Player {
      * @param strategy decision strategy
      */
     public Player(Strategy strategy) {
-        this.strategy = strategy;
+        this.strategy = Objects.requireNonNull(strategy, "strategy");
         this.totalTreasure = 0;
         this.roundTreasure = 0;
         this.artifactsClaimed = 0;
@@ -46,6 +48,9 @@ public class Player {
      * @param amount treasure to collect
      */
     public void collect(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Collected treasure cannot be negative: " + amount);
+        }
         roundTreasure += amount;
     }
 
@@ -55,6 +60,9 @@ public class Player {
      * @param templeShare share of remaining temple treasure
      */
     public void leaveRound(int templeShare) {
+        if (templeShare < 0) {
+            throw new IllegalArgumentException("Temple share cannot be negative: " + templeShare);
+        }
         roundTreasure += templeShare;
         bankRoundTreasure();
     }
@@ -98,6 +106,9 @@ public class Player {
      * @param value artifact value
      */
     public void claimArtifact(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Artifact value cannot be negative: " + value);
+        }
         totalTreasure += value;
         artifactsClaimed++;
     }
@@ -109,5 +120,20 @@ public class Player {
      */
     public int getArtifactsClaimed() {
         return artifactsClaimed;
+    }
+
+    /**
+     * Compares final standings using treasure first and artifact count as the tiebreaker.
+     *
+     * @param other player to compare against
+     * @return a positive value when this player ranks higher, zero for a true tie
+     */
+    public int compareFinalStanding(Player other) {
+        Objects.requireNonNull(other, "other");
+        int scoreComparison = Integer.compare(totalTreasure, other.totalTreasure);
+        if (scoreComparison != 0) {
+            return scoreComparison;
+        }
+        return Integer.compare(artifactsClaimed, other.artifactsClaimed);
     }
 }

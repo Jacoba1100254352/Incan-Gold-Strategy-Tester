@@ -12,20 +12,42 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
  * Evaluates how strategies perform against other strategies and writes a report.
  */
-public class StrategyInteractionEvaluator {
+public final class StrategyInteractionEvaluator {
     private static final String OUTPUT_DIR = "results";
     private static final String OUTPUT_FILE = "strategy-interactions.json";
+    private static final Path DEFAULT_OUTPUT_PATH = Paths.get(OUTPUT_DIR, OUTPUT_FILE);
     private static final String NUMBER_FORMAT = "%.4f";
     private static final double UNAFFECTED_THRESHOLD = 0.25;
+    private static Path outputPath = DEFAULT_OUTPUT_PATH;
+
+    private StrategyInteractionEvaluator() {
+    }
+
+    /**
+     * Returns the active interaction report output path.
+     */
+    public static Path getOutputPath() {
+        return outputPath;
+    }
+
+    /**
+     * Overrides the report output path, primarily for tests and isolated runs.
+     */
+    public static void setOutputPath(Path path) {
+        outputPath = Objects.requireNonNull(path, "path");
+    }
 
     /**
      * Runs strategy matchups and writes a JSON report to the results folder.
@@ -39,26 +61,60 @@ public class StrategyInteractionEvaluator {
             List<StrategyCatalog.StrategySpec> strategies,
             int simulations,
             int playersPerGame) {
-        InteractionReport report = evaluate(strategies, simulations, playersPerGame);
+        return evaluateAndWrite(strategies, simulations, playersPerGame, new Random().nextLong());
+    }
+
+    /**
+     * Runs strategy matchups with a fixed seed and writes a JSON report to the results folder.
+     *
+     * @param strategies strategies to evaluate
+     * @param simulations simulations per matchup
+     * @param playersPerGame players per simulated game
+     * @param seed seed used for deterministic simulations
+     * @return per-strategy interaction performance summary
+     */
+    public static Map<String, StrategyRatings.InteractionPerformance> evaluateAndWrite(
+            List<StrategyCatalog.StrategySpec> strategies,
+            int simulations,
+            int playersPerGame,
+            long seed) {
+        InteractionReport report = evaluate(strategies, simulations, playersPerGame, seed);
         writeReport(report);
         return buildInteractionMap(report);
     }
     /**
-     * Handles evaluate.
+     * Evaluates mirror, pairwise, and mixed-field performance.
      */
     private static InteractionReport evaluate(List<StrategyCatalog.StrategySpec> strategies,
                                               int simulations,
-                                              int playersPerGame) {
+                                              int playersPerGame,
+                                              long seed) {
+        Objects.requireNonNull(strategies, "strategies");
+        if (strategies.size() < 2) {
+            throw new IllegalArgumentException("At least two strategies are required for interaction evaluation");
+        }
+        if (playersPerGame <= 0) {
+            throw new IllegalArgumentException("playersPerGame must be positive: " + playersPerGame);
+        }
+        Set<String> strategyNames = new HashSet<>();
+        for (StrategyCatalog.StrategySpec strategy : strategies) {
+            Objects.requireNonNull(strategy, "strategies cannot contain null");
+            if (!strategyNames.add(strategy.name())) {
+                throw new IllegalArgumentException("Duplicate strategy name: " + strategy.name());
+            }
+        }
         List<StrategyResult> results = new ArrayList<>();
         List<StrategyCatalog.StrategySpec> sortedStrategies = new ArrayList<>(strategies);
         sortedStrategies.sort(Comparator.comparing(spec -> spec.name()));
-        Random random = new Random();
+        Random seedGenerator = new Random(seed);
+        long[] gameSeeds = StrategySimulator.createGameSeeds(simulations, seedGenerator);
+        long fieldSelectionSeed = seedGenerator.nextLong();
 
         for (StrategyCatalog.StrategySpec focus : sortedStrategies) {
             double mirrorAverage = StrategySimulator.simulateAverageTreasure(
-		            focus.factory(),
-                    simulations,
-                    playersPerGame);
+                    focus.factory(),
+                    playersPerGame,
+                    gameSeeds);
 
             List<OpponentResult> matchups = new ArrayList<>();
             double maxAbsDelta = 0.0;
@@ -67,15 +123,15 @@ public class StrategyInteractionEvaluator {
             OpponentResult mostAffectedBy = null;
 
             for (StrategyCatalog.StrategySpec opponent : sortedStrategies) {
-                if (opponent == focus) {
+                if (opponent.name().equals(focus.name())) {
                     continue;
                 }
                 StrategySimulator.MatchupStats stats = StrategySimulator.simulateMatchup(
-		                focus.factory(),
-		                opponent.factory(),
-                        simulations,
+                        focus.factory(),
+                        opponent.factory(),
                         playersPerGame,
-                        1);
+                        1,
+                        gameSeeds);
                 double delta = stats.averageTreasure() - mirrorAverage;
                 OpponentResult matchup = new OpponentResult(opponent.name(), stats.averageTreasure(), delta,
                                                             stats.winRate());
@@ -102,12 +158,12 @@ public class StrategyInteractionEvaluator {
             });
 
             StrategySimulator.MatchupStats mixedStats = simulateAgainstField(
-		            focus.name(),
-		            focus.factory(),
+                    focus.name(),
+                    focus.factory(),
                     sortedStrategies,
-                    simulations,
                     playersPerGame,
-                    random);
+                    gameSeeds,
+                    fieldSelectionSeed);
             double mixedDelta = mixedStats.averageTreasure() - mirrorAverage;
             if (mostAffectedBy == null) {
                 maxDelta = 0.0;
@@ -115,7 +171,7 @@ public class StrategyInteractionEvaluator {
             }
             boolean unaffected = maxAbsDelta <= UNAFFECTED_THRESHOLD;
             results.add(new StrategyResult(
-		            focus.name(),
+                    focus.name(),
                     mirrorAverage,
                     mixedStats.averageTreasure(),
                     mixedDelta,
@@ -158,21 +214,22 @@ public class StrategyInteractionEvaluator {
                 OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
                 simulations,
                 playersPerGame,
+                seed,
                 UNAFFECTED_THRESHOLD,
                 results,
                 mostAffected
         );
     }
     /**
-     * Handles simulate against field.
+     * Simulates a focus strategy against a reproducible random opponent field.
      */
     private static StrategySimulator.MatchupStats simulateAgainstField(
             String focusName,
             Supplier<Strategy> focusFactory,
             List<StrategyCatalog.StrategySpec> allStrategies,
-            int simulations,
             int playersPerGame,
-            Random random) {
+            long[] gameSeeds,
+            long fieldSelectionSeed) {
         List<Supplier<Strategy>> opponentFactories = new ArrayList<>();
         for (StrategyCatalog.StrategySpec spec : allStrategies) {
             if (!spec.name().equals(focusName)) {
@@ -185,18 +242,20 @@ public class StrategyInteractionEvaluator {
         return StrategySimulator.simulateMatchupAgainstField(
                 focusFactory,
                 opponentFactories,
-                simulations,
                 playersPerGame,
-                random
+                gameSeeds,
+                new Random(fieldSelectionSeed)
         );
     }
     /**
      * Writes report.
      */
     private static void writeReport(InteractionReport report) {
-        Path outputPath = Paths.get(OUTPUT_DIR, OUTPUT_FILE);
         try {
-            Files.createDirectories(outputPath.getParent());
+            Path parent = outputPath.getParent();
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
             String json = buildJson(report);
             Files.writeString(outputPath, json, StandardCharsets.UTF_8);
             System.out.printf("Saved strategy interaction report to %s%n", outputPath.toAbsolutePath());
@@ -228,6 +287,10 @@ public class StrategyInteractionEvaluator {
         builder.append("  \"generatedAt\": \"").append(report.generatedAt).append("\",\n");
         builder.append("  \"simulations\": ").append(report.simulations).append(",\n");
         builder.append("  \"playersPerGame\": ").append(report.playersPerGame).append(",\n");
+        builder.append("  \"seed\": ").append(report.seed).append(",\n");
+        builder.append("  \"randomization\": \"common game seeds across strategies and matchups\",\n");
+        builder.append("  \"winRateDefinition\": ")
+                .append("\"top finish after the artifact-count tiebreak; exact ties count as top finishes\",\n");
         builder.append("  \"unaffectedThreshold\": ").append(formatNumber(report.unaffectedThreshold)).append(",\n");
         builder.append("  \"strategies\": [\n");
 
@@ -323,6 +386,7 @@ public class StrategyInteractionEvaluator {
     private record InteractionReport(String generatedAt,
                                      int simulations,
                                      int playersPerGame,
+                                     long seed,
                                      double unaffectedThreshold,
                                      List<StrategyResult> results,
                                      List<MostAffectedEntry> mostAffected) {

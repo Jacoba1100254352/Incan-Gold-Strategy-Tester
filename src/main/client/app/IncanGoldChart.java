@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 /**
@@ -62,6 +63,8 @@ public class IncanGoldChart extends Application {
     private static final int MAX_PLAYERS_ARG_INDEX = 3;
     // Argument index for output directory.
     private static final int OUTPUT_DIR_ARG_INDEX = 4;
+    // Argument index for optional deterministic simulation seed.
+    private static final int SEED_ARG_INDEX = 5;
     // Default minimum players per game for chart sweeps.
     private static final int DEFAULT_PLAYER_SWEEP_MIN = 2;
     // Default maximum players per game for chart sweeps.
@@ -91,7 +94,7 @@ public class IncanGoldChart extends Application {
      * Launches the JavaFX chart.
      *
      * @param args optional args: [repeats] [simulations] [playersPerGame] or [minPlayers] [maxPlayers]
-     *             [outputDir]
+     *             [outputDir] [seed]
      */
     public static void main(String[] args) {
         launch(args);
@@ -110,13 +113,16 @@ public class IncanGoldChart extends Application {
         content.setPadding(new Insets(CHART_PADDING));
         List<BucketSection> sections = new ArrayList<>();
         Map<String, PerformanceAccumulator> ratingTotals = new LinkedHashMap<>();
+        Random seedGenerator = new Random(params.seed);
+        System.out.printf("Chart simulation seed: %d%n", params.seed);
 
         for (int players = params.minPlayersPerGame; players <= params.maxPlayersPerGame; players++) {
             List<StrategyEvaluator.StrategyScore> scores = StrategyEvaluator.evaluate(
                     strategies,
                     params.repeats,
                     params.simulations,
-                    players
+                    players,
+                    new Random(seedGenerator.nextLong())
             );
             for (StrategyEvaluator.StrategyScore score : scores) {
                 ratingTotals
@@ -130,7 +136,7 @@ public class IncanGoldChart extends Application {
             sections.add(section);
             content.getChildren().add(createBucketSection(section));
         }
-        StrategyRatings.updateRatings(buildRatingPerformances(ratingTotals), "chart");
+        StrategyRatings.updateRatings(buildRatingPerformances(ratingTotals), "chart seed=" + params.seed);
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
@@ -170,8 +176,11 @@ public class IncanGoldChart extends Application {
         Path outputDir = rawArgs.size() > OUTPUT_DIR_ARG_INDEX
                 ? Paths.get(rawArgs.get(OUTPUT_DIR_ARG_INDEX))
                 : Paths.get(OUTPUT_DIR_NAME);
+        long seed = rawArgs.size() > SEED_ARG_INDEX
+                ? parseLong(rawArgs.get(SEED_ARG_INDEX), new Random().nextLong())
+                : new Random().nextLong();
 
-        return new SimulationParams(repeats, simulations, minPlayersPerGame, maxPlayersPerGame, outputDir);
+        return new SimulationParams(repeats, simulations, minPlayersPerGame, maxPlayersPerGame, outputDir, seed);
     }
 
     /**
@@ -180,6 +189,17 @@ public class IncanGoldChart extends Application {
     private static int parsePositiveInt(String value, int fallback) {
         try {
             return Integer.parseInt(value);
+        } catch (NumberFormatException ignored) {
+            return fallback;
+        }
+    }
+
+    /**
+     * Parses a long from a string, returning a fallback on error.
+     */
+    private static long parseLong(String value, long fallback) {
+        try {
+            return Long.parseLong(value);
         } catch (NumberFormatException ignored) {
             return fallback;
         }
@@ -374,6 +394,7 @@ public class IncanGoldChart extends Application {
         builder.append("  \"simulations\": ").append(params.simulations).append(",\n");
         builder.append("  \"minPlayersPerGame\": ").append(params.minPlayersPerGame).append(",\n");
         builder.append("  \"maxPlayersPerGame\": ").append(params.maxPlayersPerGame).append(",\n");
+        builder.append("  \"seed\": ").append(params.seed).append(",\n");
         builder.append("  \"image\": {\n");
         builder.append("    \"file\": \"").append(escapeJson(imageFileName)).append("\",\n");
         builder.append("    \"width\": ").append((int) Math.round(image.getWidth())).append(",\n");
@@ -517,7 +538,8 @@ public class IncanGoldChart extends Application {
                                     int simulations,
                                     int minPlayersPerGame,
                                     int maxPlayersPerGame,
-                                    Path outputDir)
+                                    Path outputDir,
+                                    long seed)
     {
     }
 

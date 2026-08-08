@@ -6,6 +6,8 @@ import client.analysis.StrategyEvaluator;
 import model.RoundState;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * Chooses between continuing and leaving based on the strongest strategies.
@@ -16,19 +18,33 @@ public class StrategyAdvisor {
      * Creates a strategy advisor.
      */
     public StrategyAdvisor(List<StrategyEvaluator.StrategyScore> scores) {
-        this.scores = scores;
+        Objects.requireNonNull(scores, "scores");
+        if (scores.isEmpty()) {
+            throw new IllegalArgumentException("scores cannot be empty");
+        }
+        this.scores = List.copyOf(scores);
     }
 
     /**
      * Builds an advisor using the default strategy catalog at the given difficulty.
      */
     public static StrategyAdvisor buildDefault(AIDifficulty difficulty, int playersPerGame) {
+        return buildDefault(difficulty, playersPerGame, new Random());
+    }
+
+    /**
+     * Builds an advisor using the default strategy catalog at the given difficulty.
+     */
+    public static StrategyAdvisor buildDefault(AIDifficulty difficulty, int playersPerGame, Random random) {
+        Objects.requireNonNull(difficulty, "difficulty");
+        Objects.requireNonNull(random, "random");
         List<StrategyCatalog.StrategySpec> strategies = StrategyCatalog.buildDefaultStrategies();
         List<StrategyEvaluator.StrategyScore> scores = StrategyEvaluator.evaluate(
                 strategies,
                 difficulty.getRepeats(),
                 difficulty.getSimulations(),
-                playersPerGame
+                playersPerGame,
+                random
         );
         return new StrategyAdvisor(scores);
     }

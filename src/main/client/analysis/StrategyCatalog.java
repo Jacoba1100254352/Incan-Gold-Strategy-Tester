@@ -19,13 +19,16 @@ import algorithm.Strategy;
 import algorithm.SwitchAfterHazardsStrategy;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
  * Centralized sweep configuration for strategy testing and AI selection.
  */
-public class StrategyCatalog {
+public final class StrategyCatalog {
     // Minimum hazards for the hazard-only sweep.
     private static final int HAZARD_SWEEP_MIN = 3;
     // Maximum hazards for the hazard-only sweep.
@@ -96,6 +99,13 @@ public class StrategyCatalog {
     private static final int HAZARD_RISK_HAZARDS_MIN = 3;
     // Maximum total hazards allowed for hazard-risk strategies.
     private static final int HAZARD_RISK_HAZARDS_MAX = 4;
+    private static final int VALIDATION_TREASURE_MIN = 4;
+    private static final int VALIDATION_TREASURE_MAX = 12;
+    private static final int VALIDATION_TURN_MIN = 4;
+    private static final int VALIDATION_TURN_MAX = 12;
+
+    private StrategyCatalog() {
+    }
 
     /**
      * Builds the default set of strategies and sweep ranges.
@@ -118,16 +128,54 @@ public class StrategyCatalog {
                 TREASURE_OR_TURNS_TURN_STEP);
         addSwitchAfterHazardsSweep(strategies, SWITCH_AFTER_HAZARDS_MIN, SWITCH_AFTER_HAZARDS_MAX,
                 SWITCH_AFTER_HAZARDS_TURN_MIN, SWITCH_AFTER_HAZARDS_TURN_MAX, SWITCH_AFTER_HAZARDS_TURN_STEP);
+        addHazardMemoryStrategies(strategies);
         addArtifactStrategies(strategies);
 
         return strategies;
     }
 
     /**
+     * Builds the default catalog plus a broad neighborhood around treasure/turn thresholds.
+     *
+     * <p>This catalog is intended for periodic validation of the optimized default
+     * ranges, not full pairwise interaction runs.</p>
+     */
+    public static List<StrategySpec> buildValidationStrategies() {
+        Map<String, StrategySpec> uniqueStrategies = new LinkedHashMap<>();
+        for (StrategySpec strategy : buildDefaultStrategies()) {
+            uniqueStrategies.put(strategy.name(), strategy);
+        }
+
+        List<StrategySpec> treasureTurnGrid = new ArrayList<>();
+        addTreasureOrTurnsSweep(
+                treasureTurnGrid,
+                VALIDATION_TREASURE_MIN,
+                VALIDATION_TREASURE_MAX,
+                1,
+                VALIDATION_TURN_MIN,
+                VALIDATION_TURN_MAX,
+                1
+        );
+        for (StrategySpec strategy : treasureTurnGrid) {
+            uniqueStrategies.putIfAbsent(strategy.name(), strategy);
+        }
+        return new ArrayList<>(uniqueStrategies.values());
+    }
+
+    /**
      * Describes a strategy name and factory for instantiation.
      */
-    public record StrategySpec(String name, Supplier<Strategy> factory)
-    {
+    public record StrategySpec(String name, Supplier<Strategy> factory) {
+        /**
+         * Validates the strategy name and factory.
+         */
+        public StrategySpec {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(factory, "factory");
+            if (name.isBlank()) {
+                throw new IllegalArgumentException("name cannot be blank");
+            }
+        }
     }
     /**
      * Adds hazard sweep.

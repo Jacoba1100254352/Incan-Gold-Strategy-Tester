@@ -16,6 +16,7 @@ public class RoundState {
     private final Map<Hazard, Integer> hazardCopiesRemaining;
     private final int artifactsOnPath;
     private final int artifactsClaimed;
+    private final int artifactsRemainingInDeck;
 
     /**
      * Creates a round state snapshot without hazard copy or artifact claim context.
@@ -40,6 +41,7 @@ public class RoundState {
                 hazardCounts,
                 Collections.emptyMap(),
                 artifactsOnPath,
+                0,
                 0);
     }
 
@@ -51,7 +53,7 @@ public class RoundState {
      * @param templeTreasure treasure remaining on the path
      * @param roundTreasure treasure held by the current player
      * @param hazardCounts hazard counts revealed so far
-     * @param hazardCopiesRemaining remaining hazard copies in the deck
+     * @param hazardCopiesRemaining copies of each hazard still in the game
      * @param artifactsOnPath artifacts currently on the path
      * @param artifactsClaimed artifacts already claimed across the game
      */
@@ -63,20 +65,85 @@ public class RoundState {
                       Map<Hazard, Integer> hazardCopiesRemaining,
                       int artifactsOnPath,
                       int artifactsClaimed) {
+        this(turnNumber,
+                activePlayers,
+                templeTreasure,
+                roundTreasure,
+                hazardCounts,
+                hazardCopiesRemaining,
+                artifactsOnPath,
+                artifactsClaimed,
+                0);
+    }
+
+    /**
+     * Creates a round state snapshot with full artifact deck context.
+     *
+     * @param turnNumber current turn number
+     * @param activePlayers players still in the temple
+     * @param templeTreasure treasure remaining on the path
+     * @param roundTreasure treasure held by the current player
+     * @param hazardCounts hazard counts revealed so far
+     * @param hazardCopiesRemaining copies of each hazard still in the game
+     * @param artifactsOnPath artifacts currently on the path
+     * @param artifactsClaimed artifacts already claimed across the game
+     * @param artifactsRemainingInDeck artifacts currently unrevealed in the expedition deck
+     */
+    public RoundState(int turnNumber,
+                      int activePlayers,
+                      int templeTreasure,
+                      int roundTreasure,
+                      Map<Hazard, Integer> hazardCounts,
+                      Map<Hazard, Integer> hazardCopiesRemaining,
+                      int artifactsOnPath,
+                      int artifactsClaimed,
+                      int artifactsRemainingInDeck) {
+        requireNonNegative(turnNumber, "turnNumber");
+        requireNonNegative(activePlayers, "activePlayers");
+        requireNonNegative(templeTreasure, "templeTreasure");
+        requireNonNegative(roundTreasure, "roundTreasure");
+        requireNonNegative(artifactsOnPath, "artifactsOnPath");
+        requireNonNegative(artifactsClaimed, "artifactsClaimed");
+        requireNonNegative(artifactsRemainingInDeck, "artifactsRemainingInDeck");
         this.turnNumber = turnNumber;
         this.activePlayers = activePlayers;
         this.templeTreasure = templeTreasure;
         this.roundTreasure = roundTreasure;
-        this.hazardCounts = Collections.unmodifiableMap(new EnumMap<>(hazardCounts));
-        Map<Hazard, Integer> remaining = hazardCopiesRemaining == null
-                ? Collections.emptyMap()
-                : hazardCopiesRemaining;
-        EnumMap<Hazard, Integer> remainingCopy = remaining.isEmpty()
-                ? new EnumMap<>(Hazard.class)
-                : new EnumMap<>(remaining);
-        this.hazardCopiesRemaining = Collections.unmodifiableMap(remainingCopy);
+        this.hazardCounts = immutableHazardMap(hazardCounts);
+        this.hazardCopiesRemaining = immutableHazardMap(hazardCopiesRemaining);
         this.artifactsOnPath = artifactsOnPath;
         this.artifactsClaimed = artifactsClaimed;
+        this.artifactsRemainingInDeck = artifactsRemainingInDeck;
+    }
+
+    /**
+     * Returns an immutable hazard map copy that tolerates null and empty inputs.
+     */
+    private static Map<Hazard, Integer> immutableHazardMap(Map<Hazard, Integer> source) {
+        EnumMap<Hazard, Integer> copy = new EnumMap<>(Hazard.class);
+        if (source != null) {
+            for (Map.Entry<Hazard, Integer> entry : source.entrySet()) {
+                Hazard hazard = entry.getKey();
+                Integer value = entry.getValue();
+                if (hazard == null) {
+                    throw new IllegalArgumentException("Hazard maps cannot contain null keys");
+                }
+                if (value == null || value < 0) {
+                    throw new IllegalArgumentException("Hazard counts cannot be negative or null for " + hazard);
+                }
+                copy.put(hazard, value);
+            }
+        }
+        return Collections.unmodifiableMap(copy);
+    }
+
+    /**
+     * Validates nonnegative integer state.
+     */
+    private static void requireNonNegative(int value, String field) {
+        if (value < 0) {
+            throw new IllegalArgumentException(field + " cannot be negative: " + value);
+        }
     }
 
     /**
@@ -148,7 +215,11 @@ public class RoundState {
     }
 
     /**
-     * Returns remaining copies of a hazard in the deck.
+     * Returns copies of a hazard still in the game.
+     *
+     * <p>This includes copies already visible on the current path. Strategies
+     * can subtract {@link #getHazardCount(Hazard)} to obtain the unrevealed
+     * matching-copy count.</p>
      *
      * @param hazard hazard type to query
      * @return remaining copies
@@ -158,7 +229,7 @@ public class RoundState {
     }
 
     /**
-     * Returns an immutable view of remaining hazard copies.
+     * Returns an immutable view of hazard copies still in the game.
      *
      * @return hazard copies map
      */
@@ -182,5 +253,14 @@ public class RoundState {
      */
     public int getArtifactsClaimed() {
         return artifactsClaimed;
+    }
+
+    /**
+     * Returns how many artifact cards remain unrevealed in the expedition deck.
+     *
+     * @return artifact cards remaining in deck
+     */
+    public int getArtifactsRemainingInDeck() {
+        return artifactsRemainingInDeck;
     }
 }

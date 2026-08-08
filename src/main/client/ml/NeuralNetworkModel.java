@@ -1,5 +1,9 @@
 package client.ml;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -7,15 +11,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Simple feedforward neural network with one hidden layer.
  */
 public class NeuralNetworkModel {
-    private static final String NUMBER_FORMAT = "%.6f";
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private final int inputSize;
     private final int hiddenSize;
@@ -27,6 +30,12 @@ public class NeuralNetworkModel {
      * Creates a neural network model.
      */
     private NeuralNetworkModel(int inputSize, int hiddenSize) {
+        if (inputSize <= 0) {
+            throw new IllegalArgumentException("inputSize must be positive: " + inputSize);
+        }
+        if (hiddenSize <= 0) {
+            throw new IllegalArgumentException("hiddenSize must be positive: " + hiddenSize);
+        }
         this.inputSize = inputSize;
         this.hiddenSize = hiddenSize;
         this.weights1 = new double[hiddenSize][inputSize];
@@ -39,6 +48,7 @@ public class NeuralNetworkModel {
      * Creates a randomly initialized network.
      */
     public static NeuralNetworkModel initialize(int inputSize, int hiddenSize, Random random) {
+        Objects.requireNonNull(random, "random");
         NeuralNetworkModel model = new NeuralNetworkModel(inputSize, hiddenSize);
         double scale = 1.0 / Math.sqrt(inputSize);
         for (int i = 0; i < hiddenSize; i++) {
@@ -56,6 +66,7 @@ public class NeuralNetworkModel {
      * Runs a forward pass and returns the continue probability.
      */
     public double predict(double[] input) {
+        Objects.requireNonNull(input, "input");
         if (input.length != inputSize) {
             throw new IllegalArgumentException("Expected " + inputSize + " inputs but got " + input.length);
         }
@@ -82,6 +93,17 @@ public class NeuralNetworkModel {
                       int batchSize,
                       double learningRate,
                       Random random) {
+        Objects.requireNonNull(samples, "samples");
+        Objects.requireNonNull(random, "random");
+        if (epochs <= 0) {
+            throw new IllegalArgumentException("epochs must be positive: " + epochs);
+        }
+        if (batchSize <= 0) {
+            throw new IllegalArgumentException("batchSize must be positive: " + batchSize);
+        }
+        if (!Double.isFinite(learningRate) || learningRate <= 0.0) {
+            throw new IllegalArgumentException("learningRate must be positive: " + learningRate);
+        }
         if (samples.isEmpty()) {
             return;
         }
@@ -155,49 +177,11 @@ public class NeuralNetworkModel {
      * Saves the model weights to a JSON file.
      */
     public void save(Path path) throws IOException {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\n");
-        builder.append("  \"inputSize\": ").append(inputSize).append(",\n");
-        builder.append("  \"hiddenSize\": ").append(hiddenSize).append(",\n");
-        builder.append("  \"weights1\": [\n");
-        for (int i = 0; i < hiddenSize; i++) {
-            builder.append("    [");
-            for (int j = 0; j < inputSize; j++) {
-                builder.append(format(weights1[i][j]));
-                if (j < inputSize - 1) {
-                    builder.append(", ");
-                }
-            }
-            builder.append("]");
-            if (i < hiddenSize - 1) {
-                builder.append(",");
-            }
-            builder.append("\n");
-        }
-        builder.append("  ],\n");
-        builder.append("  \"bias1\": [");
-        for (int i = 0; i < hiddenSize; i++) {
-            builder.append(format(bias1[i]));
-            if (i < hiddenSize - 1) {
-                builder.append(", ");
-            }
-        }
-        builder.append("],\n");
-        builder.append("  \"weights2\": [");
-        for (int i = 0; i < hiddenSize; i++) {
-            builder.append(format(weights2[i]));
-            if (i < hiddenSize - 1) {
-                builder.append(", ");
-            }
-        }
-        builder.append("],\n");
-        builder.append("  \"bias2\": ").append(format(bias2)).append("\n");
-        builder.append("}\n");
-
         if (path.getParent() != null) {
             Files.createDirectories(path.getParent());
         }
-        Files.writeString(path, builder.toString(), StandardCharsets.UTF_8);
+        ModelData data = new ModelData(inputSize, hiddenSize, weights1, bias1, weights2, bias2);
+        Files.writeString(path, GSON.toJson(data) + "\n", StandardCharsets.UTF_8);
     }
 
     /**
@@ -205,21 +189,48 @@ public class NeuralNetworkModel {
      */
     public static NeuralNetworkModel load(Path path) throws IOException {
         String json = Files.readString(path, StandardCharsets.UTF_8);
-        int inputSize = (int) extractNumber(json, "inputSize");
-        int hiddenSize = (int) extractNumber(json, "hiddenSize");
-        NeuralNetworkModel model = new NeuralNetworkModel(inputSize, hiddenSize);
-        double[][] weights1 = extractMatrix(json, "weights1", hiddenSize, inputSize);
-        double[] bias1 = extractArray(json, "bias1", hiddenSize);
-        double[] weights2 = extractArray(json, "weights2", hiddenSize);
-        double bias2 = extractNumber(json, "bias2");
-
-        for (int i = 0; i < hiddenSize; i++) {
-            System.arraycopy(weights1[i], 0, model.weights1[i], 0, inputSize);
-            model.bias1[i] = bias1[i];
-            model.weights2[i] = weights2[i];
+        ModelData data;
+        try {
+            data = GSON.fromJson(json, ModelData.class);
+        } catch (JsonParseException e) {
+            throw new IllegalArgumentException("Invalid model JSON: " + e.getMessage(), e);
         }
-        model.bias2 = bias2;
+        validateModelData(data);
+
+        NeuralNetworkModel model = new NeuralNetworkModel(data.inputSize, data.hiddenSize);
+        for (int i = 0; i < data.hiddenSize; i++) {
+            System.arraycopy(data.weights1[i], 0, model.weights1[i], 0, data.inputSize);
+            model.bias1[i] = data.bias1[i];
+            model.weights2[i] = data.weights2[i];
+        }
+        model.bias2 = data.bias2;
         return model;
+    }
+
+    /**
+     * Validates model shape before copying arrays into the runtime model.
+     */
+    private static void validateModelData(ModelData data) {
+        if (data == null) {
+            throw new IllegalArgumentException("Missing model data");
+        }
+        if (data.inputSize <= 0 || data.hiddenSize <= 0) {
+            throw new IllegalArgumentException("Model dimensions must be positive");
+        }
+        if (data.weights1 == null || data.weights1.length != data.hiddenSize) {
+            throw new IllegalArgumentException("weights1 row count does not match hiddenSize");
+        }
+        for (double[] row : data.weights1) {
+            if (row == null || row.length != data.inputSize) {
+                throw new IllegalArgumentException("weights1 column count does not match inputSize");
+            }
+        }
+        if (data.bias1 == null || data.bias1.length != data.hiddenSize) {
+            throw new IllegalArgumentException("bias1 length does not match hiddenSize");
+        }
+        if (data.weights2 == null || data.weights2.length != data.hiddenSize) {
+            throw new IllegalArgumentException("weights2 length does not match hiddenSize");
+        }
     }
     /**
      * Handles reset.
@@ -232,89 +243,6 @@ public class NeuralNetworkModel {
             gradB1[i] = 0.0;
             gradW2[i] = 0.0;
         }
-    }
-    /**
-     * Handles extract number.
-     */
-    private static double extractNumber(String json, String field) {
-        Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([-0-9.eE]+)")
-                .matcher(json);
-        if (!matcher.find()) {
-            throw new IllegalArgumentException("Missing field: " + field);
-        }
-        return Double.parseDouble(matcher.group(1));
-    }
-    /**
-     * Handles extract array.
-     */
-    private static double[] extractArray(String json, String field, int expected) {
-        String content = extractArrayContent(json, field);
-        List<Double> values = extractNumbers(content);
-        if (values.size() != expected) {
-            throw new IllegalArgumentException("Expected " + expected + " values for " + field
-                    + " but found " + values.size());
-        }
-        double[] result = new double[expected];
-        for (int i = 0; i < expected; i++) {
-            result[i] = values.get(i);
-        }
-        return result;
-    }
-    /**
-     * Handles extract matrix.
-     */
-    private static double[][] extractMatrix(String json, String field, int rows, int cols) {
-        String content = extractArrayContent(json, field);
-        List<Double> values = extractNumbers(content);
-        if (values.size() != rows * cols) {
-            throw new IllegalArgumentException("Expected " + (rows * cols) + " values for " + field
-                    + " but found " + values.size());
-        }
-        double[][] result = new double[rows][cols];
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                result[i][j] = values.get(index++);
-            }
-        }
-        return result;
-    }
-    /**
-     * Handles extract array content.
-     */
-    private static String extractArrayContent(String json, String field) {
-        int fieldIndex = json.indexOf("\"" + field + "\"");
-        if (fieldIndex < 0) {
-            throw new IllegalArgumentException("Missing field: " + field);
-        }
-        int start = json.indexOf('[', fieldIndex);
-        if (start < 0) {
-            throw new IllegalArgumentException("Missing array start for field: " + field);
-        }
-        int depth = 0;
-        for (int i = start; i < json.length(); i++) {
-            char c = json.charAt(i);
-            if (c == '[') {
-                depth++;
-            } else if (c == ']') {
-                depth--;
-                if (depth == 0) {
-                    return json.substring(start, i + 1);
-                }
-            }
-        }
-        throw new IllegalArgumentException("Unterminated array for field: " + field);
-    }
-    /**
-     * Handles extract numbers.
-     */
-    private static List<Double> extractNumbers(String input) {
-        List<Double> values = new ArrayList<>();
-        Matcher matcher = Pattern.compile("[-0-9.eE]+").matcher(input);
-        while (matcher.find()) {
-            values.add(Double.parseDouble(matcher.group()));
-        }
-        return values;
     }
     /**
      * Applies gradients.
@@ -361,10 +289,12 @@ public class NeuralNetworkModel {
         double p = Math.min(1.0 - epsilon, Math.max(epsilon, prediction));
         return -(label * Math.log(p) + (1.0 - label) * Math.log(1.0 - p));
     }
-    /**
-     * Handles format.
-     */
-    private static String format(double value) {
-        return String.format(Locale.US, NUMBER_FORMAT, value);
+
+    private record ModelData(int inputSize,
+                             int hiddenSize,
+                             double[][] weights1,
+                             double[] bias1,
+                             double[] weights2,
+                             double bias2) {
     }
 }

@@ -3,6 +3,8 @@ package client.ml;
 import model.Hazard;
 import model.RoundState;
 
+import java.util.Objects;
+
 /**
  * Converts round states into normalized feature vectors for ML models.
  */
@@ -24,13 +26,14 @@ public class RoundStateVectorizer {
      * Returns the number of features emitted by the vectorizer.
      */
     public static int featureCount() {
-        return 7 + Hazard.values().length * 2;
+        return 8 + Hazard.values().length * 2;
     }
 
     /**
      * Builds a normalized feature vector for the given state.
      */
     public static double[] toFeatures(RoundState state) {
+        Objects.requireNonNull(state, "state");
         double[] features = new double[featureCount()];
         int index = 0;
         features[index++] = normalize(state.getTurnNumber(), MAX_TURN);
@@ -39,6 +42,7 @@ public class RoundStateVectorizer {
         features[index++] = normalize(state.getRoundTreasure(), MAX_TREASURE);
         features[index++] = normalize(state.getArtifactsOnPath(), MAX_ARTIFACTS);
         features[index++] = normalize(state.getArtifactsClaimed(), MAX_ARTIFACTS);
+        features[index++] = normalize(state.getArtifactsRemainingInDeck(), MAX_ARTIFACTS);
         features[index++] = normalize(state.getTotalHazardsRevealed(), MAX_TOTAL_HAZARDS);
         for (Hazard hazard : Hazard.values()) {
             features[index++] = normalize(state.getHazardCount(hazard), MAX_HAZARD_COUNT);

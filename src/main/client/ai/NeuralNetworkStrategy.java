@@ -6,6 +6,7 @@ import client.ml.RoundStateVectorizer;
 import model.RoundState;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * Strategy that uses a trained neural network to decide whether to continue.
@@ -25,12 +26,16 @@ public class NeuralNetworkStrategy implements Strategy {
      * @param fallback strategy used if the model fails to load
      */
     public NeuralNetworkStrategy(String name, Path modelPath, double threshold, Strategy fallback) {
-        this.name = name;
+        if (!Double.isFinite(threshold) || threshold < 0.0 || threshold > 1.0) {
+            throw new IllegalArgumentException("threshold must be in [0, 1]: " + threshold);
+        }
+        this.name = Objects.requireNonNull(name, "name");
         this.threshold = threshold;
         this.fallback = fallback;
+        Path resolvedModelPath = Objects.requireNonNull(modelPath, "modelPath");
         NeuralNetworkModel loaded = null;
         try {
-            loaded = NeuralNetworkModel.load(modelPath);
+            loaded = NeuralNetworkModel.load(resolvedModelPath);
         } catch (Exception e) {
             System.err.printf("Failed to load model for %s: %s%n", name, e.getMessage());
         }

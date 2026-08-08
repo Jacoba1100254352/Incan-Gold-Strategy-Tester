@@ -49,26 +49,22 @@ public class NeuralNetworkTrainer {
     private static final String DEFAULT_MODEL_PATH = "results/models/strategy-net.json";
     // Default number of copies per hazard when copy info is missing.
     private static final int DEFAULT_HAZARD_COPIES = 3;
-    // Total artifacts in the full game.
-    private static final int TOTAL_ARTIFACTS = 5;
     // Value for the first few artifacts.
-    private static final int ARTIFACT_LOW_VALUE = 5;
+    private static final int ARTIFACT_LOW_VALUE = Game.artifactLowValue();
     // Value for later artifacts.
-    private static final int ARTIFACT_HIGH_VALUE = 10;
+    private static final int ARTIFACT_HIGH_VALUE = Game.artifactHighValue();
     // Number of artifacts scored at the lower value.
-    private static final int ARTIFACT_LOW_COUNT = 3;
+    private static final int ARTIFACT_LOW_COUNT = Game.artifactLowCount();
     // Treasure values included in the deck.
-    private static final List<Integer> TREASURE_VALUES = List.of(
-            1, 2, 3, 4, 5,
-            6, 7, 8, 9, 10,
-            11, 12, 13, 14, 15
-    );
+    private static final List<Integer> TREASURE_VALUES = Game.defaultTreasureValues();
+    // Argument index for optional deterministic training seed.
+    private static final int SEED_ARG_INDEX = 12;
 
     /**
      * Entry point for training a neural network strategy.
      *
-     * @param args optional args: [games] [players] [samples] [epochs] [batch] [hidden] [lr] [followRate] [difficulty]
-     *             [outputPath] [useMonteCarloLabels] [rollouts]
+     * @param args optional args: [games] [players] [samples] [epochs] [batch] [hidden] [lr] [followRate]
+     *             [difficulty] [outputPath] [useMonteCarloLabels] [rollouts] [seed]
      */
     public static void main(String[] args) {
         int games = args.length > 0 ? parsePositiveInt(args[0], DEFAULT_GAMES) : DEFAULT_GAMES;
@@ -88,6 +84,10 @@ public class NeuralNetworkTrainer {
         int rollouts = args.length > 11
                 ? parsePositiveInt(args[11], DEFAULT_MONTE_CARLO_ROLLOUTS)
                 : DEFAULT_MONTE_CARLO_ROLLOUTS;
+        long seed = args.length > SEED_ARG_INDEX
+                ? parseLong(args[SEED_ARG_INDEX], new Random().nextLong())
+                : new Random().nextLong();
+        Random seedGenerator = new Random(seed);
         System.out.printf("Training samples: target=%d games=%d players=%d%n", sampleTarget, games, players);
         System.out.printf("Trainer: epochs=%d batch=%d hidden=%d lr=%.4f followRate=%.2f%n",
                 epochs, batchSize, hiddenSize, learningRate, followRate);
@@ -95,16 +95,20 @@ public class NeuralNetworkTrainer {
         System.out.printf("Monte Carlo labels: %s (rollouts=%d)%n",
                 useMonteCarloLabels ? "enabled" : "disabled",
                 rollouts);
+        System.out.printf("Training seed: %d%n", seed);
 
         List<StrategyCatalog.StrategySpec> strategies = StrategyCatalog.buildDefaultStrategies();
-        StrategyAdvisor advisor = StrategyAdvisor.buildDefault(difficulty, players);
+        StrategyAdvisor advisor = StrategyAdvisor.buildDefault(
+                difficulty,
+                players,
+                new Random(seedGenerator.nextLong()));
         List<TrainingSample> samples = collectSamples(strategies, advisor, games, players, sampleTarget,
-                followRate, useMonteCarloLabels, rollouts, new Random());
+                followRate, useMonteCarloLabels, rollouts, new Random(seedGenerator.nextLong()));
         System.out.printf("Collected %d samples%n", samples.size());
 
         NeuralNetworkModel model = NeuralNetworkModel.initialize(RoundStateVectorizer.featureCount(),
-                hiddenSize, new Random());
-        model.train(samples, epochs, batchSize, learningRate, new Random());
+                hiddenSize, new Random(seedGenerator.nextLong()));
+        model.train(samples, epochs, batchSize, learningRate, new Random(seedGenerator.nextLong()));
 
         try {
             model.save(outputPath);
@@ -135,7 +139,7 @@ public class NeuralNetworkTrainer {
                         followRate, useMonteCarloLabels, rollouts, random);
                 players.add(new Player(trainingStrategy));
             }
-            Game game = new Game(players);
+            Game game = new Game(players, random);
             game.playGame();
             gameIndex++;
         }
@@ -159,6 +163,17 @@ public class NeuralNetworkTrainer {
         try {
             double parsed = Double.parseDouble(value);
             return parsed > 0.0 ? parsed : fallback;
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    /**
+     * Parses a long from a string, returning a fallback on error.
+     */
+    private static long parseLong(String value, long fallback) {
+        try {
+            return Long.parseLong(value);
         } catch (NumberFormatException e) {
             return fallback;
         }
@@ -253,6 +268,7 @@ public class NeuralNetworkTrainer {
         int sharedRoundTreasure = state.getRoundTreasure();
         int artifactsOnPath = state.getArtifactsOnPath();
         int artifactsClaimed = state.getArtifactsClaimed();
+        int artifactsRemainingInDeck = state.getArtifactsRemainingInDeck();
         boolean forcedDecisionUsed = false;
 
         Map<Hazard, Integer> hazardCounts = new EnumMap<>(Hazard.class);
@@ -274,7 +290,8 @@ public class NeuralNetworkTrainer {
                     hazardCounts,
                     hazardCopies,
                     artifactsOnPath,
-                    artifactsClaimed
+                    artifactsClaimed,
+                    artifactsRemainingInDeck
             );
             boolean defaultContinue = advisor.decide(decisionState).shouldContinue;
 
@@ -335,6 +352,7 @@ public class NeuralNetworkTrainer {
                 }
             } else {
                 artifactsOnPath++;
+                artifactsRemainingInDeck = Math.max(0, artifactsRemainingInDeck - 1);
             }
         }
 
@@ -403,8 +421,7 @@ public class NeuralNetworkTrainer {
             deck.add(Card.treasure(value));
         }
 
-        int remainingArtifacts = Math.max(0,
-                TOTAL_ARTIFACTS - state.getArtifactsClaimed() - state.getArtifactsOnPath());
+        int remainingArtifacts = Math.max(0, state.getArtifactsRemainingInDeck());
         for (int i = 0; i < remainingArtifacts; i++) {
             deck.add(Card.artifact(i + 1));
         }

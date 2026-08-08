@@ -1,0 +1,169 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'jacoco'
+}
+
+group = 'com.incangold'
+version = '1.0.0'
+
+def javaRelease = 21
+def junitVersion = '5.14.3'
+def gsonVersion = '2.14.0'
+def javafxVersion = '21.0.11'
+def jacocoVersion = '0.8.13'
+def externalBuildDir = providers.environmentVariable('INCAN_GOLD_BUILD_DIR')
+def osName = System.getProperty('os.name').toLowerCase(Locale.US)
+def osArch = System.getProperty('os.arch').toLowerCase(Locale.US)
+def javafxPlatform = osName.contains('mac')
+        ? (osArch.contains('aarch64') || osArch.contains('arm64') ? 'mac-aarch64' : 'mac')
+        : (osName.contains('win') ? 'win' : (osArch.contains('aarch64') || osArch.contains('arm64') ? 'linux-aarch64' : 'linux'))
+
+repositories {
+    mavenCentral()
+}
+
+if (externalBuildDir.present) {
+    layout.buildDirectory.set(file(externalBuildDir.get()))
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main']
+    }
+    test {
+        java.srcDirs = ['src/test/java']
+    }
+}
+
+dependencies {
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "org.openjfx:javafx-base:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-graphics:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-controls:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-swing:${javafxVersion}:${javafxPlatform}"
+
+    testImplementation platform("org.junit:junit-bom:${junitVersion}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+application {
+    mainClass = 'client.app.IncanGoldPlay'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = javaRelease
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    workingDir = projectDir
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+def coverageExcludes = [
+        'client/app/**'
+]
+
+def coreCoverageClassDirectories = {
+    files(sourceSets.main.output.classesDirs.collect {
+        fileTree(dir: it, exclude: coverageExcludes)
+    })
+}
+
+jacocoTestReport {
+    dependsOn test
+    classDirectories.setFrom(coreCoverageClassDirectories())
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn test
+    classDirectories.setFrom(coreCoverageClassDirectories())
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.70
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestReport, jacocoTestCoverageVerification
+
+tasks.named('run', JavaExec) {
+    standardInput = System.in
+}
+
+tasks.register('runSweep', JavaExec) {
+    group = 'application'
+    description = 'Runs the strategy sweep CLI.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'client.app.IncanGoldTest'
+}
+
+tasks.register('runValidation', JavaExec) {
+    group = 'application'
+    description = 'Screens the expanded catalog and reruns the finalists at higher sample size.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'client.app.StrategyValidationRunner'
+}
+
+tasks.register('trainNeuralNetwork', JavaExec) {
+    group = 'application'
+    description = 'Generates training data and trains the neural network strategy.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'client.app.NeuralNetworkTrainer'
+}
+
+tasks.register('renderBucketChart', JavaExec) {
+    group = 'application'
+    description = 'Launches the original strategy bucket chart renderer.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'client.app.IncanGoldChart'
+}
+
+tasks.register('renderStrategyCharts', JavaExec) {
+    group = 'application'
+    description = 'Launches the ratings and interaction chart renderer.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'client.app.StrategyResultsChart'
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+}
+
+tasks.named('clean') {
+    delete 'out'
+}
+
+tasks.named('wrapper', Wrapper) {
+    gradleVersion = '9.4.1'
+    distributionType = Wrapper.DistributionType.BIN
+}

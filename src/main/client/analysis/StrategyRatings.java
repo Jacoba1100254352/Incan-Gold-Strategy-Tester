@@ -1,5 +1,13 @@
 package client.analysis;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -9,34 +17,50 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Maintains a shared ratings file for strategy performance.
  */
-public class StrategyRatings {
-    private static final Path RATINGS_PATH = Paths.get("results", "strategy-ratings.json");
+public final class StrategyRatings {
+    private static final Path DEFAULT_RATINGS_PATH = Paths.get("results", "strategy-ratings.json");
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final double MAX_RATING = 5.0;
     private static final double MIN_RATING = 0.0;
     private static final double DEFAULT_WEIGHT = 0.5;
     private static final double INTERACTION_AVERAGE_WEIGHT = 0.5;
     private static final double INTERACTION_WIN_RATE_WEIGHT = 0.7;
     private static final double WIN_RATE_SCORE_WEIGHT = 0.6;
-    private static final String NUMBER_FORMAT = "%.4f";
     private static final double MAX_WIN_RATE = 100.0;
     private static final double MIN_WIN_RATE = 0.0;
-    private static final Pattern ENTRY_PATTERN = Pattern.compile(
-            "\\{\\s*\"name\"\\s*:\\s*\"(.*?)\"(.*?)\\n\\s*\\}",
-            Pattern.DOTALL);
+    private static final double TIE_EPSILON = 1e-9;
+    private static Path ratingsPath = DEFAULT_RATINGS_PATH;
+
+    private StrategyRatings() {
+    }
 
     /**
      * Represents per-run strategy performance for rating updates.
      */
     public record StrategyPerformance(String name, double average, int wins, int runs) {
+    }
+
+    /**
+     * Returns the active ratings file path.
+     */
+    public static Path getRatingsPath() {
+        return ratingsPath;
+    }
+
+    /**
+     * Overrides the ratings file path, primarily for tests and isolated runs.
+     */
+    public static void setRatingsPath(Path path) {
+        ratingsPath = Objects.requireNonNull(path, "path");
     }
 
     /**
@@ -53,11 +77,25 @@ public class StrategyRatings {
                                      String sourceLabel,
                                      Map<String, InteractionPerformance> interactionPerformances,
                                      boolean includeInteractions) {
+        updateRatings(performances, sourceLabel, interactionPerformances, includeInteractions, true);
+    }
+
+    /**
+     * Writes ratings with optional blending of the existing ratings file.
+     *
+     * @param blendHistory whether to blend this run with previously saved ratings
+     */
+    public static void updateRatings(List<StrategyPerformance> performances,
+                                     String sourceLabel,
+                                     Map<String, InteractionPerformance> interactionPerformances,
+                                     boolean includeInteractions,
+                                     boolean blendHistory) {
         if (performances == null || performances.isEmpty()) {
             return;
         }
 
-        Map<String, ExistingEntry> previous = loadRatings();
+        validatePerformances(performances);
+        Map<String, ExistingEntry> previous = blendHistory ? loadRatings() : Map.of();
         List<EffectivePerformance> effectivePerformances = buildEffectivePerformances(
                 performances,
                 interactionPerformances,
@@ -67,7 +105,7 @@ public class StrategyRatings {
         applyScoreRatings(effectivePerformances);
 
         Map<String, ScoreInfo> scoreInfo = buildScoreInfoMap(effectivePerformances);
-        
+
         List<RatingEntry> entries = new ArrayList<>();
         for (EffectivePerformance effective : effectivePerformances) {
             StrategyPerformance performance = effective.performance;
@@ -107,10 +145,8 @@ public class StrategyRatings {
             return left.name.compareToIgnoreCase(right.name);
         });
 
-        for (int i = 0; i < entries.size(); i++) {
-            entries.get(i).ratingRank = i + 1;
-        }
-        writeRatings(entries, sourceLabel);
+        assignRatingRanks(entries);
+        writeRatings(entries, sourceLabel, blendHistory);
     }
     /**
      * Applies average ratings.
@@ -119,8 +155,14 @@ public class StrategyRatings {
         List<EffectivePerformance> sorted = new ArrayList<>(performances);
         sorted.sort((left, right) -> Double.compare(right.effectiveAverage, left.effectiveAverage));
         int total = sorted.size();
+        int rank = 1;
         for (int i = 0; i < sorted.size(); i++) {
-            sorted.get(i).averageRating = ratingFromRank(i + 1, total);
+            if (i > 0 && !approximatelyEqual(
+                    sorted.get(i).effectiveAverage,
+                    sorted.get(i - 1).effectiveAverage)) {
+                rank = i + 1;
+            }
+            sorted.get(i).averageRating = ratingFromRank(rank, total);
         }
     }
     /**
@@ -130,8 +172,14 @@ public class StrategyRatings {
         List<EffectivePerformance> sorted = new ArrayList<>(performances);
         sorted.sort((left, right) -> Double.compare(right.effectiveWinRate, left.effectiveWinRate));
         int total = sorted.size();
+        int rank = 1;
         for (int i = 0; i < sorted.size(); i++) {
-            sorted.get(i).winRateRating = ratingFromRank(i + 1, total);
+            if (i > 0 && !approximatelyEqual(
+                    sorted.get(i).effectiveWinRate,
+                    sorted.get(i - 1).effectiveWinRate)) {
+                rank = i + 1;
+            }
+            sorted.get(i).winRateRating = ratingFromRank(rank, total);
         }
     }
     /**
@@ -151,8 +199,14 @@ public class StrategyRatings {
             }
             return left.performance.name.compareToIgnoreCase(right.performance.name);
         });
+        int rank = 1;
         for (int i = 0; i < sorted.size(); i++) {
-            sorted.get(i).scoreRank = i + 1;
+            if (i > 0 && !approximatelyEqual(
+                    sorted.get(i).scoreRating,
+                    sorted.get(i - 1).scoreRating)) {
+                rank = i + 1;
+            }
+            sorted.get(i).scoreRank = rank;
         }
     }
     /**
@@ -208,30 +262,43 @@ public class StrategyRatings {
      */
     private static Map<String, ExistingEntry> loadRatings() {
         Map<String, ExistingEntry> ratings = new HashMap<>();
-        if (!Files.exists(RATINGS_PATH)) {
+        if (!Files.exists(ratingsPath)) {
             return ratings;
         }
         try {
-            String content = Files.readString(RATINGS_PATH, StandardCharsets.UTF_8);
-            Matcher matcher = ENTRY_PATTERN.matcher(content);
-            while (matcher.find()) {
-                String name = unescapeJson(matcher.group(1));
-                String entryBody = matcher.group(2);
-                double rating = parseDoubleField(entryBody, "rating", Double.NaN);
+            String content = Files.readString(ratingsPath, StandardCharsets.UTF_8);
+            JsonElement rootElement = JsonParser.parseString(content);
+            if (!rootElement.isJsonObject()) {
+                return ratings;
+            }
+            JsonArray strategies = rootElement.getAsJsonObject().getAsJsonArray("strategies");
+            if (strategies == null) {
+                return ratings;
+            }
+            for (JsonElement element : strategies) {
+                if (!element.isJsonObject()) {
+                    continue;
+                }
+                JsonObject entry = element.getAsJsonObject();
+                String name = getString(entry, "name", null);
+                double rating = getDouble(entry, "rating", Double.NaN);
+                if (name == null || name.isBlank()) {
+                    continue;
+                }
                 if (Double.isNaN(rating)) {
                     continue;
                 }
-                double winRate = parseDoubleField(entryBody, "winRate", Double.NaN);
+                double winRate = getDouble(entry, "winRate", Double.NaN);
                 if (Double.isNaN(winRate)) {
-                    winRate = parseDoubleField(entryBody, "lastWinRate", Double.NaN);
+                    winRate = getDouble(entry, "lastWinRate", Double.NaN);
                 }
-                double sweepWinRate = parseDoubleField(entryBody, "sweepWinRate", Double.NaN);
+                double sweepWinRate = getDouble(entry, "sweepWinRate", Double.NaN);
                 if (Double.isNaN(sweepWinRate)) {
-                    sweepWinRate = parseDoubleField(entryBody, "lastSweepWinRate", Double.NaN);
+                    sweepWinRate = getDouble(entry, "lastSweepWinRate", Double.NaN);
                 }
-                double interactionWinRate = parseDoubleField(entryBody, "interactionWinRate", Double.NaN);
+                double interactionWinRate = getDouble(entry, "interactionWinRate", Double.NaN);
                 if (Double.isNaN(interactionWinRate)) {
-                    interactionWinRate = parseDoubleField(entryBody, "lastInteractionWinRate", Double.NaN);
+                    interactionWinRate = getDouble(entry, "lastInteractionWinRate", Double.NaN);
                 }
                 double clampedRating = clampRating(rating);
                 double clampedWinRate = Double.isNaN(winRate) ? Double.NaN : clampWinRate(winRate);
@@ -242,7 +309,7 @@ public class StrategyRatings {
                 ratings.put(name, new ExistingEntry(clampedRating, clampedWinRate,
                         clampedSweepWinRate, clampedInteractionWinRate));
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException | ClassCastException | IllegalStateException | JsonParseException e) {
             System.err.println("Failed to read strategy ratings: " + e.getMessage());
         }
         return ratings;
@@ -250,51 +317,21 @@ public class StrategyRatings {
     /**
      * Writes ratings.
      */
-    private static void writeRatings(List<RatingEntry> entries, String sourceLabel) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\n");
-        builder.append("  \"updatedAt\": \"")
-                .append(OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
-                .append("\",\n");
-        builder.append("  \"ratingWeight\": ").append(formatNumber(DEFAULT_WEIGHT)).append(",\n");
-        if (sourceLabel != null && !sourceLabel.isBlank()) {
-            builder.append("  \"source\": \"").append(escapeJson(sourceLabel)).append("\",\n");
-        }
-        builder.append("  \"strategies\": [\n");
-
-        for (int i = 0; i < entries.size(); i++) {
-            RatingEntry entry = entries.get(i);
-            builder.append("    {\n");
-            builder.append("      \"name\": \"").append(escapeJson(entry.name)).append("\",\n");
-            builder.append("      \"rating\": ").append(formatNumber(entry.rating)).append(",\n");
-            builder.append("      \"ratingRank\": ").append(entry.ratingRank).append(",\n");
-            builder.append("      \"scoreRank\": ").append(entry.scoreRank).append(",\n");
-            builder.append("      \"scoreRating\": ").append(formatNumber(entry.scoreRating)).append(",\n");
-            builder.append("      \"lastAverage\": ").append(formatNumber(entry.lastAverage)).append(",\n");
-            builder.append("      \"winRate\": ").append(formatNumber(entry.winRate)).append(",\n");
-            builder.append("      \"lastWinRate\": ").append(formatNumber(entry.lastWinRate)).append(",\n");
-            builder.append("      \"sweepWinRate\": ").append(formatNumber(entry.sweepWinRate)).append(",\n");
-            builder.append("      \"lastSweepWinRate\": ").append(formatNumber(entry.lastSweepWinRate)).append(",\n");
-            builder.append("      \"interactionWinRate\": ").append(formatNumber(entry.interactionWinRate)).append(",\n");
-            builder.append("      \"lastInteractionWinRate\": ")
-                    .append(formatNumber(entry.lastInteractionWinRate)).append(",\n");
-            builder.append("      \"wins\": ").append(entry.wins).append(",\n");
-            builder.append("      \"runs\": ").append(entry.runs).append("\n");
-            builder.append("    }");
-            if (i < entries.size() - 1) {
-                builder.append(",");
-            }
-            builder.append("\n");
-        }
-        builder.append("  ]\n");
-        builder.append("}\n");
-
+    private static void writeRatings(List<RatingEntry> entries,
+                                     String sourceLabel,
+                                     boolean historyBlended) {
         try {
-            Path parent = RATINGS_PATH.getParent();
+            Path parent = ratingsPath.getParent();
             if (parent != null) {
                 Files.createDirectories(parent);
             }
-            Files.writeString(RATINGS_PATH, builder.toString(), StandardCharsets.UTF_8);
+            RatingsDocument document = new RatingsDocument(
+                    OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+                    historyBlended ? DEFAULT_WEIGHT : 1.0,
+                    historyBlended,
+                    sourceLabel == null || sourceLabel.isBlank() ? null : sourceLabel,
+                    entries);
+            Files.writeString(ratingsPath, GSON.toJson(document) + "\n", StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.err.println("Failed to write strategy ratings: " + e.getMessage());
         }
@@ -346,7 +383,7 @@ public class StrategyRatings {
         if (rating < MIN_RATING) {
             return MIN_RATING;
         }
-	    return Math.min(rating, MAX_RATING);
+        return Math.min(rating, MAX_RATING);
     }
     /**
      * Handles clamp win rate.
@@ -366,86 +403,77 @@ public class StrategyRatings {
         }
         return (wins * 100.0) / runs;
     }
+
+    private static void validatePerformances(List<StrategyPerformance> performances) {
+        Set<String> names = new HashSet<>();
+        for (StrategyPerformance performance : performances) {
+            Objects.requireNonNull(performance, "performances cannot contain null");
+            if (performance.name == null || performance.name.isBlank()) {
+                throw new IllegalArgumentException("Strategy names cannot be blank");
+            }
+            if (!Double.isFinite(performance.average)) {
+                throw new IllegalArgumentException("Strategy average must be finite: " + performance.name);
+            }
+            if (performance.runs < 0 || performance.wins < 0 || performance.wins > performance.runs) {
+                throw new IllegalArgumentException("Invalid win/run counts for " + performance.name);
+            }
+            if (!names.add(performance.name)) {
+                throw new IllegalArgumentException("Duplicate strategy name: " + performance.name);
+            }
+        }
+    }
+
+    private static void assignRatingRanks(List<RatingEntry> entries) {
+        int rank = 1;
+        for (int index = 0; index < entries.size(); index++) {
+            if (index > 0 && !approximatelyEqual(
+                    entries.get(index).rating,
+                    entries.get(index - 1).rating)) {
+                rank = index + 1;
+            }
+            entries.get(index).ratingRank = rank;
+        }
+    }
+
+    private static boolean approximatelyEqual(double left, double right) {
+        return Math.abs(left - right) <= TIE_EPSILON;
+    }
+
     /**
-     * Parses double field.
+     * Reads a string from a JSON object with a fallback.
      */
-    private static double parseDoubleField(String entryBody, String field, double fallback) {
-        Matcher matcher = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([0-9.]+)")
-                .matcher(entryBody);
-        if (!matcher.find()) {
+    private static String getString(JsonObject object, String field, String fallback) {
+        JsonElement element = object.get(field);
+        if (element == null || element.isJsonNull()) {
             return fallback;
         }
-        return Double.parseDouble(matcher.group(1));
-    }
-    /**
-     * Formats number.
-     */
-    private static String formatNumber(double value) {
-        if (Double.isNaN(value)) {
-            return String.format(Locale.US, NUMBER_FORMAT, 0.0);
+        try {
+            return element.getAsString();
+        } catch (ClassCastException | IllegalStateException e) {
+            return fallback;
         }
-        return String.format(Locale.US, NUMBER_FORMAT, value);
     }
+
     /**
-     * Handles escape json.
+     * Reads a double from a JSON object with a fallback.
      */
-    private static String escapeJson(String value) {
-        StringBuilder escaped = new StringBuilder();
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            switch (c) {
-                case '\\' -> escaped.append("\\\\");
-                case '"' -> escaped.append("\\\"");
-                case '\n' -> escaped.append("\\n");
-                case '\r' -> escaped.append("\\r");
-                case '\t' -> escaped.append("\\t");
-                default -> {
-                    if (c < 0x20) {
-                        escaped.append(String.format(Locale.US, "\\u%04x", (int) c));
-                    } else {
-                        escaped.append(c);
-                    }
-                }
-            }
+    private static double getDouble(JsonObject object, String field, double fallback) {
+        JsonElement element = object.get(field);
+        if (element == null || element.isJsonNull()) {
+            return fallback;
         }
-        return escaped.toString();
+        try {
+            return element.getAsDouble();
+        } catch (ClassCastException | IllegalStateException | NumberFormatException e) {
+            return fallback;
+        }
     }
+
     /**
-     * Handles unescape json.
+     * Normalizes non-finite values before JSON serialization.
      */
-    private static String unescapeJson(String value) {
-        StringBuilder unescaped = new StringBuilder();
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            if (c != '\\' || i + 1 >= value.length()) {
-                unescaped.append(c);
-                continue;
-            }
-            char next = value.charAt(++i);
-            switch (next) {
-                case '\\' -> unescaped.append('\\');
-                case '"' -> unescaped.append('"');
-                case 'n' -> unescaped.append('\n');
-                case 'r' -> unescaped.append('\r');
-                case 't' -> unescaped.append('\t');
-                case 'u' -> {
-                    if (i + 4 < value.length()) {
-                        String hex = value.substring(i + 1, i + 5);
-                        try {
-                            unescaped.append((char) Integer.parseInt(hex, 16));
-                            i += 4;
-                        } catch (NumberFormatException e) {
-                            unescaped.append("\\u").append(hex);
-                            i += 4;
-                        }
-                    } else {
-                        unescaped.append("\\u");
-                    }
-                }
-                default -> unescaped.append(next);
-            }
-        }
-        return unescaped.toString();
+    private static double finiteOrZero(double value) {
+        return Double.isFinite(value) ? value : 0.0;
     }
     
     private record ScoreInfo(int scoreRank,
@@ -469,6 +497,13 @@ public class StrategyRatings {
      * Interaction data for combining sweep results with matchup performance.
      */
     public record InteractionPerformance(String name, double average, double winRate) {
+    }
+
+    private record RatingsDocument(String updatedAt,
+                                   double ratingWeight,
+                                   boolean historyBlended,
+                                   String source,
+                                   List<RatingEntry> strategies) {
     }
 
     private static class RatingEntry {
@@ -504,17 +539,17 @@ public class StrategyRatings {
                             int wins,
                             int runs) {
             this.name = name;
-            this.rating = rating;
+            this.rating = finiteOrZero(rating);
             this.ratingRank = ratingRank;
             this.scoreRank = scoreRank;
-            this.scoreRating = scoreRating;
-            this.lastAverage = lastAverage;
-            this.winRate = winRate;
-            this.lastWinRate = lastWinRate;
-            this.sweepWinRate = sweepWinRate;
-            this.lastSweepWinRate = lastSweepWinRate;
-            this.interactionWinRate = interactionWinRate;
-            this.lastInteractionWinRate = lastInteractionWinRate;
+            this.scoreRating = finiteOrZero(scoreRating);
+            this.lastAverage = finiteOrZero(lastAverage);
+            this.winRate = finiteOrZero(winRate);
+            this.lastWinRate = finiteOrZero(lastWinRate);
+            this.sweepWinRate = finiteOrZero(sweepWinRate);
+            this.lastSweepWinRate = finiteOrZero(lastSweepWinRate);
+            this.interactionWinRate = finiteOrZero(interactionWinRate);
+            this.lastInteractionWinRate = finiteOrZero(lastInteractionWinRate);
             this.wins = wins;
             this.runs = runs;
         }

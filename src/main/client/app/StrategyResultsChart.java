@@ -1,5 +1,11 @@
 package client.app;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -28,8 +34,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Renders charts for strategy ratings and interaction win rates from JSON files.
@@ -267,15 +271,10 @@ public class StrategyResultsChart extends Application {
      * Loads rating metrics.
      */
     private static List<StrategyMetric> loadRatingMetrics(Path path) {
-        String content = readFile(path);
-        if (content == null) {
-            return Collections.emptyList();
-        }
-        List<String> entries = extractStrategyObjects(content);
         List<StrategyMetric> metrics = new ArrayList<>();
-        for (String entry : entries) {
-            String name = extractStringField(entry, "name");
-            double rating = extractNumberField(entry, "rating", Double.NaN);
+        for (JsonObject entry : loadStrategyObjects(path)) {
+            String name = getString(entry, "name");
+            double rating = getDouble(entry, "rating", Double.NaN);
             if (name != null && !Double.isNaN(rating)) {
                 metrics.add(new StrategyMetric(name, rating));
             }
@@ -288,15 +287,10 @@ public class StrategyResultsChart extends Application {
      * Loads interaction metrics.
      */
     private static List<StrategyMetric> loadInteractionMetrics(Path path) {
-        String content = readFile(path);
-        if (content == null) {
-            return Collections.emptyList();
-        }
-        List<String> entries = extractStrategyObjects(content);
         List<StrategyMetric> metrics = new ArrayList<>();
-        for (String entry : entries) {
-            String name = extractStringField(entry, "name");
-            double winRate = extractNumberField(entry, "mixedOpponentsWinRate", Double.NaN);
+        for (JsonObject entry : loadStrategyObjects(path)) {
+            String name = getString(entry, "name");
+            double winRate = getDouble(entry, "mixedOpponentsWinRate", Double.NaN);
             if (name != null && !Double.isNaN(winRate)) {
                 metrics.add(new StrategyMetric(name, winRate));
             }
@@ -342,130 +336,58 @@ public class StrategyResultsChart extends Application {
         return new ArrayList<>(metrics.subList(0, max));
     }
     /**
-     * Handles extract strategy objects.
+     * Loads the top-level strategies array from a result JSON file.
      */
-    private static List<String> extractStrategyObjects(String content) {
-        int index = content.indexOf("\"strategies\"");
-        if (index < 0) {
-            return Collections.emptyList();
-        }
-        int arrayStart = content.indexOf('[', index);
-        if (arrayStart < 0) {
-            return Collections.emptyList();
-        }
-        int arrayEnd = findMatchingBracket(content, arrayStart, '[', ']');
-        if (arrayEnd < 0) {
-            return Collections.emptyList();
-        }
-
-        List<String> objects = new ArrayList<>();
-        boolean inString = false;
-        boolean escaping = false;
-        int depth = 0;
-        int objectStart = -1;
-        for (int i = arrayStart + 1; i < arrayEnd; i++) {
-            char c = content.charAt(i);
-            if (escaping) {
-                escaping = false;
-                continue;
-            }
-            if (c == '\\') {
-                escaping = true;
-                continue;
-            }
-            if (c == '"') {
-                inString = !inString;
-                continue;
-            }
-            if (inString) {
-                continue;
-            }
-            if (c == '{') {
-                if (depth == 0) {
-                    objectStart = i;
-                }
-                depth++;
-            } else if (c == '}') {
-                depth--;
-                if (depth == 0 && objectStart >= 0) {
-                    objects.add(content.substring(objectStart, i + 1));
-                    objectStart = -1;
-                }
-            }
-        }
-        return objects;
-    }
-    /**
-     * Handles find matching bracket.
-     */
-    private static int findMatchingBracket(String content, int start, char open, char close) {
-        boolean inString = false;
-        boolean escaping = false;
-        int depth = 0;
-        for (int i = start; i < content.length(); i++) {
-            char c = content.charAt(i);
-            if (escaping) {
-                escaping = false;
-                continue;
-            }
-            if (c == '\\') {
-                escaping = true;
-                continue;
-            }
-            if (c == '"') {
-                inString = !inString;
-                continue;
-            }
-            if (inString) {
-                continue;
-            }
-            if (c == open) {
-                depth++;
-            } else if (c == close) {
-                depth--;
-                if (depth == 0) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-    /**
-     * Handles extract string field.
-     */
-    private static String extractStringField(String entry, String field) {
-        Pattern pattern = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*\"(.*?)\"",
-                Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(entry);
-        if (matcher.find()) {
-            return unescapeJson(matcher.group(1));
-        }
-        return null;
-    }
-    /**
-     * Handles extract number field.
-     */
-    private static double extractNumberField(String entry, String field, double fallback) {
-        Pattern pattern = Pattern.compile("\"" + Pattern.quote(field) + "\"\\s*:\\s*([-0-9.]+)");
-        Matcher matcher = pattern.matcher(entry);
-        if (matcher.find()) {
-            try {
-                return Double.parseDouble(matcher.group(1));
-            } catch (NumberFormatException ignored) {
-                return fallback;
-            }
-        }
-        return fallback;
-    }
-    /**
-     * Reads file.
-     */
-    private static String readFile(Path path) {
+    private static List<JsonObject> loadStrategyObjects(Path path) {
+        List<JsonObject> strategies = new ArrayList<>();
         try {
-            return Files.readString(path, StandardCharsets.UTF_8);
-        } catch (IOException e) {
+            String content = Files.readString(path, StandardCharsets.UTF_8);
+            JsonElement root = JsonParser.parseString(content);
+            if (!root.isJsonObject()) {
+                return strategies;
+            }
+            JsonArray array = root.getAsJsonObject().getAsJsonArray("strategies");
+            if (array == null) {
+                return strategies;
+            }
+            for (JsonElement element : array) {
+                if (element.isJsonObject()) {
+                    strategies.add(element.getAsJsonObject());
+                }
+            }
+        } catch (IOException | ClassCastException | IllegalStateException | JsonParseException e) {
             System.err.println("Failed to read file: " + path + " (" + e.getMessage() + ")");
+        }
+        return strategies;
+    }
+
+    /**
+     * Reads a string field from a JSON object.
+     */
+    private static String getString(JsonObject object, String field) {
+        JsonElement element = object.get(field);
+        if (element == null || element.isJsonNull()) {
             return null;
+        }
+        try {
+            return element.getAsString();
+        } catch (ClassCastException | IllegalStateException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Reads a double field from a JSON object.
+     */
+    private static double getDouble(JsonObject object, String field, double fallback) {
+        JsonElement element = object.get(field);
+        if (element == null || element.isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return element.getAsDouble();
+        } catch (ClassCastException | IllegalStateException | NumberFormatException e) {
+            return fallback;
         }
     }
     /**
@@ -515,17 +437,6 @@ public class StrategyResultsChart extends Application {
         }
         return escaped.toString();
     }
-    /**
-     * Handles unescape json.
-     */
-    private static String unescapeJson(String value) {
-        return value.replace("\\\"", "\"")
-                .replace("\\n", "\n")
-                .replace("\\r", "\r")
-                .replace("\\t", "\t")
-                .replace("\\\\", "\\");
-    }
-
     private record StrategyMetric(String name, double value) {
     }
 }

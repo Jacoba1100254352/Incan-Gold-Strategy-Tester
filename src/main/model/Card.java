@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Represents a quest deck card: treasure, hazard, or artifact.
  */
@@ -33,6 +35,9 @@ public class Card {
      * @return treasure card instance
      */
     public static Card treasure(int value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException("Treasure value must be positive: " + value);
+        }
         return new Card(Type.TREASURE, value, null, 0);
     }
 
@@ -43,7 +48,7 @@ public class Card {
      * @return hazard card instance
      */
     public static Card hazard(Hazard hazard) {
-        return new Card(Type.HAZARD, 0, hazard, 0);
+        return new Card(Type.HAZARD, 0, Objects.requireNonNull(hazard, "hazard"), 0);
     }
 
     /**
@@ -53,6 +58,9 @@ public class Card {
      * @return artifact card instance
      */
     public static Card artifact(int artifactId) {
+        if (artifactId <= 0) {
+            throw new IllegalArgumentException("Artifact id must be positive: " + artifactId);
+        }
         return new Card(Type.ARTIFACT, 0, null, artifactId);
     }
 
@@ -89,6 +97,9 @@ public class Card {
      * @param remainingTreasure remaining treasure value
      */
     public void setRemainingTreasure(int remainingTreasure) {
+        if (remainingTreasure < 0) {
+            throw new IllegalArgumentException("Remaining treasure cannot be negative: " + remainingTreasure);
+        }
         this.remainingTreasure = remainingTreasure;
     }
 

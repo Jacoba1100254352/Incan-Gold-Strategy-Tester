@@ -39,6 +39,9 @@ public enum AIDifficulty {
      * Maps user input to a difficulty, defaulting to medium when unknown.
      */
     public static AIDifficulty fromInput(String input) {
+        if (input == null) {
+            return MEDIUM;
+        }
         String normalized = input.trim().toLowerCase();
 	    return switch (normalized) {
 		    case "1", "easy" -> EASY;
